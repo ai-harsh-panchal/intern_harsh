@@ -1,0 +1,20 @@
+Creating a Config File in Odoo:
+   
+   - A configuration file in Odoo is typically used to set various parameters that control the behavior of the Odoo server. This file is 													usually named `odoo.conf` and can include settings such as database connection details, server port, addons path, and logging configurations.
+   - Basic parameters to include in the config file:
+     - `db_host`: Hostname of the database server(localhost).
+     - `db_port`: Port number for the database connection.
+     - `db_user`: Username for the database.
+     - `db_password`: Password for the database user.
+     - `addons_path`: Path to the directory containing Odoo addons.
+     - `logfile`: Path to the log file for Odoo server logs.
+     - `xmlrpc_port`: Specifies the port number on which the Odoo server will run (default is 8069).
+     - `admin_passwd`: Password to manage the database through the database manager.
+     - `workers`: Number of worker processes for handling requests (used for production mode).
+     - `max_cron_threads`: Number of threads for managing background jobs (cron jobs).
+     - `limit_memory_hard`: Maximum memory limit (in bytes) before the process is killed.
+     - `limit_memory_soft`: Memory limit (in bytes) for warning before reaching the hard limit.
+     - `limit_time_cpu`: Maximum CPU time (in seconds) allowed for a request before it's killed.
+     - `limit_time_real`: Maximum real time (in seconds) allowed for a request before termination.
+     - `proxy_mode`: Used if the server is behind a proxy to handle proper redirections.
+     - `db_filter`: Restricts which databases are visible or accessible for the Odoo instance.

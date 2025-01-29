@@ -1,0 +1,46 @@
+creating module and manifest structure
+
+Step 1: Setup Odoo Development Environment
+1. A properly configured Odoo development environment.
+2. Access to the Odoo `addons` folder where custom modules will be located.
+
+Step 2: Create the Module Structure
+1. Navigate to the custom `addons` folder.
+2. Create a folder for your new module. Example: `my_module`
+3. Inside the folder `my_module`, create the following standard Odoo module structure:
+    - `__init__.py`  Links different Python files.
+    - __manifest__.py`  Contains metadata about the module.
+    - `models/` A folder containing all Python models.
+
+Step 3: Define Models
+- Create the `models/` directory to hold your model files.
+- Add Python files for your models. For example, `models/my_model.py`.
+
+Step 4: Explore the Manifest File (`__manifest__.py`)
+The `__manifest__.py` file is critical as it provides the metadata for the module.
+ Key Sections of the Manifest:
+1. Basic Information:
+    - Name: Human-readable name of the module.
+
+2. Version Information:
+    - `version`: Version number of the module in the format ` (e.g., 18.0.0).
+
+3. Authors and License:
+    - `author`: Name of the module author.
+    - `website`: Author or company URL.
+    - `license`: Licensing terms, e.g., LGPL-3, AGPL-3.
+
+4. Dependencies:
+    - `depends`: A list of other modules this module relies on. Example: `[‘base’]`.
+
+5. Data Files:
+    - `data`: Loadable files such as views, XML definitions, menus. If your module only has models, this section can be kept empty.
+
+6. Category:
+    - `category`: Organizes the module in Odoo Apps (e.g., Sales, Inventory, Uncategorized).
+
+7. Auto Installation:
+    - `auto_install`: Boolean to determine if the module installs automatically when its dependencies are installed.
+
+8. Application:
+    - `application`: Boolean indicating if the module is standalone or tied to another.
