@@ -1,0 +1,63 @@
+Difference between SQL and PSQL
+
+
+Definition:
+
+
+SQL: A standard programming language used for managing and manipulating relational databases.
+PSQL: The procedural extension of SQL used specifically in PostgreSQL, allowing for more complex operations and control structures.
+
+Purpose:
+
+
+SQL: Primarily used for querying, updating, and managing data in relational databases.
+PSQL: Used for writing stored procedures, functions, and triggers in PostgreSQL, enabling procedural programming capabilities.
+
+Syntax:
+
+
+SQL: Follows a declarative syntax where you specify what you want to retrieve or manipulate, not how to do it.
+PSQL: Includes procedural constructs such as loops, conditionals, and variables, allowing for more complex logic and flow control.
+
+Functionality:
+
+
+SQL: Provides basic operations like SELECT, INSERT, UPDATE, DELETE, and JOIN.
+PSQL: Extends SQL with features like control-of-flow statements (IF, CASE, LOOP), exception handling, and the ability to create functions and procedures.
+
+Execution:
+
+
+SQL: Each SQL statement is executed independently.
+PSQL: Allows multiple SQL statements to be executed together as a block of code, making it suitable for batch processing.
+
+Use Cases:
+
+
+SQL: Used for data retrieval and manipulation in any SQL-compliant relational database (e.g., MySQL, Oracle, SQL Server).
+PSQL: Specific to PostgreSQL and used for creating complex business logic within the database, such as custom functions and triggers.
+
+Data Types:
+
+
+SQL: Standard data types like INTEGER, VARCHAR, DATE, etc.
+PSQL: Supports additional data types and custom types specific to PostgreSQL, such as JSONB, ARRAY, and HSTORE.
+
+Performance:
+
+
+SQL: Performance depends on the database engine and the efficiency of the queries written.
+PSQL: Can improve performance for complex operations by reducing the number of calls to the database and allowing for optimized execution of procedural code.
+
+Portability:
+
+
+SQL: Generally portable across different relational database systems with some variations in syntax and features.
+PSQL: Not portable as it is specific to PostgreSQL; code written in PSQL may not work in other database systems.
+
+Community and Documentation:
+
+
+SQL: Extensive documentation available due to its widespread use across various database systems.
+PSQL: Well-documented within the PostgreSQL community, with resources specific to its features and usage.
+
