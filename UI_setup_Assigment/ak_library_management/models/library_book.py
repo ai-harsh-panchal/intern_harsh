@@ -33,26 +33,3 @@ class Book(models.Model):
             return 'Available'  # Book is available
         else:
             return 'Borrowed'  # Book is borrowed
-
-
-class Tag(models.Model):
-    """
-    Model representing a tag that can be associated with books.
-    """
-    _name = 'library.tag'
-    _description = 'Library Tag'
-
-    name = fields.Char(string='Tag Name', required=True)  # Name of the tag
-    description = fields.Text(string='Tag Description')  # Description of the tag
-
-
-class Category(models.Model):
-    """
-    Model representing a category of books in the library.
-    """
-    _name = 'library.category'
-    _description = 'Library Category'
-
-    name = fields.Char(string='Category Name', required=True)  # Name of the category
-    description = fields.Text(string='Category Description')  # Description of the category
-    tag_ids = fields.Many2many('library.tag', string='Tags')  # Tags associated with the category
