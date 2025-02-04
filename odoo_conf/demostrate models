@@ -9,15 +9,20 @@ Normal Model
         - `Student`: Name, Age, Class, Roll Number.
         - `Faculty`: Name, Subject, Department.
 
-2. Abstract Model
-- Usage: These are base models used for sharing common fields and logic across different models without storing data directly.
-- Example:
-    - In the school management system, both `Student` and `Faculty` should have a "contact details" section (fields like `email` and `phone`).
-    - Instead of duplicating these fields in `Student` and `Faculty`, you create an `Abstract Model` that contains these reusable fields and logic.
-    - Both `Student` and `Faculty` models inherit this abstract model.
 
-3. Transient Model
+2. Transient Model
 -Usage: These are temporary models that are used to handle data for wizards or temporary forms. The data is cleared after execution or after some time.
 -Example:
     - You create a wizard to assign multiple students to a course. This wizard collects input (e.g., course name and student list) temporarily, executes the operation, and then discards the data.
     - Transient models are also used for filters, report parameters, or user input forms in the system.
+    
+
+3. Abstract Model:
+An abstract model in Odoo is a special type of model that cannot be instantiated directly. It serves as a blueprint for other models, allowing you to define common fields and methods that can be inherited by other models. This helps in organizing code and promoting reusability.
+
+Imagine we are building a coaching management system where you have different types of users: Student, Faculty, and Admin. Each user type has some common attributes (like name, email, and phone), but they also have unique attributes.
+so Common fields and methods are defined once in the abstract model. but Both Student and Faculty inherit these fields, avoiding duplication or we can easily code reuse.
+
+When we define an abstract model, no database table is created for it. Instead, the concrete models that inherit from it will have their own tables, which include the fields defined in the abstract model.
+
+
