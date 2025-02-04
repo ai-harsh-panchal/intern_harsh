@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields
+
 class Book(models.Model):
     """
     Model representing a book details in the library.
