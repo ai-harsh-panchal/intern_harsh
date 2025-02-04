@@ -1,0 +1,30 @@
+Explain how the product type and product Tracebility is work together ?
+
+So there is three way to Trace a product in odoo:
+1)by lots
+2)by Serial number
+3)by Quantity
+
+here i have distinguish the product by there Tracebility:
+
+Service Products:
+
+
+defination : Service products are intangible offerings that cannot be stored or inventoried. Examples include consulting services, maintenance services, or training sessions.
+Traceability: Service products are not traceable because they do not have a physical presence. There are no lots, serial numbers, or quantities to track since services are delivered and consumed in real-time.
+
+Consumable Products:
+
+
+Definition: Consumables are items that are used up quickly and do not require detailed tracking of inventory levels. Examples include office supplies, cleaning materials, or raw materials.
+Traceability: Consumable products can be tracked by quantity but not by lots or serial numbers. Since these items are typically purchased in bulk and used as needed, businesses may track the total quantity on hand but do not need to manage individual units or batches.
+
+Stockable Products:
+
+
+Definition: Stockable products are tangible items that can be stored, handled, and sold. Examples include electronics, furniture, or any product that requires inventory management.
+Traceability: Stockable products can be traced using all three methods:
+By Lots: When products are received in batches (lots), businesses can track inventory based on these lots. This is useful for managing expiration dates, quality control, and batch recalls.
+By Serial Number: For high-value or unique items, businesses can track products individually using serial numbers. This method is essential for warranty management, service history, and customer support for ex laptop , mobile etc.
+By Quantity: Businesses can also track the total quantity of stockable products available in inventory. This is the most basic form of traceability and is crucial for inventory management.
+

@@ -1,0 +1,38 @@
+types of product in inventory odoo :
+
+1. Services:
+Services based product are not physical products that cannot be stored or inventoried. They typically represent tasks or activities of project where provided to customers.
+
+Characteristics:
+No physical inventory.
+Billed based on time or project completion.
+
+Example:
+Consulting Services: A consulting firm offers strategic planning services. When a client hires the firm, they are billed based on the hours worked or the project scope.
+Maintenance Services: A company provides maintenance and repair services for equipment. Each service rendered can be invoiced based on the work performed.
+
+
+2. Consumables:
+the product which consume by customer as per need  & goods that are meant to be used up or discarded.
+
+Characteristics:
+Can be stocked but are not tracked in inventory as individual items.
+Usually have a low cost and high turnover rate.
+Often used in manufacturing or operational processes.
+
+Example:
+Office Supplies: Items like paper, pens, and printer cartridges are considered consumables. Businesses purchase these items in bulk and use them as needed without tracking each individual item.
+Cleaning Supplies: Products such as cleaning agents, mops, and brooms used in maintaining office cleanliness fall under consumables.
+
+
+3. Storeable Products
+Storeable products are tangible items that are tracked in inventory. They can be stored, handled, and sold, and their stock levels are managed within the inventory system.
+
+Characteristics:
+Inventory is tracked in real-time.
+Can be purchased and sold.
+Typically have a defined cost and sales price.
+
+Example:
+Electronics: Items like laptops, smartphones, and televisions are stockable products. They are purchased from suppliers, stored in inventory, and sold to customers.
+
