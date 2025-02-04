@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
 {
     'name': "Library Management System",
-    'version': '18.0.0.0',
+    'version': '18.0.2.0.0',
     'summary': 'A comprehensive module for managing library operations, including book tracking and member management.',
     'depends': ['base','web'],
     'category' : 'Education',

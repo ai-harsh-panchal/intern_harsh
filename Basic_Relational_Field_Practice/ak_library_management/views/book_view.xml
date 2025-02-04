@@ -1,5 +1,6 @@
 <odoo>
     <data>
+        <!-- list view of book model-->
         <record id="view_library_book_tree" model="ir.ui.view">
             <field name="name">library.book.list</field>
             <field name="model">library.book</field>
@@ -7,26 +8,32 @@
                 <list>
                     <field name="name"/>
                     <field name="author"/>
-                    <field name="category_id"/>
+                    <field name="state"/>
                     <field name="isbn"/>
-                    <field name="publication_date"/>
                 </list>
             </field>
         </record>
 
+        <!-- form view of book model-->
         <record id="view_library_book_form" model="ir.ui.view">
         <field name="name">library.book.form</field>
         <field name="model">library.book</field>
         <field name="arch" type="xml">
         <form>
+            <header>
+                <label for="state" string="Status" />
+                <field name="state" widget="statusbar" statusbar_visible="available,borrowed"/>
+            </header>
             <sheet>
                 <div class="row">
                     <div class="col-6">
                         <group>
                             <field name="name"/>
                             <field name="author"/>
+                            <field name="state"/>
                             <field name="isbn"/>
                             <field name="publication_date"/>
+                            <field name="member_ids"/>
                         </group>
                     </div>
                     <div class="col-6">
@@ -41,7 +48,6 @@
         </form>
     </field>
 </record>
-
 
         <!-- Tree View for Categories -->
         <record id="view_library_category_tree" model="ir.ui.view">
@@ -77,6 +83,7 @@
             <field name="view_mode">list,form</field>
         </record>
 
+        <!-- action for books-->
         <record id="action_library_book" model="ir.actions.act_window">
             <field name="name">Books</field>
             <field name="res_model">library.book</field>
@@ -84,9 +91,7 @@
             <field name ="view_id" ref="view_library_book_tree"/>
         </record>
 
-
-
-
+        <!-- menu item -->
         <menuitem
                 id="library_menu_root"
                 name="Library Management"/>
@@ -104,12 +109,11 @@
                 sequence="2"
                 action="action_library_book"
             />
-        <menuitem
+            <menuitem
                 id="menu_library_category"
                 name="Categories"
                 action="action_library_category"
                 parent="menu_library_book_section"
-        />
-
+            />
     </data>
 </odoo>
