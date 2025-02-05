@@ -27,7 +27,7 @@
     <!-- menu for member view -->
         <menuitem
                 id="menu_library_member"
-                name="Members_section"
+                name="Members"
                 parent="library_menu_root"
         />
 
