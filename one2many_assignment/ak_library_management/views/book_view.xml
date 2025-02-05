@@ -29,7 +29,7 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <label for="state" string="Status" /> <!-- Label for the status field -->
+                        <label for="state"/> <!-- Label for the status field -->
                         <field name="state" widget="statusbar" statusbar_visible="available,borrowed"/> <!-- Status bar widget -->
                     </header>
                     <sheet>
