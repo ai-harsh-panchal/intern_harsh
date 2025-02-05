@@ -17,7 +17,6 @@
                     <field name="name"/> <!-- Member's name -->
                     <field name="email"/> <!-- Member's email address -->
                     <field name="phone"/> <!-- Member's phone number -->
-                    <field name="book_id"/> <!-- Associated book ID for the member -->
                 </list>
             </field>
         </record>

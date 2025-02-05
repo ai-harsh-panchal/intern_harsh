@@ -12,6 +12,7 @@
         'views/book_view.xml',
         'views/categories_view.xml',
         'views/member_view.xml',
+        'views/library_view.xml',
         'views/menu.xml',
     ],
     'installable': True,

@@ -1,0 +1,39 @@
+<odoo>
+    <data>
+        <!-- Form view for the Library model -->
+        <record id="view_library_form" model="ir.ui.view">
+            <field name="name">library.library.form</field>
+            <field name="model">library.library</field>
+            <field name="arch" type="xml">
+                <form string="Library">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="location"/>
+                            <field name="capacity"/>
+                            <field name="notes"/>
+                        </group>
+                        <notebook>
+                            <page string="Books">
+                                <field name="book_ids">
+                                    <list editable="bottom">
+                                        <field name="name"/>
+                                        <field name="author"/>
+                                        <field name="isbn"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action to open the Library form -->
+        <record id="action_library_store" model="ir.actions.act_window">
+            <field name="name">Libraries</field>
+            <field name="res_model">library.library</field>
+            <field name="view_mode">list,form</field>
+        </record>
+    </data>
+</odoo>

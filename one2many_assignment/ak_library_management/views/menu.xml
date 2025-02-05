@@ -4,25 +4,31 @@
                 id="library_menu_root"
                 name="Library Management"/>
 
-            <menuitem
-                    id="menu_library_book_section"
-                    name="Library"
-                    sequence="1"
-                    parent="library_menu_root"
-            />
-            <menuitem
+        <menuitem
+                id="menu_library_section"
+                name="Library"
+                sequence="1"
+                parent="library_menu_root"
+        />
+        <menuitem
+                id="menu_library_book_section"
+                name="library"
+                action="action_library_store"
+                parent="menu_library_section"
+        />
+        <menuitem
                 id="menu_library_book"
                 name="Books"
-                parent="menu_library_book_section"
+                parent="menu_library_section"
                 sequence="2"
                 action="action_library_book"
-            />
+        />
     <!-- menu for categories view-->
         <menuitem
                 id="menu_library_category"
                 name="Categories"
                 action="action_library_category"
-                parent="menu_library_book_section"
+                parent="menu_library_section"
         />
     <!-- menu for member view -->
         <menuitem

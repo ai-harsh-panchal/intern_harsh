@@ -10,7 +10,8 @@ class Book(models.Model):
 
     name = fields.Char(string='Book Title', required=True)  # Title of the book
     author = fields.Char(string='Author Name')  # Author of the book
-    isbn = fields.Char(string='ISBN Number')  # ISBN number of the book
+    Library_id = fields.Many2one('library.library', string='Library')  # Library where the book is stored
+    isbn = fields.Char(string='ISBN Number')  # unique identification number of the book
     publication_date = fields.Date(string='Date of Publication')  # Publication date of the book
     category_id = fields.Many2one('library.category', string='Book Category')  # Category of the book
     description = fields.Text(string='Book Summary')  # Summary of the book

@@ -39,7 +39,8 @@
                                     <field name="name"/> <!-- Field for the book name -->
                                     <field name="author"/> <!-- Field for the book author -->
                                     <field name="state"/> <!-- Field for the book status -->
-                                    <field name="isbn"/> <!-- Field for the book ISBN -->
+                                    <field name="Library_id"/>
+                                    <field name="isbn"/><!-- Field for the book ISBN -->
                                     <field name="publication_date"/> <!-- Field for the publication date -->
                                     <field name="member_ids"/> <!-- Field for associated members -->
                                 </group>
