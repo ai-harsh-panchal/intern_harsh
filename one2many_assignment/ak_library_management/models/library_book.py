@@ -20,4 +20,4 @@ class Book(models.Model):
                                readonly=False) 
     member_ids = fields.One2many('library.member', 'book_id',
                                  string='Member Assign')  
-                          
+                                                         
