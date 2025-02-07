@@ -43,10 +43,10 @@
                 action="action_library_member"
                 parent="menu_library_member"
         />
-
+   <!-- menu for product view -->
         <menuitem
                 id="product_menu"
-                name="products"
+                name="Products"
                 parent="library_menu_root"
         />
 
