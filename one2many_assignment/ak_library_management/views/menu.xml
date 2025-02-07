@@ -12,7 +12,7 @@
         />
         <menuitem
                 id="menu_library_book_section"
-                name="library"
+                name="Library"
                 action="action_library_store"
                 parent="menu_library_section"
         />

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 {
     'name': "Library Management System",
     'version': '18.0.2.0.0',

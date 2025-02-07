@@ -10,29 +10,29 @@
 
         <!-- Tree View for Members -->
         <record id="view_library_member_tree" model="ir.ui.view">
-            <field name="name">library.member.tree</field> <!-- Name of the tree view -->
-            <field name="model">library.member</field> <!-- Model associated with the view -->
+            <field name="name">library.member.tree</field> 
+            <field name="model">library.member</field>
             <field name="arch" type="xml">
                 <list>
-                    <field name="name"/> <!-- Member's name -->
-                    <field name="email"/> <!-- Member's email address -->
-                    <field name="phone"/> <!-- Member's phone number -->
+                    <field name="name"/>
+                    <field name="email"/> 
+                    <field name="phone"/> 
                 </list>
             </field>
         </record>
 
         <!-- Form View for Members -->
         <record id="view_library_member_form" model="ir.ui.view">
-            <field name="name">library.member.form</field> <!-- Name of the form view -->
-            <field name="model">library.member</field> <!-- Model associated with the view -->
+            <field name="name">library.member.form</field>
+            <field name="model">library.member</field> 
             <field name="arch" type="xml">
                 <form>
                     <sheet>
                         <group>
-                            <field name="name"/> <!-- Field for the member's name -->
-                            <field name="email"/> <!-- Field for the member's email address -->
-                            <field name="phone"/> <!-- Field for the member's phone number -->
-                            <field name="membership_date"/> <!-- Field for the member's membership date -->
+                            <field name="name"/>
+                            <field name="email"/> 
+                            <field name="phone"/>
+                            <field name="membership_date"/> 
                         </group>
                     </sheet>
                 </form>
@@ -41,9 +41,9 @@
 
         <!-- Action for Members -->
         <record id="action_library_member" model="ir.actions.act_window">
-            <field name="name">Members</field> <!-- Name of the action -->
-            <field name="res_model">library.member</field> <!-- Model associated with the action -->
-            <field name="view_mode">list,form</field> <!-- View modes available for this action -->
+            <field name="name">Members</field> 
+            <field name="res_model">library.member</field> 
+            <field name="view_mode">list,form</field> 
         </record>
     </data>
 </odoo>

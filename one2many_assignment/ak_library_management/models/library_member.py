@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from odoo import models, fields
 
 class Member(models.Model):
@@ -8,8 +9,8 @@ class Member(models.Model):
     _name = 'library.member'
     _description = 'Library Member Model'
 
-    name = fields.Char(string='Member Name', required=True)# name of member
-    email = fields.Char(string='Email ID')# email of member
-    phone = fields.Char(string='Contact Number')# phone number of member
-    membership_date = fields.Date(string='Membership Start Date')# membership date of member
-    book_id = fields.Many2one('library.book', string='Book Allocate')# show that book borrowed by member
+    name = fields.Char(string='Member Name', required=True)
+    email = fields.Char(string='Email ID')
+    phone = fields.Char(string='Contact Number')
+    membership_date = fields.Date(string='Membership Start Date')
+    book_id = fields.Many2one('library.book', string='Book Allocate')
