@@ -1,0 +1,40 @@
+<odoo>
+    <data>
+        <!-- Inherit the product.template form view -->
+        <record id="view_product_template_form_inherit_book_tab" model="ir.ui.view">
+            <field name="name">product.template.form.inherit.book.tab</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='inventory']" position="after">
+                    <page string="Book Details" name="book_details">
+                        <group>
+                            <group col="2">
+                                <field name="is_library_book"/>
+                                <field name="author" required="sale_ok == True"/>
+                                <field name="publisher" required="sale_ok == True"/>
+                                <field name="edition" required="sale_ok == True"/>
+                            </group>
+                            <group col="2">
+                                <field name="published_date" required="sale_ok == True"/>
+                                <field name="pages" required="sale_ok == True"/>
+                                <field name="available" required="sale_ok == True"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='published_date']" position="after">
+                    <field name="barcode" required="sale_ok == True" position="move"/>
+                </xpath>
+                <xpath expr="//field[@name='standard_price']" position="attributes">
+                    <attribute name="readonly">sale_ok == True</attribute>
+                </xpath>
+                <xpath expr="//header" position="inside">
+                    <button name="action_available" type="object" string="Available"/>
+                    <button name="action_borrow" type="object" string="Borrowed"/>
+                     <field name="status" widget="statusbar" statusbar_visible="available,borrowed,reserved"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

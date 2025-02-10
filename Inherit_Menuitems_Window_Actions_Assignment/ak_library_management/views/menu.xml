@@ -1,0 +1,82 @@
+<odoo>
+    <!-- menu for book view -->
+        <menuitem
+                id="library_menu_root"
+                name="Library Management"/>
+
+        <menuitem
+                id="menu_library_section"
+                name="Library"
+                sequence="1"
+                parent="library_menu_root"
+        />
+    <!-- menu for manage library -->
+        <menuitem
+                id="submenu_library_book_section"
+                name="Library"
+                action="action_library_store"
+                parent="menu_library_section"
+        />
+        <menuitem
+                id="submenu_library_book"
+                name="Books"
+                parent="menu_library_section"
+                sequence="2"
+                action="action_library_book"
+        />
+    <!-- menu for categories view-->
+        <menuitem
+                id="submenu_library_category"
+                name="Categories"
+                action="action_library_category"
+                parent="menu_library_section"
+        />
+    <!-- menu for member view -->
+        <menuitem
+                id="menu_library_member"
+                name="Members"
+                parent="library_menu_root"
+        />
+
+        <menuitem
+                id="submenu_library_member"
+                name="Members"
+                action="action_library_member"
+                parent="menu_library_member"
+        />
+
+   <!-- menu for product view -->
+        <menuitem
+                id="product_menu"
+                name="Products"
+                parent="library_menu_root"
+        />
+
+        <menuitem
+                id="submenu_product"
+                name="Product"
+                action="sale.product_template_action"
+                parent="product_menu"
+        />
+    <!-- here i have inherit a menu from sale
+         and change the sequence below to pricelist menu
+         and also chnage the name of menu -->
+
+        <menuitem
+                id="sale.menu_products"
+                name="Product Items"
+                action="product.product_normal_action_sell"
+                parent="sale.product_menu_catalog"
+                sequence="40"
+        />
+     <!-- here i have change the position of customer menu
+          from order to configuaration -->
+
+        <menuitem
+                id="sale.res_partner_menu"
+                name="Customers"
+                action="account.res_partner_action_customer"
+                parent="sale.menu_sale_config"
+                sequence="30"
+        />
+</odoo>

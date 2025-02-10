@@ -1,0 +1,45 @@
+<odoo>
+    <data>
+        <!--
+        This XML file defines the views and actions for the library category model.
+        It includes:
+        - A tree view for listing categories
+        - A form view for creating and editing categories
+        - An action to open the category views
+        -->
+
+        <!-- Tree View for Categories -->
+        <record id="view_library_category_tree" model="ir.ui.view">
+            <field name="name">library.category.list</field>
+            <field name="model">library.category</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Form View for Categories -->
+        <record id="view_library_category_form" model="ir.ui.view">
+            <field name="name">library.category.form</field>
+            <field name="model">library.category</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action for Categories -->
+        <record id="action_library_category" model="ir.actions.act_window">
+            <field name="name">Categories</field>
+            <field name="res_model">library.category</field>
+            <field name="view_mode">list,form</field>
+        </record>
+    </data>
+</odoo>
