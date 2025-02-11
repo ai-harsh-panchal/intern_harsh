@@ -2,7 +2,11 @@
 
 from odoo import models, fields, api
 
+
 class Member(models.Model):
+    """
+    this model is used for add the member for library
+    """
     _name = 'library.member'
     _description = 'Library Member Model'
 
