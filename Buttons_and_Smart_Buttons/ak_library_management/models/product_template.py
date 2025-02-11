@@ -2,6 +2,7 @@
 
 from odoo import models, fields
 
+
 class ProductTemplate(models.Model):
     """
     This model is inherit for add new field and customize the form view of product template
