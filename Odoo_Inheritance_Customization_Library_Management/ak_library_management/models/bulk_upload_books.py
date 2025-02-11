@@ -1,4 +1,7 @@
-from odoo import models, fields, api
+# -*- coding: utf-8 -*-
+
+from odoo import models, fields
+
 
 class BulkUploadBooks(models.TransientModel):
     """
