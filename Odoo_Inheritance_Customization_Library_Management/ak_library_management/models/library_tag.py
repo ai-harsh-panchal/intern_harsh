@@ -2,6 +2,7 @@
 
 from odoo import models, fields
 
+
 class Tag(models.Model):
     """
     Model representing a tag that can be associated with books.

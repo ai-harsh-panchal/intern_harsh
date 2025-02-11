@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields
+from odoo import models, fields, api
+
 
 class Member(models.Model):
     """
-    Model representing a Member details in the library.
+    this model is used for add the member for library
     """
     _name = 'library.member'
     _description = 'Library Member Model'
@@ -13,4 +14,4 @@ class Member(models.Model):
     email = fields.Char(string='Email ID')
     phone = fields.Char(string='Contact Number')
     membership_date = fields.Date(string='Membership Start Date')
-    book_id = fields.Many2one('library.book', string='Book Allocate')
+    book_id = fields.Many2many('library.book', string='Books')

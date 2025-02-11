@@ -6,6 +6,13 @@
             <field name="model">library.library</field>
             <field name="arch" type="xml">
                 <form string="Library">
+                    <header>
+                        <div name="button_box" position="inside">
+                            <button class="oe_stat_button" type="object" icon="fa-book" name="action_get_books_record">
+                                <field string="Borrowed Books" name="book_count" widget="statinfo"/>
+                            </button>
+                        </div>
+                    </header>
                     <sheet>
                         <group>
                             <field name="name"/>
@@ -15,7 +22,7 @@
                         </group>
                         <notebook>
                             <page string="Books">
-                                <field name="book_ids" options="{'create': False, 'create_edit': False}"/>
+                                <field name="book_id" options="{'create': False, 'create_edit': False}"/>
                             </page>
                         </notebook>
                     </sheet>

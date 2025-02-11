@@ -29,6 +29,11 @@
                 <xpath expr="//field[@name='standard_price']" position="attributes">
                     <attribute name="readonly">sale_ok == True</attribute>
                 </xpath>
+                <xpath expr="//header" position="inside">
+                    <button name="action_available" type="object" string="Available"/>
+                    <button name="action_borrow" type="object" string="Borrowed"/>
+                     <field name="status" widget="statusbar" statusbar_visible="available,borrowed,reserved"/>
+                </xpath>
             </field>
         </record>
     </data>

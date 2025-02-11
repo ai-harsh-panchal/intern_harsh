@@ -33,6 +33,7 @@
                             <field name="email"/>
                             <field name="phone"/>
                             <field name="membership_date"/>
+                            <field name="book_id"/>
                         </group>
                     </sheet>
                 </form>

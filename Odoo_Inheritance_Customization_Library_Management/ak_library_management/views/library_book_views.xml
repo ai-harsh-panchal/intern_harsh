@@ -36,7 +36,6 @@
                                     <field name="library_id"/>
                                     <field name="isbn"/>
                                     <field name="publication_date"/>
-                                    <field name="member_ids"/>
                                 </group>
                             </div>
                             <div class="col-6">

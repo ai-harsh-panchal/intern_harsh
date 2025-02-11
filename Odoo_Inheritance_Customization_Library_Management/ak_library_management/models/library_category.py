@@ -2,6 +2,7 @@
 
 from odoo import models, fields
 
+
 class Category(models.Model):
     """
     Model representing a category of books in the library.

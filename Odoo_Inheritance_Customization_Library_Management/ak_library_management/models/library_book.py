@@ -2,6 +2,7 @@
 
 from odoo import models, fields
 
+
 class Book(models.Model):
     """
     Model representing a book details in the library.
@@ -18,5 +19,3 @@ class Book(models.Model):
     description = fields.Text(string='Book Summary')
     tag_ids = fields.Many2many('library.tag', string='Tags', related='category_id.tag_ids',
                                readonly=False)
-    member_ids = fields.One2many('library.member', 'book_id',
-                                 string='Member Assign')
