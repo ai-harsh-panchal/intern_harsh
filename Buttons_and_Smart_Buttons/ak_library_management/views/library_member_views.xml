@@ -1,13 +1,5 @@
 <odoo>
     <data>
-        <!--
-        This XML file defines the views and actions for the library member model.
-        It includes:
-        - A tree view for listing members
-        - A form view for creating and editing member details
-        - An action to open the member views
-        -->
-
         <!-- Tree View for Members -->
         <record id="view_library_member_tree" model="ir.ui.view">
             <field name="name">library.member.tree</field>
@@ -33,7 +25,7 @@
                             <field name="email"/>
                             <field name="phone"/>
                             <field name="membership_date"/>
-                            <field name="book_id"/>
+                            <field name="book_ids"/>
                         </group>
                     </sheet>
                 </form>

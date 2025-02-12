@@ -14,4 +14,4 @@ class Member(models.Model):
     email = fields.Char(string='Email ID')
     phone = fields.Char(string='Contact Number')
     membership_date = fields.Date(string='Membership Start Date')
-    book_id = fields.Many2many('library.book', string='Books')
+    book_ids = fields.Many2many('library.book', string='Books')

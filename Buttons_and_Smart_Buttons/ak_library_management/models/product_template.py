@@ -20,27 +20,18 @@ class ProductTemplate(models.Model):
     status = fields.Selection([('available', 'Available'),
                                ('borrowed', 'Borrowed'),
                                ('reserved', 'Reserved')],
-                              string='Status', default='available')
+                              string='Status')
 
     def action_borrow(self):
         """
         this function is used to set the status borrowed
-        when book is available or status is available then we can borrowed the book
         """
-        for record in self:
-            if record.available and record.status == 'available':
-                record.status = 'borrowed'
-                record.available = False
-            else:
-                return record.status == 'reserved'
+        self.status = 'borrowed'
+        self.available = False
 
     def action_available(self):
         """
         this function is used to set the status back to available from borrowed
         """
-        for record in self:
-            if record.status == 'borrowed':
-                record.status = 'available'
-                record.available = True
-            else:
-                pass
+        self.status = 'available'
+        self.available = True
