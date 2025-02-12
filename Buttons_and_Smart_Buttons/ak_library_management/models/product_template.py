@@ -16,7 +16,7 @@ class ProductTemplate(models.Model):
     published_date = fields.Date(string='Published Date')
     pages = fields.Integer(string='Number of Pages')
     available = fields.Boolean(string='Available in Stock', default=True)
-    # barcode = fields.Char(string='ISBN Number', required=True)
+    barcode = fields.Char(string='ISBN Number', required=True)
     status = fields.Selection([('available', 'Available'),
                                ('borrowed', 'Borrowed'),
                                ('reserved', 'Reserved')],
