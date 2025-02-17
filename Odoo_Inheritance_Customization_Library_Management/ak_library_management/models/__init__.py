@@ -7,3 +7,5 @@ from . import library_category
 from . import library_tag
 from . import product_template
 from . import bulk_upload_books
+from . import res_user
+from . import sale_order

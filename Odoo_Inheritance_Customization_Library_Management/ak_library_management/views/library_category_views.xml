@@ -1,13 +1,5 @@
 <odoo>
     <data>
-        <!--
-        This XML file defines the views and actions for the library category model.
-        It includes:
-        - A tree view for listing categories
-        - A form view for creating and editing categories
-        - An action to open the category views
-        -->
-
         <!-- Tree View for Categories -->
         <record id="view_library_category_tree" model="ir.ui.view">
             <field name="name">library.category.list</field>

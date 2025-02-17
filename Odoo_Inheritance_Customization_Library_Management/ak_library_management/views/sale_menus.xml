@@ -10,7 +10,7 @@
                 parent="sale.product_menu_catalog"
                 sequence="40"
         />
-     <!-- here i have change the position of customer menu
+         <!-- here i have change the position of customer menu
           from order to configuaration -->
 
         <menuitem

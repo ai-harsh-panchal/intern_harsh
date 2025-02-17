@@ -10,6 +10,8 @@
     'website': 'https://www.aktivsoftware.com',
     'data': [
         'security/ir.model.access.csv',
+        'data/ir_sequence_product.xml',
+        'data/ir_sequence_member.xml',
         'views/library_book_views.xml',
         'views/library_category_views.xml',
         'views/library_member_views.xml',
@@ -18,6 +20,7 @@
         'views/sale_order_quotation_views.xml',
         'views/bulk_upload_book_views.xml',
         'views/library_menus.xml',
+        'views/sale_order_view_form.xml',
         'views/sale_menus.xml',
     ],
     'installable': True,
