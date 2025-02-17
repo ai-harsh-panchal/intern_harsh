@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+   <odoo>
+       <data>
+           <!-- this record is create a unique sequence for product -->
+           <record id="ir_sequence_library_member" model="ir.sequence">
+               <field name="name">Sequence no of member</field>
+               <field name="code">library.member</field>
+               <field name="prefix">MEM-%(year)s-%(month)s-</field>
+               <field name="padding">4</field>
+           </record>
+       </data>
+   </odoo>

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_library_book,name.library.book,model_library_book,base.group_user,1,1,1,1
+access_library_member,name.library.member,model_library_member,base.group_user,1,1,1,1
+access_library_tag,access_library_tag,model_library_tag,base.group_user,1,1,1,1
+access_library_category,access_library_category,model_library_category,base.group_user,1,1,1,1
+access_library_library,access_library_library,model_library_library,base.group_user,1,1,1,1
+ak_library_management.access_bulk_upload_books,access_bulk_upload_books,ak_library_management.model_bulk_upload_books,base.group_user,1,1,1,1
