@@ -1,0 +1,24 @@
+<odoo>
+    <data>
+        <!-- I have inherited a sale order view form -->
+        <record id="view_order_form_inherit_library" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit.library</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="action_approve" type="object" string="Approve"
+                            invisible="approval_required == False or state not in ('draft', 'cancel')"/>
+                    <button name="action_reject" type="object" string="Reject"
+                            invisible="approval_required == False or state not in ('draft', 'cancel')"/>
+                </xpath>
+                <xpath expr="//button[@name='action_cancel']" position="attributes">
+                    <attribute name="invisible">approval_required == True or state in ('draft', 'cancel')</attribute>
+                </xpath>
+                <xpath expr="(//button[@name='action_confirm'])[2]" position="attributes">
+                    <attribute name="invisible">approval_required == True or state in ('sale', 'cancel')</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

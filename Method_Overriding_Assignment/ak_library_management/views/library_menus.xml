@@ -1,0 +1,70 @@
+<odoo>
+    <!-- menu for book view -->
+        <menuitem
+                id="library_menu_root"
+                name="Library Management"/>
+
+        <menuitem
+                id="menu_library_section"
+                name="Library"
+                sequence="1"
+                parent="library_menu_root"
+        />
+    <!-- menu for manage library -->
+        <menuitem
+                id="submenu_library_book_section"
+                name="Library"
+                action="action_library_store"
+                parent="menu_library_section"
+        />
+        <menuitem
+                id="submenu_library_book"
+                name="Books"
+                parent="menu_library_section"
+                sequence="2"
+                action="action_library_book"
+        />
+    <!-- menu for categories view-->
+        <menuitem
+                id="submenu_library_category"
+                name="Categories"
+                action="action_library_category"
+                parent="menu_library_section"
+        />
+    <!-- menu for member view -->
+        <menuitem
+                id="menu_library_member"
+                name="Members"
+                parent="library_menu_root"
+        />
+
+        <menuitem
+                id="submenu_library_member"
+                name="Members"
+                action="action_library_member"
+                parent="menu_library_member"
+        />
+
+   <!-- menu for product view -->
+        <menuitem
+                id="product_menu"
+                name="Products"
+                parent="library_menu_root"
+        />
+
+        <menuitem
+                id="submenu_product"
+                name="Product"
+                action="sale.product_template_action"
+                parent="product_menu"
+        />
+
+    <!-- this menu is for bulk upload book -->
+        <menuitem
+                id="menu_bulk_upload_book"
+                name="Bulk Upload Book"
+                action="action_bulk_upload_books"
+                sequence="10"
+                parent="library_menu_root"
+        />
+</odoo>
