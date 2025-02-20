@@ -24,4 +24,4 @@ class Member(models.Model):
         """
         for vals in vals_list:
             vals['membership_no'] = self.env['ir.sequence'].next_by_code('library.member')
-        return super(Member, self).create(vals)
+        return super(Member, self).create(vals_list)

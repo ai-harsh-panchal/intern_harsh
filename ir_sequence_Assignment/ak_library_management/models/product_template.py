@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from sqlite3.dbapi2 import apilevel
 
 from odoo import models, fields,api
 
@@ -43,4 +42,4 @@ class ProductTemplate(models.Model):
         """
         for vals in vals_list:
             vals['default_code'] = self.env['ir.sequence'].next_by_code('product.template')
-        return super(ProductTemplate, self).create(vals)
+        return super(ProductTemplate, self).create(vals_list)

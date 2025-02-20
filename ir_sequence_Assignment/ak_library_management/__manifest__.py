@@ -23,7 +23,6 @@
         'views/res_user_form_view.xml',
         'views/sale_order_view_wizard.xml',
         'views/res_partner_form_view.xml',
-        'views/borrow_transaction_history_view.xml',
         'views/sale_menus.xml',
     ],
     'installable': True,
