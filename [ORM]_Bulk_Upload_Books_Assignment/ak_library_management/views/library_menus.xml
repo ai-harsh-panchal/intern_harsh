@@ -67,4 +67,18 @@
                 sequence="10"
                 parent="library_menu_root"
         />
+     <!-- Borrow transaction history menu-->
+        <menuitem
+                id="menu_borrow_transaction_history"
+                name="Borrow Transactions History"
+                sequence="15"
+                parent="library_menu_root"
+        />
+     <!-- sub menu for borrow transaction history -->
+        <menuitem
+            id="submenu_borrow_transaction"
+            name="Borrow Transaction"
+            action="action_borrow_transaction_history"
+            parent="menu_borrow_transaction_history"
+        />
 </odoo>

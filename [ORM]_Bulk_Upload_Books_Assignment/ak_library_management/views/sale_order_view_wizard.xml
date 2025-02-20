@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <!-- this is sale order wizard popup message -->
+        <record id="view_sale_order_wizard" model="ir.ui.view">
+            <field name="name">sale.order.wizard.form</field>
+            <field name="model">sale.order.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Approval Required">
+                    <group>
+                        <field name="message" readonly="1"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

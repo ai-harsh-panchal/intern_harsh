@@ -5,3 +5,5 @@ access_library_tag,access_library_tag,model_library_tag,base.group_user,1,1,1,1
 access_library_category,access_library_category,model_library_category,base.group_user,1,1,1,1
 access_library_library,access_library_library,model_library_library,base.group_user,1,1,1,1
 ak_library_management.access_bulk_upload_books,access_bulk_upload_books,ak_library_management.model_bulk_upload_books,base.group_user,1,1,1,1
+ak_library_management.access_sale_order_wizard,access_sale_order_wizard,ak_library_management.model_sale_order_wizard,base.group_user,1,1,1,1
+ak_library_management.access_borrow_transaction_history,access_borrow_transaction_history,ak_library_management.model_borrow_transaction_history,base.group_user,1,1,1,1

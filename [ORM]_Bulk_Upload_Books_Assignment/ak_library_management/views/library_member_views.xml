@@ -21,6 +21,7 @@
                 <form>
                     <sheet>
                         <group>
+                            <h1><field name="membership_no"/></h1>
                             <field name="name"/>
                             <field name="email"/>
                             <field name="phone"/>

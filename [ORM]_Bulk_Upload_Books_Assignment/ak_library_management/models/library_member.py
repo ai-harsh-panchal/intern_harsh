@@ -15,3 +15,13 @@ class Member(models.Model):
     phone = fields.Char(string='Contact Number')
     membership_date = fields.Date(string='Membership Start Date')
     book_ids = fields.Many2many('library.book', string='Books')
+    membership_no = fields.Char(string='membership_no', readonly=True)
+
+    @api.model_create_multi
+    def create(self,vals_list):
+        """
+        this method is used to generate unique sequence for member record
+        """
+        for vals in vals_list:
+            vals['membership_no'] = self.env['ir.sequence'].next_by_code('library.member')
+        return super(Member, self).create(vals)

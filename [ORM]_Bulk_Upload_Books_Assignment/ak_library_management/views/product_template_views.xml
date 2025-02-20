@@ -11,24 +11,27 @@
                         <group>
                             <group col="2">
                                 <field name="is_library_book"/>
-                                <field name="author" required="sale_ok == True"/>
-                                <field name="publisher" required="sale_ok == True"/>
-                                <field name="edition" required="sale_ok == True"/>
+                                <field name="author" required="sale_ok"/>
+                                <field name="publisher" required="sale_ok"/>
+                                <field name="edition" required="sale_ok"/>
                             </group>
                             <group col="2">
-                                <field name="published_date" required="sale_ok == True"/>
-                                <field name="pages" required="sale_ok == True"/>
-                                <field name="available" required="sale_ok == True"/>
+                                <field name="published_date" required="sale_ok"/>
+                                <field name="pages" required="sale_ok"/>
+                                <field name="available" required="sale_ok"/>
                                 <field name="status"/>
                             </group>
                         </group>
                     </page>
                 </xpath>
+                <xpath expr="//field[@name='barcode']" position="attributes">
+                    <attribute name="string">isbn number</attribute>
+                </xpath>
                 <xpath expr="//field[@name='published_date']" position="after">
-                    <field name="barcode" required="sale_ok == True" position="move"/>
+                    <field name="barcode" position="move"/>
                 </xpath>
                 <xpath expr="//field[@name='standard_price']" position="attributes">
-                    <attribute name="readonly">sale_ok == True</attribute>
+                    <attribute name="readonly">sale_ok</attribute>
                 </xpath>
                 <xpath expr="//header" position="inside">
                     <button name="action_borrow" type="object" string="Borrowed" invisible="status != 'available'"/>
