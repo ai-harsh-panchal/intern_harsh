@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
+from sqlite3.dbapi2 import apilevel
 
-from odoo import models, fields
+from odoo import models, fields,api
 
 
 class ProductTemplate(models.Model):
@@ -9,14 +10,13 @@ class ProductTemplate(models.Model):
     """
     _inherit = 'product.template'
 
-    is_library_book = fields.Boolean(string='Is Library Book', default=False)
+    is_library_book = fields.Boolean(string='Is Library Book')
     author = fields.Char(string='Author Name')
     publisher = fields.Char(string='Publisher Name')
     edition = fields.Char(string='Edition')
     published_date = fields.Date(string='Published Date')
     pages = fields.Integer(string='Number of Pages')
-    available = fields.Boolean(string='Available in Stock', default=True)
-    barcode = fields.Char(string='ISBN Number', required=True)
+    available = fields.Boolean(string='Available in Stock')
     status = fields.Selection([('available', 'Available'),
                                ('borrowed', 'Borrowed'),
                                ('reserved', 'Reserved')],
@@ -36,9 +36,11 @@ class ProductTemplate(models.Model):
         self.status = 'available'
         self.available = True
 
-    def create(self,vals):
+    @api.model_create_multi
+    def create(self,vals_list):
         """
         this function is used for create a unique sequence in refernce field of product
         """
-        vals['default_code'] = self.env['ir.sequence'].next_by_code('product.template')
+        for vals in vals_list:
+            vals['default_code'] = self.env['ir.sequence'].next_by_code('product.template')
         return super(ProductTemplate, self).create(vals)
