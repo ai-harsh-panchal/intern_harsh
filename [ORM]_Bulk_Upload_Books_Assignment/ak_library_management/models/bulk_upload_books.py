@@ -13,7 +13,7 @@ class BulkUploadBooks(models.TransientModel):
 
     book_names = fields.Text(string='Book Names')
     author_id = fields.Many2one('res.partner', string='Author', required=True)
-    product_create = fields.Boolean(string='Create Products', default=False)
+    product_create = fields.Boolean(string='Create Products')
     book_count = fields.Integer(compute="compute_count_book")
 
     def create_product(self):
@@ -22,14 +22,9 @@ class BulkUploadBooks(models.TransientModel):
         check the if duplicate record value get then it will not create the record
         """
         book_names = self.book_names.split(',')
-        print(f'book name---- split-- {book_names}')
-
         for book_name in book_names:
             book_name = book_name.strip()
-            print(f'book name----strip-- {book_names}')
-
             existing_product = self.env['product.template'].search([('name', '=', book_name)], limit=1)
-
             if existing_product:
                 continue
             else:
@@ -41,43 +36,36 @@ class BulkUploadBooks(models.TransientModel):
 
     def revert_changes(self):
         """
-        this function is used to revert the changes in which if we create a record and
-        want to do delete it record then we i call this function
+        Reverts changes by deleting records of books based on their names.
         """
-        for book in self.env['product.template'].search([('name', '=', self.book_names.split(','))]):
-            book.unlink()
+        domain = [('name', 'in', self.book_names.split(','))]
+        self.env['product.template'].search(domain).unlink()
         self.product_create = False
 
     def compute_count_book(self):
         """
-        this function is just count the book for smart button only
+        Computes the count of books for the smart button.
         """
-        self.book_count = 0
-        book_names_list = self.book_names.split(',')
-        for book in book_names_list:
-            book = book.strip()
-            self.book_count += self.env['product.template'].search_count([('name', '=', book)])
+        book_names_list = [name.strip() for name in self.book_names.split(',')]
+        domain = [('name', 'in', book_names_list)]
+        self.book_count = self.env['product.template'].search_count(domain)
 
     def action_book_list(self):
         """
-        This function is used to open a form view when record is 1
-         if records are multiple records then open list view
+        This function is used to open a form view when there is one record.
+        If there are multiple records, it opens a list view.
         """
-        book_records = self.env['product.template'].search([('name', 'in', self.book_names.split(','))])
-        if len(book_records) == 1:
-            return {
-                'type': 'ir.actions.act_window',
-                'name': 'Book Detail',
-                'res_model': 'product.template',
-                'res_id': book_records.id,
-                'view_mode': 'form',
-            }
-        else:
-            return {
-                'type': 'ir.actions.act_window',
-                'name': 'Bulk Book Uploaded',
-                'view_mode': 'list',
-                'res_model': 'product.template',
-                'domain': [('name', 'in', self.book_names.split(','))],
-                'context': {'create': False}
-            }
+        domain = [('name', 'in', self.book_names.split(','))]
+        book_records = self.env['product.template'].search(domain)
+
+        action = {
+            'name': 'Bulk Book Uploaded' if len(book_records) > 1 else 'Book Detail',
+            'type': 'ir.actions.act_window',
+            'res_model': 'product.template',
+            'view_mode': 'list,form' if len(book_records) > 1 else 'form',
+            'domain': domain if len(book_records) > 1 else [],
+            'res_id': book_records[0].id if len(book_records) == 1 else None,
+            'context': {'create': False} if len(book_records) > 1 else {},
+        }
+        return action
+
