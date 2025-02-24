@@ -34,6 +34,7 @@
                     <attribute name="readonly">sale_ok</attribute>
                 </xpath>
                 <xpath expr="//header" position="inside">
+                    <button name="borrowed_books" type="object" string="Borrowed Books"/>
                     <button name="action_borrow" type="object" string="Borrowed" invisible="status != 'available'"/>
                     <button name="action_available" type="object" string="Available" invisible="status != 'borrowed'"/>
                     <field name="status" widget="statusbar" statusbar_visible="available,borrowed,reserved"/>

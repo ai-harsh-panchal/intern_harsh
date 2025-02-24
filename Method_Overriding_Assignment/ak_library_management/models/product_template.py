@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields
+from odoo import models, fields,api
 
 
 class ProductTemplate(models.Model):
@@ -19,7 +19,14 @@ class ProductTemplate(models.Model):
     status = fields.Selection([('available', 'Available'),
                                ('borrowed', 'Borrowed'),
                                ('reserved', 'Reserved')],
-                              string='Status')
+                              string='Status',
+                              default='')
+
+    @api.depends('author')
+    def _compute_display_name(self):
+        for record in self:
+            author_name = record.author if record.author else "Unknown Author"
+            record.display_name = f"{author_name}-{record.name}"
 
     def action_borrow(self):
         """
@@ -35,9 +42,21 @@ class ProductTemplate(models.Model):
         self.status = 'available'
         self.available = True
 
-    def create(self,vals):
+    @api.model_create_multi
+    def create(self,vals_list):
         """
         this function is used for create a unique sequence in refernce field of product
         """
-        vals['default_code'] = self.env['ir.sequence'].next_by_code('product.template')
-        return super(ProductTemplate, self).create(vals)
+        for vals in vals_list:
+            vals['default_code'] = self.env['ir.sequence'].next_by_code('product.template')
+        return super(ProductTemplate, self).create(vals_list)
+
+    def borrowed_books(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Borrowed Books',
+            'res_model': 'borrow.transaction.history',
+            'view_mode': 'form',
+            'view_type': 'form',
+            'target': 'new',
+        }

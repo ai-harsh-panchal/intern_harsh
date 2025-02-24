@@ -2,6 +2,13 @@
    <odoo>
        <data>
            <!-- this record is create a unique sequence for product -->
+           <record id="ir_sequence_product_template" model="ir.sequence">
+               <field name="name">Book Reference Numbers</field>
+               <field name="code">product.template</field>
+               <field name="prefix">BOOK-%(year)s-</field>
+               <field name="padding">4</field>
+           </record>
+           <!-- this record is create ir sequence for member model -->
            <record id="ir_sequence_library_member" model="ir.sequence">
                <field name="name">Sequence no of member</field>
                <field name="code">library.member</field>
