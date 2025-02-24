@@ -1,5 +1,7 @@
 # Changelog
 
+
+#update:
 Sale Order: Optimize action_confirm, reject function and merge sale order XML files
 
 - Optimized the `action_confirm` method to enhance performance and readability:
@@ -8,6 +10,7 @@ Sale Order: Optimize action_confirm, reject function and merge sale order XML fi
 
 - Merged multiple Sale Order XML files into a single file for better maintainability:
   - Combined related view customizations, menu, and action definitions.
+
 
 
 
