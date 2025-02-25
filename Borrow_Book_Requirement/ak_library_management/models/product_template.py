@@ -18,6 +18,7 @@ class ProductTemplate(models.Model):
     available = fields.Boolean(string='Available in Stock')
     status = fields.Selection([('available', 'Available'),
                                ('borrowed', 'Borrowed'),
+                               ('unavailable', 'Unavailable'),
                                ('reserved', 'Reserved')],
                               string='Status',
                               default='')
@@ -41,20 +42,6 @@ class ProductTemplate(models.Model):
         if name:
             args += [('author', operator, name)]
         return super().name_search(args=args, limit=limit)
-
-    def action_borrow(self):
-        """
-        this function is used to set the status borrowed
-        """
-        self.status = 'borrowed'
-        self.available = False
-
-    def action_available(self):
-        """
-        this function is used to set the status back to available from borrowed
-        """
-        self.status = 'available'
-        self.available = True
 
     @api.model_create_multi
     def create(self,vals_list):

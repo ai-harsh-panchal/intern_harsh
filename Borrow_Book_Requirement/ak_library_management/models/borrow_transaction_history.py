@@ -48,14 +48,6 @@ class BorrowTransactionHistory(models.Model):
         """
         this function create the record & check the all condition as per given
         """
-        # condition check that new customer try to borrow the book
-        new = self.search_count([('customer_id', '=', self.customer_id.id)])
-        if new <= 1:
-            return self._get_wizard_popup(
-                title='New Customer',
-                message="Are you sure you want to allow borrowing more than 5 books for this customer?"
-            )
-
         # Condition: Customer is not trustworthy
         if self.customer_id.not_trust_worthy:
             return self._get_wizard_popup(
@@ -71,24 +63,28 @@ class BorrowTransactionHistory(models.Model):
                 message=f"The book '{out_of_stock_books[0].name}' is out of stock. Do you want to proceed?"
             )
 
-        # condition check the borrow transaction of particular customer if more then 0 then show popup msg
-        customer_transactions = self.env['borrow.transaction.history'].search(
-            [('customer_id', '=', self.customer_id.id)])
-        total_borrowed_books = sum(len(transaction.books_ids) for transaction in customer_transactions)
-        if total_borrowed_books > 0:
-            borrowed_book_names = ', '.join(
-                book.name for transaction in customer_transactions for book in transaction.books_ids
-            )
+        if len(self.books_ids) >= 5:
+            # Check for existing open borrow transactions
+            open_borrow_transactions = self.env['borrow.transaction.history'].search([
+                ('customer_id', '=', self.customer_id.id),
+            ])
+
+            if open_borrow_transactions:
+                # Case A: Existing customer with open borrow transactions
+                open_books_count = sum(len(transaction.books_ids) for transaction in open_borrow_transactions)
+                return self._get_wizard_popup(
+                    title='Warning',
+                    message=f"Customer already has {len(open_borrow_transactions)} open borrow transactions with {open_books_count} books. Are you sure you want to borrow more books?"
+                )
+        else:
+            # Case C: New or existing customer borrowing fewer than 5 books
             return self._get_wizard_popup(
-                title='Total Borrowed Books',
-                message=f"This customer has borrowed a total of {total_borrowed_books} books: {borrowed_book_names}. Are you sure you want them to borrow more?"
+                title='Information',
+                message="Borrowing fewer than 5 books is allowed. Do you want to borrow these books?"
             )
 
-        # create record
-        borrowing_record = self.create({
-            'customer_id': self.customer_id.id,
-            'borrow_start_date': self.borrow_start_date,
-            'borrow_end_date': self.borrow_end_date,
-            'books_ids': [(6, 0, self.books_ids.ids)],
-            'deposit_amount': self.deposit_amount,
-        })
+        # case c Decrease Stock for Each Book in the Borrow Process
+        for book in self.books_ids:
+            if book.qty_available <= 0:
+                raise ValueError(f"The book '{book.name}' is out of stock.")
+            book.qty_available -= 1
