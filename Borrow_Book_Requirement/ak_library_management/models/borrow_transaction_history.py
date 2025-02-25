@@ -76,12 +76,12 @@ class BorrowTransactionHistory(models.Model):
                     title='Warning',
                     message=f"Customer already has {len(open_borrow_transactions)} open borrow transactions with {open_books_count} books. Are you sure you want to borrow more books?"
                 )
-        else:
+            else:
             # Case C: New or existing customer borrowing fewer than 5 books
-            return self._get_wizard_popup(
-                title='Information',
-                message="Borrowing fewer than 5 books is allowed. Do you want to borrow these books?"
-            )
+                return self._get_wizard_popup(
+                    title='Information',
+                    message="Borrowing fewer than 5 books is allowed. Do you want to borrow these books?"
+                )
 
         # case c Decrease Stock for Each Book in the Borrow Process
         for book in self.books_ids:
