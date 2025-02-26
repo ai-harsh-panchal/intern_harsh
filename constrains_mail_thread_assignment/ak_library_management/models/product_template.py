@@ -23,8 +23,7 @@ class ProductTemplate(models.Model):
                                ('unavailable', 'Unavailable'),
                                ('return', 'Return')],
                               string='Status',
-                              tracking=True,
-                              default='')
+                              tracking=True,)
 
 
     @api.constrains('unavailable')
@@ -116,7 +115,7 @@ class ProductTemplate(models.Model):
             'target': 'new',
         }
 
-    @api.onchange('status')
+    @api.constrains('status')
     def action_update_status(self):
         """
         This method sends a notification to the user whenever the status of the book is updated.
