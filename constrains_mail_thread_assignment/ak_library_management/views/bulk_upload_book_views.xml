@@ -1,0 +1,47 @@
+<odoo>
+    <data>
+        <!-- this is list view of bulk upload book model -->
+        <record id="bulk_upload_books_list" model="ir.ui.view">
+            <field name="name">bulk.upload.books.list</field>
+            <field name="model">bulk.upload.books</field>
+            <field name="arch" type="xml">
+                <list string="Bulk Upload Books">
+                    <field name="book_names" />
+                    <field name="author_id" />
+                </list>
+            </field>
+        </record>
+
+        <!-- this is form view of bulk upload book model -->
+        <record id="view_bulk_upload_books_form" model="ir.ui.view">
+            <field name="name">bulk.upload.books.form</field>
+            <field name="model">bulk.upload.books</field>
+            <field name="arch" type="xml">
+                <form string="Bulk Upload Books">
+                    <header>
+                        <button name="revert_changes" type="object" string="Revert Changes" class="oe_highlight" invisible="product_create == False"/>
+                        <button name="create_product" type="object" string="Create Product" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <div name="button_box">
+                            <button class="oe_stat_button" type="object" icon="fa-book" name="action_book_list" invisible="product_create == False">
+                                <field string="Books Created" name="book_count" widget="statinfo"/>
+                            </button>
+                        </div>
+                    <group>
+                        <field name="book_names" widget="text"/>
+                        <field name="author_id" />
+                    </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action to open the bulk book upload list and form view -->
+        <record id="action_bulk_upload_books" model="ir.actions.act_window">
+            <field name="name">Bulk Upload Books</field>
+            <field name="res_model">bulk.upload.books</field>
+            <field name="view_mode">list,form</field>
+        </record>
+    </data>
+</odoo>

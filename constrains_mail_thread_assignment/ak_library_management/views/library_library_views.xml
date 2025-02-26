@@ -1,0 +1,38 @@
+<odoo>
+    <data>
+        <!-- Form view for the Library model -->
+        <record id="view_library_form" model="ir.ui.view">
+            <field name="name">library.library.form</field>
+            <field name="model">library.library</field>
+            <field name="arch" type="xml">
+                <form string="Library">
+                    <sheet>
+                        <div name="button_box">
+                            <button class="oe_stat_button" type="object" icon="fa-book" name="action_get_books_record">
+                                <field string="Borrowed Books" name="book_count" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <group>
+                            <field name="name"/>
+                            <field name="location"/>
+                            <field name="capacity"/>
+                            <field name="notes"/>
+                        </group>
+                        <notebook>
+                            <page string="Books">
+                                <field name="book_ids" options="{'create' : False}"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action to open the Library form -->
+        <record id="action_library_store" model="ir.actions.act_window">
+            <field name="name">Libraries</field>
+            <field name="res_model">library.library</field>
+            <field name="view_mode">list,form</field>
+        </record>
+    </data>
+</odoo>
