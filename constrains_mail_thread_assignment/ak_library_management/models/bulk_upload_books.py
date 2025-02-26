@@ -32,6 +32,11 @@ class BulkUploadBooks(models.TransientModel):
                 'name': book_name,
                 'author': self.author_id.name
             })
+            self.env['bus.bus']._sendone(
+                self.env.user.partner_id, 'simple_notification', {
+                    'type': 'success',
+                    'message': f"{book_name} is created.",
+                })
         self.product_create = True
 
     def revert_changes(self):

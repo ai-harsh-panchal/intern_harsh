@@ -22,6 +22,7 @@ class Library(models.Model):
     capacity = fields.Integer(string='Capacity')
     notes = fields.Text(string='Notes')
     book_count = fields.Integer(compute='compute_book_count')
+    librarian_id = fields.Many2one('res.partner',string='Librarian')
 
     @api.depends('book_ids')
     def compute_book_count(self):
