@@ -17,6 +17,7 @@
                             <field name="location"/>
                             <field name="capacity"/>
                             <field name="notes"/>
+                            <field name="librarian_id"/>
                         </group>
                         <notebook>
                             <page string="Books">

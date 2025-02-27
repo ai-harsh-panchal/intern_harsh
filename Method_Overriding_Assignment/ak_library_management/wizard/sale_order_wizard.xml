@@ -1,6 +1,6 @@
 <odoo>
     <data>
-        <!-- this is sale order wizard popup message -->
+       <!-- this record is use tp show wizard popup for approval -->
         <record id="view_sale_order_wizard" model="ir.ui.view">
             <field name="name">sale.order.wizard.form</field>
             <field name="model">sale.order.wizard</field>

@@ -74,7 +74,6 @@
                 sequence="15"
                 parent="library_menu_root"
         />
-     <!-- sub menu for borrow transaction history -->
         <menuitem
             id="submenu_borrow_transaction"
             name="Borrow Transaction"

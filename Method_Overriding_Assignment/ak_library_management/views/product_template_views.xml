@@ -34,10 +34,11 @@
                     <attribute name="readonly">sale_ok</attribute>
                 </xpath>
                 <xpath expr="//header" position="inside">
-                    <button name="borrowed_books" type="object" string="Borrowed Books"/>
-                    <button name="action_borrow" type="object" string="Borrowed" invisible="status != 'available'"/>
-                    <button name="action_available" type="object" string="Available" invisible="status != 'borrowed'"/>
-                    <field name="status" widget="statusbar" statusbar_visible="available,borrowed,reserved"/>
+                    <button name="action_borrow" type="object" string="Mark as Borrowed" invisible="status in ('return','borrowed')"/>
+                    <button name="action_available" type="object" string="Mark as Available" invisible="status != 'borrowed'"/>
+                    <button name="action_return" type="object" string="Return Book" invisible="status != 'unavailable'"/>
+                    <button name="borrowed_books" type="object" string="Borrowed Books" invisible="status in ('borrowed','unavailable')"/>
+                    <field name="status" widget="statusbar" statusbar_visible="available,borrowed,return,unavailable"/>
                 </xpath>
             </field>
         </record>
