@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields,api
-from datetime import datetime
+from datetime import datetime,timedelta
 from odoo.models import ValidationError
 
 
@@ -97,3 +97,22 @@ class BorrowTransactionHistory(models.Model):
         for rec in self.books_ids:
             if rec.qty_available:
                 rec.qty_available -= 1
+
+    @api.depends('borrow_end_date')
+    def cron_check_due_date(self):
+        """
+        this function is used for check the due date
+        parameter: self
+        return: None
+        """
+        for record in self:
+            if record.borrow_end_date - fields.Datetime.now() <= timedelta(days=2):
+                message = f"Reminder message for book '{record.name}' due on {record.borrow_end_date}"
+                self.env['bus.bus']._sendone(
+                    self.env.user.partner_id,
+                    'simple_notification',
+                    {'title': 'Library Update', 'message': message, 'type': 'success', 'sticky': True}
+                )
+                return message
+            else:
+                return None

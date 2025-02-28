@@ -135,7 +135,7 @@ class ProductTemplate(models.Model):
         }
 
 
-    @api.constrains('status')
+    # @api.constrains('status')
     def action_update_status(self):
         """
         This method sends a notification to the user whenever the status of the book is updated.
