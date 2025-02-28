@@ -1,20 +1,32 @@
 # Changelog
 
-# update on 27-02-2025
+## [18.0.0.0.0] - 2025-02-28
 
-# Sale Order.py file
-- Optimized action_confirm() to handle multiple records
-- Improved approval workflow for batch processing
-- Enhanced validation messages for low stock products
-- Added bulk processing for approve/reject actions
-- Implemented write() method for efficient multiple record updates
+### Added
+- Added comprehensive docstrings at model and function levels with return types and parameters
+- Implemented user-friendly error messages and validation prompts
 
-# Bulk Book Upload.py file
-- Optimized book creation with list comprehension
-- Added bulk database operations for better performance
-- Enhanced notification system for multiple book creation
-- Improved duplicate checking mechanism
-- Added validation for empty book names
-- Optimized book count computation
-- Enhanced revert changes functionality for multiple records
+
+### Changed
+- Optimized sale_order.py code for better performance
+- Refactored bulk_book.py with code optimization
+- Updated model inheritance patterns to follow Odoo standards (TransientModel, AbstractModel, Model)
+- Improved method handling for multi-record operations instead of self
+
+### Technical
+- Added type param and return value in function doc string
+- Enhanced model-level doc string
+- Standardized model inheritance declarations
+- Version management in manifest file updated to 18.0.0.0.0
+
+### Fixed
+- Resolved single-record method issues for multi-record scenarios
+- Enhanced error handling and user feedback
+- Improved input validation across the module
+
+### Code Quality
+- Added comprehensive docstrings following Python standards
+- Implemented proper model inheritance patterns
+- Optimized code structure for better maintainability
+
 
