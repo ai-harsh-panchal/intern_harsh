@@ -29,6 +29,8 @@ class Library(models.Model):
         """
         this function is counting the number of books
         which are borrowed
+        parameter: self
+        return: None
         """
         for rec in self:
             borrowed_books = rec.book_ids.filtered(lambda book: book.status == 'borrowed')
@@ -39,6 +41,9 @@ class Library(models.Model):
         """
         this function perfrom action when i click on button it display the
         list in which it contain only borrowed book
+        parameter: self
+        return: Dictionary open list of values
+        return type: dict
         """
         return {
             'type': 'ir.actions.act_window',

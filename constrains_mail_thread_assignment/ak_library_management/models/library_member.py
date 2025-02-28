@@ -21,6 +21,9 @@ class Member(models.Model):
     def create(self,vals_list):
         """
         this method is used to generate unique sequence for member record
+        parameter: self
+        return: base create orm method
+        return type: recordset
         """
         for vals in vals_list:
             vals['membership_no'] = self.env['ir.sequence'].next_by_code('library.member')

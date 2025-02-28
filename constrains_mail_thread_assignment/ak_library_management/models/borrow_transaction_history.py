@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields,api
-from datetime import datetime
+from datetime import datetime,timedelta
 from odoo.models import ValidationError
 
 
 class BorrowTransactionHistory(models.Model):
     """
-    this model is show the details about customer borrow transaction history
+    Manages and tracks library book borrowing transactions.
+    This model maintains detailed records of book borrowing activities including
+    customer information, borrowed books, transaction dates, and deposit details.
     """
     _name = 'borrow.transaction.history'
     _description = 'Borrow Transaction History'
@@ -24,6 +26,8 @@ class BorrowTransactionHistory(models.Model):
     def check_dates(self):
         """
         this function check that end date is not less then start date
+        parameter: self
+        return: None
         """
         for record in self:
             if record.borrow_start_date > record.borrow_end_date:
@@ -32,6 +36,9 @@ class BorrowTransactionHistory(models.Model):
     def _get_wizard_popup(self, title, message):
         """
         this function is used for display the wizard popup message
+        parameter: self
+        return: Dictionary action open form view
+        return type: dict
         """
         return {
             'name': title,
@@ -47,6 +54,9 @@ class BorrowTransactionHistory(models.Model):
     def action_borrow_books(self):
         """
         this function create the record & check the all condition as per given
+        parameter: self
+        return: _get_wizard_popup method
+        return type: dict
         """
         # Condition: Customer is not trustworthy
         if self.customer_id.not_trust_worthy:
@@ -87,3 +97,22 @@ class BorrowTransactionHistory(models.Model):
         for rec in self.books_ids:
             if rec.qty_available:
                 rec.qty_available -= 1
+
+    @api.depends('borrow_end_date')
+    def cron_check_due_date(self):
+        """
+        this function is used for check the due date
+        parameter: self
+        return: None
+        """
+        for record in self:
+            if record.borrow_end_date - fields.Datetime.now() <= timedelta(days=2):
+                message = f"Reminder message for book '{record.name}' due on {record.borrow_end_date}"
+                self.env['bus.bus']._sendone(
+                    self.env.user.partner_id,
+                    'simple_notification',
+                    {'title': 'Library Update', 'message': message, 'type': 'success', 'sticky': True}
+                )
+                return message
+            else:
+                return None

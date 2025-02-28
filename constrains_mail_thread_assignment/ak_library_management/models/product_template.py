@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from pyasn1_modules.rfc5280 import anotherNameMap
 
 from odoo import models, fields,api
 from odoo.exceptions import ValidationError
@@ -23,14 +24,16 @@ class ProductTemplate(models.Model):
                                ('unavailable', 'Unavailable'),
                                ('return', 'Return')],
                               string='Status',
-                              tracking=True,)
-
+                              tracking=True,
+                              default='available')
 
     @api.constrains('unavailable')
     def action_borrow(self):
         """
         This function is an action to set the status to 'borrowed' and mark the book as unavailable.
         It validates that the book is not 'unavailable' before proceeding.
+        parameter: self
+        return: None
         """
         for record in self:
             if record.status == 'unavailable':
@@ -52,6 +55,8 @@ class ProductTemplate(models.Model):
     def action_available(self):
         """
         This function is used to set the status back to available from borrowed.
+        parameter: self
+        return: None
         """
         self.status = 'available'
         self.available = True
@@ -61,6 +66,8 @@ class ProductTemplate(models.Model):
         """
         This function marks the book as returned, updates the status to 'return',
         and creates a log note (not a chatter notification).
+        parameter: self
+        return: None
         """
         for record in self:
             record.status = 'return'
@@ -76,6 +83,8 @@ class ProductTemplate(models.Model):
     def _compute_display_name(self):
         """
         this function is used for display name in dropdown particular format
+        parameter: self
+        return: None
         """
         for record in self:
             author_name = record.author if record.author else "Unknown Author"
@@ -86,16 +95,23 @@ class ProductTemplate(models.Model):
         """
         override name_search method to search book by author name.
         param: name, args, operator, limit
+        parameter: self
+        return: Base name search method
+        return type: List of tuple
         """
         args = list(args or [])
         if name:
             args += [('author', operator, name)]
         return super().name_search(args=args, limit=limit)
 
+
     @api.model_create_multi
     def create(self,vals_list):
         """
         this function is used for create a unique sequence in refernce field of product
+        parameter: self
+        return: Base create orm method
+        return type: recordset
         """
         for vals in vals_list:
             vals['default_code'] = self.env['ir.sequence'].next_by_code('product.template')
@@ -105,6 +121,9 @@ class ProductTemplate(models.Model):
     def borrowed_books(self):
         """
         this function open the borrow transaction wizard model form view
+        parameter: self
+        return: dictionary of action open form
+        return type: dict
         """
         return {
             'type': 'ir.actions.act_window',
@@ -119,6 +138,8 @@ class ProductTemplate(models.Model):
     def action_update_status(self):
         """
         This method sends a notification to the user whenever the status of the book is updated.
+        parameter: self
+        return: None
         """
         for record in self:
             message = f"The status of the book '{record.name}' has been updated to '{record.status}'."
