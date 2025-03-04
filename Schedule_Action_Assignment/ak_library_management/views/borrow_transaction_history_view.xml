@@ -1,0 +1,64 @@
+<odoo>
+    <data>
+        <!-- List View for borrow transaction history model -->
+        <record id="view_borrow_transaction_list" model="ir.ui.view">
+            <field name="name">borrow.transaction.history.list</field>
+            <field name="model">borrow.transaction.history</field>
+            <field name="arch" type="xml">
+                <list string="Borrow Transaction History">
+                    <field name="customer_id"/>
+                    <field name="books_ids"/>
+                    <field name="borrow_start_date"/>
+                    <field name="borrow_end_date"/>
+                    <field name="deposit_amount"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Search View for borrow transaction history -->
+        <record id="view_borrow_transaction_search" model="ir.ui.view">
+            <field name="name">borrow.transaction.history.search</field>
+            <field name="model">borrow.transaction.history</field>
+            <field name="arch" type="xml">
+                <search string="Search Borrow Transactions">
+                    <field name="customer_id" string="Customer"/>
+                    <filter string="Customer" name="group_by_customer" context="{'group_by': 'customer_id'}"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Form View for borrow transaction model -->
+        <record id="view_borrow_transaction_form" model="ir.ui.view">
+            <field name="name">borrow.transaction.history.form</field>
+            <field name="model">borrow.transaction.history</field>
+            <field name="arch" type="xml">
+                <form string="Borrow Transaction History">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="customer_id"/>
+                                <field name="books_ids" widget="many2many_tags"/>
+                            </group>
+                            <group>
+                                <field name="borrow_start_date"/>
+                                <field name="borrow_end_date"/>
+                                <field name="deposit_amount" invisible="is_member == True"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="action_borrow_books" string="Confirm" type="object"/>
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action window for borrow transaction model-->
+        <record id="action_borrow_transaction_history" model="ir.actions.act_window">
+            <field name="name">Borrow Transactions</field>
+            <field name="res_model">borrow.transaction.history</field>
+            <field name="view_mode">list,form,search</field>
+        </record>
+    </data>
+</odoo>
