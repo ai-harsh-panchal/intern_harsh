@@ -1,0 +1,39 @@
+<odoo>
+    <!-- schedule action cron job for send reminders to customer -->
+    <record id="ir_cron_notify_due_returns" model="ir.cron">
+        <field name="name">Borrow Book Reminder</field>
+        <field name="model_id" ref="model_borrow_transaction_history"/>
+        <field name="state">code</field>
+        <field name="code">model.notify_due_returns()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">minutes</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <!-- Server Action for Book Returns -->
+    <record id="model_borrow_transaction_action" model="ir.actions.server">
+        <field name="name">Return Books</field>
+        <field name="model_id" ref="model_borrow_transaction_history"/>
+        <field name="binding_model_id" ref="model_borrow_transaction_history"/>
+        <field name="binding_view_types">form</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_return_books()</field>
+    </record>
+
+    <!-- Server Action for Overdue Check -->
+    <record id="check_overdue_books_server_action" model="ir.actions.server">
+        <field name="name">Check Overdue Books</field>
+        <field name="model_id" ref="model_borrow_transaction_history"/>
+        <field name="binding_model_id" ref="model_borrow_transaction_history"/>
+        <field name="state">code</field>
+        <field name="code">records._check_overdue_books()</field>
+    </record>
+
+    <!--     Automation Rule for Overdue Books-->
+    <record id="automation_check_overdue_books" model="base.automation">
+        <field name="name">Check Overdue Books on Transaction</field>
+        <field name="model_id" ref="model_borrow_transaction_history"/>
+        <field name="trigger">on_create_or_write</field>
+        <field name="action_server_ids" eval="[(4, ref('check_overdue_books_server_action'))]"/>
+    </record>
+</odoo>

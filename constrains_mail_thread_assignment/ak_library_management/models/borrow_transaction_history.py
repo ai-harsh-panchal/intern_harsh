@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields,api
-from datetime import datetime,timedelta
+from datetime import timedelta
 from odoo.models import ValidationError
 
 
@@ -13,25 +13,28 @@ class BorrowTransactionHistory(models.Model):
     """
     _name = 'borrow.transaction.history'
     _description = 'Borrow Transaction History'
+    _rec_name = 'customer_id'
 
     customer_id = fields.Many2one('res.partner', string='Customer')
     books_ids = fields.Many2many('product.template', string='Books', domain=[('is_library_book', '=', 'True')])
-    borrow_start_date = fields.Datetime(string='Borrow Start Date', default=datetime.today())
-    borrow_end_date = fields.Datetime(string='Borrow End Date', required=True)
+    borrow_start_date = fields.Date(string='Borrow Start Date', default=fields.datetime.now())
+    borrow_end_date = fields.Date(string='Borrow End Date', required=True)
     deposit_amount = fields.Float(string='Deposit Amount')
     is_member = fields.Boolean(string="is_member", related='customer_id.is_member')
-    non_trust_worthy = fields.Boolean(related="customer_id.is_member")
+    non_trust_worthy = fields.Boolean('res.partner', related="customer_id.is_member")
 
     @api.constrains('borrow_start_date', 'borrow_end_date')
-    def check_dates(self):
+    def validate_borrow_dates(self):
         """
-        this function check that end date is not less then start date
-        parameter: self
-        return: None
+        Validates that the borrow end date is after the start date.
+        Raises ValidationError if end date precedes start date.
+        param: self
+        Raises:
+            ValidationError: When borrow end date is earlier than start date
         """
         for record in self:
             if record.borrow_start_date > record.borrow_end_date:
-                raise ValidationError('end date must be less than start date')
+                raise ValidationError('Borrow end date not less then the start date')
 
     def _get_wizard_popup(self, title, message):
         """
@@ -73,46 +76,85 @@ class BorrowTransactionHistory(models.Model):
                 message=f"The book '{out_of_stock_books[0].name}' is out of stock. Do you want to proceed?"
             )
 
+
+        # If the customer is trying to borrow 5 or more books
         if len(self.books_ids) >= 5:
-            # Check for existing open borrow transactions
-            open_borrow_transactions = self.env['borrow.transaction.history'].search([
-                ('customer_id', '=', self.customer_id.id),
-            ])
+            search_recd = self.search([('customer_id.id', "=", self.customer_id.id)])
+            books_name = []
+            [books_name.append(book.name) for rec in search_recd[:-1]
+             for book in rec.books_ids if book.name not in books_name]
 
-            if open_borrow_transactions:
-                # Case A: Existing customer with open borrow transactions
-                open_books_count = sum(len(transaction.books_ids) for transaction in open_borrow_transactions)
-                return self._get_wizard_popup(
-                    title='Warning',
-                    message=f"Customer already has {len(open_borrow_transactions)} open borrow transactions with {open_books_count} books. Are you sure you want to borrow more books?"
-                )
-            else:
-            # Case C: New or existing customer borrowing fewer than 5 books
-                return self._get_wizard_popup(
-                    title='Information',
-                    message="Borrowing fewer than 5 books is allowed. Do you want to borrow these books?"
-                )
+            if books_name:
+                return self._get_wizard_popup(title='warning',
+                            message=f"Customer already has [{len(search_recd) - 1}] open borrow transactions "
+                           f"with {books_name} books. "
+                           f"Are you sure you want to borrow more books?")
 
-        # case c Decrease Stock for Each Book in the Borrow Process
-        for rec in self.books_ids:
+            return self._get_wizard_popup(title='warning',
+                        message="Are you sure you want to allow "
+                       "borrowing more than 5 books for this customer?")
+
+        # decrease a stock of product when borrowed
+        for rec in self.book_ids:
             if rec.qty_available:
-                rec.qty_available -= 1
+                product_id = self.env['product.product'].search([('name', '=', rec.name)])
+                loc = self.env['stock.quant'].search([('product_id.name', '=', rec.name)])
+                self.env['stock.quant']._update_available_quantity(product_id, loc[0].location_id, quantity=-1)
 
-    @api.depends('borrow_end_date')
-    def cron_check_due_date(self):
+
+    def notify_due_returns(self):
+            """
+            This method checks for records with a borrow_end_date that is 2 days from today
+            and sends notifications to the respective customers.
+            param : self
+            return: None
+            """
+            all_recd = self.search([])
+            for record in all_recd:
+                for rec in record.books_ids:
+                    if rec.status == 'borrowed':
+                        date_deadline = record.borrow_start_date + timedelta(days=2)
+                        if record.borrow_end_date == date_deadline:
+                            self.env['bus.bus']._sendone(record.customer_id, 'simple_notification', {
+                                'type': 'warning',
+                                'message': f"reminder: your book return date is {record.borrow_end_date}",
+                            })
+
+    def action_return_books(self):
         """
-        this function is used for check the due date
-        parameter: self
-        return: None
+        Marks selected books as returned in the library system.
+
+        Updates the status of borrowed books to 'return' when customers
+        physically return them to the library.
+
+        param: self
+        Returns: None
+        """
+        for rec in self.books_ids:
+            if rec.status == 'borrowed':
+                rec.status = 'return'
+                self.env['bus.bus']._sendone(self.customer_id, 'simple_notification', {
+                    'type': 'success',
+                    'message': f"Book '{rec.name}' has been returned successfully.",
+                })
+
+    @api.constrains('customer_id', 'books_ids')
+    def _check_overdue_books(self):
+        """
+        Prevents customers from borrowing new books if they have overdue books.
+        Checks during creation of new borrow transactions.
+        param : self
+        Returns: None
         """
         for record in self:
-            if record.borrow_end_date - fields.Datetime.now() <= timedelta(days=2):
-                message = f"Reminder message for book '{record.name}' due on {record.borrow_end_date}"
-                self.env['bus.bus']._sendone(
-                    self.env.user.partner_id,
-                    'simple_notification',
-                    {'title': 'Library Update', 'message': message, 'type': 'success', 'sticky': True}
-                )
-                return message
-            else:
-                return None
+            if record.customer_id and record.books_ids:
+                overdue_count = self.env['borrow.transaction.history'].search_count([
+                    ('customer_id', '=', record.customer_id.id),
+                    ('borrow_end_date', '<', fields.Date.today()),
+                    ('books_ids.status', '=', 'borrowed'),
+                ])
+
+                if overdue_count:
+                    raise ValidationError(
+                        f"Customers with overdue books cannot borrow new ones until they return the overdue items."
+                    )
