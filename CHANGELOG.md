@@ -9,6 +9,9 @@
 
 
 ### Changed
+- in borrow book requirement assignment i have add co model in field of non trustworthy
+- refactor function check_date to validate_date
+- solve installation time error 
 - Optimized sale_order.py code for better performance
 - Refactored bulk_book.py with code optimization
 - Updated model inheritance patterns to follow Odoo standards (TransientModel, AbstractModel, Model)
