@@ -1,0 +1,16 @@
+<odoo>
+    <!-- this wizard is used to show poup message for given condition -->
+    <record id="view_borrow_books_wizard" model="ir.ui.view">
+        <field name="name">borrow.books.wizard.form</field>
+        <field name="model">borrow.books.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Borrow Books">
+                <field name="message"/>
+                <footer>
+                    <button special="save" string="Continue"/>
+                    <button special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
