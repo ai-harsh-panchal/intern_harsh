@@ -134,7 +134,6 @@ class ProductTemplate(models.Model):
             'target': 'new',
         }
 
-
     @api.constrains('status')
     def action_update_status(self):
         """

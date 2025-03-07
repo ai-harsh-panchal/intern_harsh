@@ -14,6 +14,7 @@ class BulkUploadBooks(models.TransientModel):
 
     book_names = fields.Text(string='Book Names')
     author_id = fields.Many2one('res.partner', string='Author', required=True)
+    product_ids = fields.Many2many(comodel_name="product.template")
     product_create = fields.Boolean(string='Create Products')
     book_count = fields.Integer(compute="compute_count_book")
 
@@ -24,19 +25,19 @@ class BulkUploadBooks(models.TransientModel):
         parameter: self
         return: None
         """
-        for record in self:
-            book_names = [name.strip() for name in record.book_names.split(',') if name.strip()]
-            existing_books = self.env['product.template'].search([('name', 'in', book_names)]).mapped('name')
-            books_to_create = []
-            for book_name in book_names:
-                if book_name not in existing_books:
-                    books_to_create.append({
-                        'name': book_name,
-                        'author': record.author_id.name
-                    })
-            if books_to_create:
-                created_books = self.env['product.template'].create(books_to_create)
-            record.product_create = True
+        for book_name in self.book_names.split(','):
+            book_name.strip()
+            if not self.env['product.template'].search([('name', '=', book_name)]):
+                products = self.env['product.template'].create({
+                    'name': book_name,
+                    'author': self.author_id.name
+                })
+                self.product_ids = [(4, products.id)]
+                self.env['bus.bus']._sendone(self.env.user.partner_id, 'simple_notification', {
+                    'type': 'success',
+                    'message': f"{book_name} is created as product.",
+                })
+            self.product_create = True
 
     def revert_changes(self):
         """
@@ -44,10 +45,7 @@ class BulkUploadBooks(models.TransientModel):
         parameter: self
         return: None
         """
-        for record in self:
-            book_names = [name.strip() for name in record.book_names.split(',') if name.strip()]
-            self.env['product.template'].search([('name', 'in', book_names)]).unlink()
-            record.product_create = False
+        self.product_ids.unlink()
 
     def compute_count_book(self):
         """

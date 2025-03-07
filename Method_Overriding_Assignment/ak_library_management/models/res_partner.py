@@ -11,3 +11,4 @@ class ResPartner(models.Model):
 
     not_trust_worthy = fields.Boolean(string='Not Trustworthy')
     is_member = fields.Boolean(string='Is Member')
+    is_librarian = fields.Boolean(string='Is Librarian')

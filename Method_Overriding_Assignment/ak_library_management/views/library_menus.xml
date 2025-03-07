@@ -71,7 +71,7 @@
         <menuitem
                 id="menu_borrow_transaction_history"
                 name="Borrow Transactions History"
-                sequence="15"
+                sequence="20"
                 parent="library_menu_root"
         />
         <menuitem
