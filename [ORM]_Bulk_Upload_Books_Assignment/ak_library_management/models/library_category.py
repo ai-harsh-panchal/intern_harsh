@@ -12,4 +12,4 @@ class Category(models.Model):
 
     name = fields.Char(string='Category Name', required=True)
     description = fields.Text(string='Category Description')
-    tag_ids = fields.Many2many('library.tag', string='Tags')
+    tag_ids = fields.Many2many(comodel_name='library.tag', string='Tags')

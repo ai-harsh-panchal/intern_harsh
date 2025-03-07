@@ -11,12 +11,15 @@ class BulkUploadBooks(models.TransientModel):
     """
     _name = 'bulk.upload.books'
     _description = 'Bulk Upload Books'
+    _rec_name = 'book_names'
 
     book_names = fields.Text(string='Book Names')
     author_id = fields.Many2one('res.partner', string='Author', required=True)
     product_ids = fields.Many2many(comodel_name="product.template")
     product_create = fields.Boolean(string='Create Products')
     book_count = fields.Integer(compute="compute_count_book")
+    category_id = fields.Many2one(comodel_name='library.category', string='Category')
+    price = fields.Float(string='Price')
 
     def create_product(self):
         """
@@ -46,6 +49,7 @@ class BulkUploadBooks(models.TransientModel):
         return: None
         """
         self.product_ids.unlink()
+        self.product_create = False
 
     def compute_count_book(self):
         """
