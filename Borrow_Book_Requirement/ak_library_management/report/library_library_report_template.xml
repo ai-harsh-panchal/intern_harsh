@@ -1,0 +1,19 @@
+<odoo>
+    <!--    Report template library-->
+    <template id="library_report_template_details">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <h1>Library Report</h1>
+                        <div>
+                            <strong>Library Name<span t-field="o.id"/>: </strong>
+                            <span t-field="o.name"/>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

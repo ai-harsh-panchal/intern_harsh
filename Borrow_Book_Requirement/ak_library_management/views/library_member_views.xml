@@ -6,7 +6,7 @@
             <field name="model">library.member</field>
             <field name="arch" type="xml">
                 <list>
-                    <field name="name"/>
+                    <field name="member_id"/>
                     <field name="email"/>
                     <field name="phone"/>
                 </list>
@@ -19,10 +19,11 @@
             <field name="model">library.member</field>
             <field name="arch" type="xml">
                 <form>
+                    <button name="action_send_mail" string="Send Email" type="object" class="oe_highlight"/>
                     <sheet>
                         <group>
                             <h1><field name="membership_no"/></h1>
-                            <field name="name"/>
+                            <field name="member_id"/>
                             <field name="email"/>
                             <field name="phone"/>
                             <field name="membership_date"/>

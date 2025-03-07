@@ -15,13 +15,12 @@ class BorrowTransactionHistory(models.Model):
     _description = 'Borrow Transaction History'
     _rec_name = 'customer_id'
 
-    customer_id = fields.Many2one('res.partner', string='Customer')
-    books_ids = fields.Many2many('product.template', string='Books', domain=[('is_library_book', '=', 'True')])
+    customer_id = fields.Many2one(comodel_name='res.partner', string='Customer', required=True)
+    books_ids = fields.Many2many(comodel_name='product.template', string='Books', domain=[('is_library_book', '=', 'True')])
     borrow_start_date = fields.Date(string='Borrow Start Date', default=fields.datetime.now())
     borrow_end_date = fields.Date(string='Borrow End Date', required=True)
     deposit_amount = fields.Float(string='Deposit Amount')
-    is_member = fields.Boolean(string="is_member", related='customer_id.is_member')
-    non_trust_worthy = fields.Boolean('res.partner', related="customer_id.is_member")
+    is_member = fields.Boolean(related='customer_id.is_member')
 
     @api.constrains('borrow_start_date', 'borrow_end_date')
     def validate_borrow_dates(self):
@@ -32,14 +31,15 @@ class BorrowTransactionHistory(models.Model):
         Raises:
             ValidationError: When borrow end date is earlier than start date
         """
-        for record in self:
-            if record.borrow_start_date > record.borrow_end_date:
-                raise ValidationError('Borrow end date not less then the start date')
+        if self.filtered(lambda r: r.borrow_start_date > r.borrow_end_date):
+            raise ValidationError('Borrow end date not less then the start date')
+        if self.filtered(lambda r: r.deposit_amount <= 0 and not r.is_member):
+            raise ValidationError('Deposit Amount must be greater than zero')
 
     def _get_wizard_popup(self, title, message):
         """
         this function is used for display the wizard popup message
-        parameter: self
+        parameter: self, title, message
         return: Dictionary action open form view
         return type: dict
         """
@@ -76,17 +76,16 @@ class BorrowTransactionHistory(models.Model):
                 message=f"The book '{out_of_stock_books[0].name}' is out of stock. Do you want to proceed?"
             )
 
-
         # If the customer is trying to borrow 5 or more books
         if len(self.books_ids) >= 5:
-            search_recd = self.search([('customer_id.id', "=", self.customer_id.id)])
+            search_recd = self.search([('customer_id.id', "=", self.customer_id.id)], order='id desc', offset=1)
             books_name = []
-            [books_name.append(book.name) for rec in search_recd[:-1]
+            [books_name.append(book.name) for rec in search_recd
              for book in rec.books_ids if book.name not in books_name]
 
             if books_name:
                 return self._get_wizard_popup(title='warning',
-                            message=f"Customer already has [{len(search_recd) - 1}] open borrow transactions "
+                            message=f"Customer already has [{len(search_recd)}] open borrow transactions "
                            f"with {books_name} books. "
                            f"Are you sure you want to borrow more books?")
 
@@ -95,12 +94,18 @@ class BorrowTransactionHistory(models.Model):
                        "borrowing more than 5 books for this customer?")
 
         # decrease a stock of product when borrowed
-        for rec in self.book_ids:
+        for rec in self.books_ids:
             if rec.qty_available:
-                product_id = self.env['product.product'].search([('name', '=', rec.name)])
-                loc = self.env['stock.quant'].search([('product_id.name', '=', rec.name)])
-                self.env['stock.quant']._update_available_quantity(product_id, loc[0].location_id, quantity=-1)
-
+                product_id = self.env['product.product'].search([('name', '=', rec.name),('default_code', '=', rec.default_code)])
+                loc = self.env['stock.quant'].search([
+                    ('product_id', '=', product_id.id),
+                    ('location_id.usage', '=', 'internal')
+                ], limit=1)
+                self.env['stock.quant']._update_available_quantity(
+                    product_id,
+                    loc.location_id,
+                    quantity=-1
+                )
 
     def notify_due_returns(self):
             """
@@ -109,16 +114,18 @@ class BorrowTransactionHistory(models.Model):
             param : self
             return: None
             """
-            all_recd = self.search([])
-            for record in all_recd:
-                for rec in record.books_ids:
-                    if rec.status == 'borrowed':
-                        date_deadline = record.borrow_start_date + timedelta(days=2)
-                        if record.borrow_end_date == date_deadline:
-                            self.env['bus.bus']._sendone(record.customer_id, 'simple_notification', {
-                                'type': 'warning',
-                                'message': f"reminder: your book return date is {record.borrow_end_date}",
-                            })
+            borrowed_records = self.search([]).filtered(
+                lambda r: any(book.status == 'borrowed' for book in r.books_ids)
+                          and r.borrow_end_date == r.borrow_start_date + timedelta(days=2))
+            for record in borrowed_records:
+                self.env['bus.bus']._sendone(
+                    record.customer_id,
+                    'simple_notification',
+                    {
+                        'type': 'warning',
+                        'message': f"reminder: your book return date is {record.borrow_end_date}",
+                    }
+                )
 
     def action_return_books(self):
         """
@@ -126,7 +133,6 @@ class BorrowTransactionHistory(models.Model):
 
         Updates the status of borrowed books to 'return' when customers
         physically return them to the library.
-
         param: self
         Returns: None
         """
@@ -158,3 +164,21 @@ class BorrowTransactionHistory(models.Model):
                     raise ValidationError(
                         f"Customers with overdue books cannot borrow new ones until they return the overdue items."
                     )
+
+    def send_overdue_notices(self):
+        """
+        Send overdue notices to customers with overdue books
+        This method is called weekly by the scheduled action
+        param : self
+        return: None
+        """
+        overdue_records = self.search([
+            ('borrow_end_date', '<', fields.Date.today()),
+            ('books_ids.status', '=', 'borrowed')
+        ])
+
+        template = self.env.ref('ak_library_management.email_template_library_overdue')
+        for record in overdue_records:
+            template.send_mail(
+                record.id,
+                force_send=True)
