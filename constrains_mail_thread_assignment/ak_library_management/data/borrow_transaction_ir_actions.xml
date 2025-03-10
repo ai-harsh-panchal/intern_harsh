@@ -10,6 +10,17 @@
         <field name="active" eval="True"/>
     </record>
 
+    <!-- cron job for send overdue emails to customer -->
+    <record id="ir_cron_send_overdue_notices" model="ir.cron">
+        <field name="name">Library: Send Overdue Notices</field>
+        <field name="model_id" ref="model_borrow_transaction_history"/>
+        <field name="state">code</field>
+        <field name="code">model.send_overdue_notices()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">weeks</field>
+        <field name="active" eval="True"/>
+    </record>
+
     <!-- Server Action for Book Returns -->
     <record id="model_borrow_transaction_action" model="ir.actions.server">
         <field name="name">Return Books</field>

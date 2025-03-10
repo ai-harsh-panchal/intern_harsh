@@ -9,6 +9,7 @@
                 <xpath expr="//field[@name='vat']" position="after">
                     <field name="is_member"/>
                     <field name="not_trust_worthy"/>
+                    <field name="is_librarian"/>
                 </xpath>
             </field>
         </record>

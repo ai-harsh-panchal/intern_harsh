@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from pyasn1_modules.rfc5280 import anotherNameMap
 
 from odoo import models, fields,api
 from odoo.exceptions import ValidationError
@@ -37,7 +36,7 @@ class ProductTemplate(models.Model):
         """
         for record in self:
             if record.status == 'unavailable':
-                raise ValidationError("The book is marked as 'Unavailable' and cannot be borrowed.")
+                raise ValidationError("This Book is not available")
             record.status = 'borrowed'
             record.available = False
             record.message_post(

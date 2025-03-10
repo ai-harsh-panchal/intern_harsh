@@ -2,9 +2,9 @@
 
 {
     'name': "Library Management System",
-    'version': '18.0.5.0.0',
+    'version': '18.0.1.0.1',
     'summary': 'A comprehensive module for managing library operations, including book tracking and member management.',
-    'depends': ['base','web','sale_management','stock','product','base_automation'],
+    'depends': ['base','web','sale_management','stock','product','base_automation','mail'],
     'category' : 'Education',
     'author': 'Harsh',
     'website': 'https://www.aktivsoftware.com',
@@ -24,6 +24,9 @@
         'wizard/borrow_books_wizard.xml',
         'wizard/sale_order_wizard.xml',
         'data/borrow_transaction_ir_actions.xml',
+        'data/borrow_transaction_mail_template.xml',
+        'report/library_library_report_action.xml',
+        'report/library_library_report_template.xml',
         'views/library_menus.xml',
         'views/sale_menus.xml',
     ],

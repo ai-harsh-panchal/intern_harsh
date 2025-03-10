@@ -9,20 +9,22 @@ class Library(models.Model):
     """
     _name = 'library.library'
     _description = 'Library Model'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _sql_constraints = [
         ('name_uniq', 'UNIQUE (name)', 'Category name must be unique')]
 
-    name = fields.Char(string='Name', required=True)
+    name = fields.Char(string='Name', required=True ,tracking=True)
     book_ids = fields.Many2many(
         comodel_name='product.template',
         string='Books',
         domain=[('is_library_book', '=', True)]
     )
-    location = fields.Char(string='Location')
+    location = fields.Char(string='Location',tracking=True)
+    date = fields.Date(string='Date', default=fields.datetime.now())
     capacity = fields.Integer(string='Capacity')
     notes = fields.Text(string='Notes')
     book_count = fields.Integer(compute='compute_book_count')
-    librarian_id = fields.Many2one('res.partner',string='Librarian')
+    librarian_id = fields.Many2one(comodel_name='res.partner',string='Librarian',tracking=True)
 
     @api.depends('book_ids')
     def compute_book_count(self):

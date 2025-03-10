@@ -12,10 +12,10 @@ class Book(models.Model):
 
     name = fields.Char(string='Book Title', required=True)
     author = fields.Char(string='Author Name')
-    library_id = fields.Many2one('library.library', string='Library')
+    library_id = fields.Many2one(comodel_name='library.library', string='Library')
     isbn = fields.Char(string='ISBN Number')
     publication_date = fields.Date(string='Date of Publication')
-    category_id = fields.Many2one('library.category', string='Book Category')
+    category_id = fields.Many2one(comodel_name='library.category', string='Book Category')
     description = fields.Text(string='Book Summary')
-    tag_ids = fields.Many2many('library.tag', string='Tags', related='category_id.tag_ids',
+    tag_ids = fields.Many2many(comodel_name='library.tag', string='Tags', related='category_id.tag_ids',
                                readonly=False)

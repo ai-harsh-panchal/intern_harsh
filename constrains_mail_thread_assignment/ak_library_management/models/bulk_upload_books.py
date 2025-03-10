@@ -11,14 +11,16 @@ class BulkUploadBooks(models.TransientModel):
     """
     _name = 'bulk.upload.books'
     _description = 'Bulk Upload Books'
+    _rec_name = 'book_names'
 
     book_names = fields.Text(string='Book Names')
     author_id = fields.Many2one('res.partner', string='Author', required=True)
-    product_ids = fields.Many2many(comodel_name="product.template")
     product_create = fields.Boolean(string='Create Products')
     book_count = fields.Integer(compute="compute_count_book")
+    category_id = fields.Many2one(comodel_name='library.category', string='Category')
+    price = fields.Float(string='Price')
 
-    def create_product(self):
+    def action_create_product(self):
         """
         this function create a book record in product.template model and also
         check the if duplicate record value get then it will not create the record
@@ -32,20 +34,29 @@ class BulkUploadBooks(models.TransientModel):
                     'name': book_name,
                     'author': self.author_id.name
                 })
-                self.product_ids = [(4, products.id)]
                 self.env['bus.bus']._sendone(self.env.user.partner_id, 'simple_notification', {
                     'type': 'success',
                     'message': f"{book_name} is created as product.",
                 })
             self.product_create = True
 
-    def revert_changes(self):
+    def action_revert_changes(self):
         """
         Reverts changes by deleting records of books based on their names.
         parameter: self
         return: None
         """
-        self.product_ids.unlink()
+        single_book = self.book_names.split(',')
+        self.env["product.template"].search([("name", "=", single_book)]).unlink()
+        for book_name in single_book:
+            book_name = book_name.strip()
+            self.env['bus.bus']._sendone(
+                self.env.user.partner_id, 'simple_notification', {
+                    'type': 'success',
+                    'message': f"{book_name} is deleted.",
+                })
+
+        self.product_create = False
 
     def compute_count_book(self):
         """
@@ -69,7 +80,6 @@ class BulkUploadBooks(models.TransientModel):
         """
         domain = [('name', 'in', self.book_names.split(','))]
         book_records = self.env['product.template'].search(domain)
-
         action = {
             'name': 'Bulk Book Uploaded' if len(book_records) > 1 else 'Book Detail',
             'type': 'ir.actions.act_window',
