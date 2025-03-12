@@ -3,6 +3,7 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
+
 class Member(models.Model):
     """
     this model is used for add the member for library

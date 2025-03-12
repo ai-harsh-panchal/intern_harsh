@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields
+from odoo import models, fields, api
 
 
 class BulkUploadBooks(models.TransientModel):
@@ -19,9 +19,11 @@ class BulkUploadBooks(models.TransientModel):
     book_count = fields.Integer(compute="compute_count_book")
     category_id = fields.Many2one(comodel_name='library.category', string='Category')
     price = fields.Float(string='Price')
+    product_ids = fields.Many2many(comodel_name="product.template")
 
     def action_create_product(self):
         """
+        Reverts changes by deleting book records and notifying users.
         this function create a book record in product.template model and also
         check the if duplicate record value get then it will not create the record
         parameter: self
@@ -34,6 +36,7 @@ class BulkUploadBooks(models.TransientModel):
                     'name': book_name,
                     'author': self.author_id.name
                 })
+                self.product_ids = [(4, products.id)]
                 self.env['bus.bus']._sendone(self.env.user.partner_id, 'simple_notification', {
                     'type': 'success',
                     'message': f"{book_name} is created as product.",
@@ -42,22 +45,16 @@ class BulkUploadBooks(models.TransientModel):
 
     def action_revert_changes(self):
         """
-        Reverts changes by deleting records of books based on their names.
-        parameter: self
-        return: None
+        This function is used for revert the changes
+            - Deletes the corresponding product.template records
+            - Sends a success notification for each deleted book
+            - Sets product_create flag to true
+        Param : self
+        Returns: None
         """
-        single_book = self.book_names.split(',')
-        self.env["product.template"].search([("name", "=", single_book)]).unlink()
-        for book_name in single_book:
-            book_name = book_name.strip()
-            self.env['bus.bus']._sendone(
-                self.env.user.partner_id, 'simple_notification', {
-                    'type': 'success',
-                    'message': f"{book_name} is deleted.",
-                })
+        self.product_ids.unlink()
 
-        self.product_create = False
-
+    @api.depends("product_ids")
     def compute_count_book(self):
         """
         Computes the count of books for the smart button.
@@ -65,10 +62,7 @@ class BulkUploadBooks(models.TransientModel):
         return: None
         """
         for record in self:
-            book_names = [name.strip() for name in record.book_names.split(',') if name.strip()]
-            record.book_count = self.env['product.template'].search_count([
-                ('name', 'in', book_names)
-            ])
+            record.book_count = len(record.product_ids) if record.product_ids else 0
 
     def action_book_list(self):
         """
@@ -78,15 +72,13 @@ class BulkUploadBooks(models.TransientModel):
         return: A dictionary defining an action, which can either open a list view for multiple records or a form view for a single record.
         return type: dict
         """
-        domain = [('name', 'in', self.book_names.split(','))]
-        book_records = self.env['product.template'].search(domain)
         action = {
-            'name': 'Bulk Book Uploaded' if len(book_records) > 1 else 'Book Detail',
+            'name': 'Bulk Books List',
             'type': 'ir.actions.act_window',
             'res_model': 'product.template',
-            'view_mode': 'list,form' if len(book_records) > 1 else 'form',
-            'domain': domain if len(book_records) > 1 else [],
-            'res_id': book_records[0].id if len(book_records) == 1 else None,
-            'context': {'create': False} if len(book_records) > 1 else {},
+            'view_mode': 'list,form' if len(self.product_ids) > 1 else 'form',
+            'domain': [("id", "in", self.product_ids.ids)],
         }
+        if len(self.product_ids) == 1:
+            action['res_id'] = self.product_ids.id
         return action

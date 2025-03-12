@@ -16,7 +16,15 @@
 ## [18.0.1.0.1] - 2025-03-11
 
 ### changes
-- add changelog file in module folder 
+- add changelog file inside of module folder 
 - utilize Many2many field to store data and also retrive a data 
 - update doc string of action_revert_change function in Bulk book upload.py
+
+## [18.0.1.0.1] - 2025-03-12
+
+## changes 
+- rename the varible name in borrow book requirement py file
+- utilize manay2mnay filed to store and search the data
+- update a doc string of action_revert function in bulk upload book py file 
+ 
 
