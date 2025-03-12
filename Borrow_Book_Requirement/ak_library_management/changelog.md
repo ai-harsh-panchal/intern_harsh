@@ -11,3 +11,9 @@
 - required the customer_id field for borrow the books
 - fix the error in action_borrow_books function 
 
+## [18.0.1.0.1] - 2025-03-12
+
+### changes
+- update the warning message in borrow book requirement when product stock level 0 
+- fix the decrease of stock quantity of each product when borrowed
+

@@ -4,16 +4,96 @@
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t t-call="web.external_layout">
+                    <br/>
                     <div class="page">
-                        <div class="oe_structure"/>
-                        <h1>Library Report</h1>
-                        <div>
-                            <strong>Library Name<span t-field="o.id"/>: </strong>
-                            <span t-field="o.name"/>
+                        <!-- Library Header Section -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <t t-set="layout_document_title">
+                                <h4>Library Name #<span t-field="o.id"/>: <span t-field="o.name"/></h4>
+                                </t>
+                            </div>
+                        </div>
+
+                        <!-- Library Details Section -->
+                        <div class="row mb-4" id="library_informations">
+                            <div t-if="o.librarian_id" class="col" name="librarian_info">
+                                <strong>Librarian Name</strong>
+                                <div t-field="o.librarian_id.name"/>
+                            </div>
+                            <div t-if="o.date" class="col" name="date_info">
+                                <strong>Date</strong>
+                                <div t-field="o.date" t-options='{"format": "dd/MMM/YYYY"}'/>
+                            </div>
+
+                            <div t-if="o.book_count" class="col" name="book_count_info">
+                                <strong>Total Borrowed Books</strong>
+                                <div t-field="o.book_count"/>
+                            </div>
+
+                            <div t-if="o.location" class="col" name="location_info">
+                                <strong>Location</strong>
+                                <div t-field="o.location"/>
+                            </div>
+                        </div>
+
+                        <!-- Books Table Section -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="color: red;">Book</th>
+                                            <th style="color: red;">Price</th>
+                                            <th style="color: red;">Published Date</th>
+                                            <th style="color: red;">Author</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="o.book_ids" t-as="book">
+                                            <td>
+                                                <strong t-esc="book.barcode or 'No-ISBN'"/><br/>
+                                                <span t-field="book.name"/><br/>
+                                                On Hand: <span t-field="book.qty_available"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="book.list_price"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="book.published_date" t-options='{"format": "dd/MMM/YYYY"}'/>
+                                            </td>
+                                            <td>
+                                                <span t-field="book.author"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Notes Section -->
+                        <div class="row">
+                            <div class="col-12">
+                                <strong>Notes:</strong>
+                                <p t-field="o.notes"/>
+                            </div>
                         </div>
                     </div>
                 </t>
             </t>
         </t>
+    </template>
+    <template id="external_layout_custom" inherit_id="web.external_layout_standard">
+        <xpath expr="//div[@name='company_address']" position="replace">
+            <div name="company_address" style="text-align: right;">
+                <span t-field="company.partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'/>
+                <div t-if="company.email">
+                    Email: <span t-field="company.email"/>
+                </div>
+                <div t-if="company.phone">
+                    Phone: <span t-field="company.phone"/>
+                </div>
+            </div>
+        </xpath>
     </template>
 </odoo>

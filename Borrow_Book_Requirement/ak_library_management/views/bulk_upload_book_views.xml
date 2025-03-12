@@ -19,8 +19,8 @@
             <field name="arch" type="xml">
                 <form string="Bulk Upload Books">
                     <header>
-                        <button name="revert_changes" type="object" string="Revert Changes" class="oe_highlight" invisible="product_create == False"/>
-                        <button name="create_product" type="object" string="Create Product" class="oe_highlight"/>
+                        <button name="action_revert_changes" type="object" string="Revert Changes" class="oe_highlight" invisible="product_create == False"/>
+                        <button name="action_create_product" type="object" string="Create Product" class="oe_highlight"/>
                     </header>
                     <sheet>
                         <div name="button_box">
