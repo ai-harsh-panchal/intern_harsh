@@ -1,0 +1,50 @@
+<odoo>
+    <data>
+        <record id="email_template_library_overdue" model="mail.template">
+            <field name="name">Library Book Overdue</field>
+            <field name="model_id" ref="model_borrow_transaction_history"/>
+            <field name="subject">Library Book Return reminder</field>
+            <field name="email_from">{{ user.company_id.email }}</field>
+            <field name="email_to">{{ object.customer_id.email }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Dear <strong>
+                        <t t-out="object.customer_id.name "/>
+                            </strong>
+                    </p>
+                    <p>This is a reminder email for you to return the following books to library</p>
+                    <p>the list of books</p>
+                    <ul>
+                        <t t-foreach="object.books_ids" t-as="book">
+                            <li>
+                                <strong>Book Name : </strong>
+                                <t t-out="book.name"/>
+                                <strong>Due Date: </strong>
+                                <t t-out="object.borrow_end_date" t-options='{"widget": "date"}'/>
+                            </li>
+                        </t>
+                    </ul>
+                </div>
+            </field>
+        </record>
+
+        <!-- this is for library member renewal reminder mail template -->
+        <record id="email_template_library_member_renewal" model="mail.template">
+            <field name="name">Library Membership Renewal</field>
+            <field name="model_id" ref="model_library_member"/>
+            <field name="subject">Membership Renewal Reminder</field>
+            <field name="email_from">{{ user.company_id.email }}</field>
+            <field name="email_to">{{ object.member_id.email }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Dear <strong> <t t-out="object.member_id.name "/></strong></p>
+                    <br/>
+                    <p>your membership date <t t-out="object.membership_date"/></p>
+                    <p>Please renew your membership to continue enjoying our library services.</p>
+                    <p>Thank you for being a valued member of our library</p>
+                </div>
+            </field>
+            <field name="report_template_ids" eval="[(4, ref('ak_library_management.action_report_library_member'))]"/>
+        </record>
+    </data>
+</odoo>
