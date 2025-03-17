@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <!--  Library Category group-->
+        <record id="module_library_category" model="ir.module.category">
+            <field name="name">Library Management</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!-- Library Worker Group -->
+        <record id="group_library_worker" model="res.groups">
+            <field name="name">Library Worker</field>
+            <field name="category_id" ref="module_library_category"/>
+        </record>
+
+        <!-- Library Assistant Group -->
+        <record id="group_library_assistant" model="res.groups">
+            <field name="name">Library Assistant</field>
+            <field name="category_id" ref="module_library_category"/>
+        </record>
+
+        <!-- Library Admin Group -->
+        <record id="group_library_admin" model="res.groups">
+            <field name="name">Library Admin</field>
+            <field name="category_id" ref="module_library_category"/>
+        </record>
+    </data>
+</odoo>

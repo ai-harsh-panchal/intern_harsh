@@ -20,10 +20,11 @@ class Library(models.Model):
         domain=[('is_library_book', '=', True)]
     )
     location = fields.Char(string='Location',tracking=True)
+    date = fields.Date(string='Date', default=fields.datetime.now())
     capacity = fields.Integer(string='Capacity')
     notes = fields.Text(string='Notes')
     book_count = fields.Integer(compute='compute_book_count')
-    librarian_id = fields.Many2one('res.partner',string='Librarian',tracking=True)
+    librarian_id = fields.Many2one(comodel_name='res.partner',string='Librarian',tracking=True)
 
     @api.depends('book_ids')
     def compute_book_count(self):

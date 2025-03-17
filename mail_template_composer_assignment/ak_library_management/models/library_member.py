@@ -3,6 +3,7 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
+
 class Member(models.Model):
     """
     this model is used for add the member for library
@@ -31,6 +32,11 @@ class Member(models.Model):
         return super(Member, self).create(vals_list)
 
     def action_send_mail(self):
+        """
+        this method is used to send mail to member when membership is expired
+        parameter: self
+        return: dictionary of action and open form
+        """
         self.ensure_one()
         librarian_user = self.env.user
         if not librarian_user.is_librarian:
@@ -47,3 +53,4 @@ class Member(models.Model):
             'target': 'new',
             'context': composer,
         }
+

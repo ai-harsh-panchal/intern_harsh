@@ -10,3 +10,6 @@ from . import res_user
 from . import sale_order
 from . import res_partner
 from . import borrow_transaction_history
+from . import bulk_upload_books
+from . import stock_warehouse
+from . import res_config_settings
