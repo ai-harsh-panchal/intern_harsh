@@ -24,5 +24,5 @@
 - update a _cron_notify_due_returns() in borrow book transaction py file as per the requirement 
 - use filtered function in action_return_books() where i have use for loops 
 - update a varaible name in proper meaningfull
-- optimize the all function in borrow book transaction model
+- optimize the all function in borrow book transaction model file
 
