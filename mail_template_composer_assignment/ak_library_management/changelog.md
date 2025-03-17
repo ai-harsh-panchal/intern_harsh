@@ -29,7 +29,7 @@
 ## [18.0.1.0.2] - 17-03-25 | Assignment mail template, mail compose wizard, attach report in mail template
 
 ### changes 
-- add changelog 
+- add changelog inside module folder
 - manage version in manifest
 - update doc string of action_send_mail() in library_member py file 
 - add module_name in model_id field in borrow_transaction_ir_action xml file 
