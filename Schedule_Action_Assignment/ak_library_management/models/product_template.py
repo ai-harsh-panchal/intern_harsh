@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from pyasn1_modules.rfc5280 import anotherNameMap
 
-from odoo import models, fields,api
-from odoo.exceptions import ValidationError
 from datetime import timedelta
+
+from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 
 
 class ProductTemplate(models.Model):
@@ -35,18 +35,22 @@ class ProductTemplate(models.Model):
         parameter: self
         return: None
         """
-        for record in self:
-            if record.status == 'unavailable':
-                raise ValidationError("The book is marked as 'Unavailable' and cannot be borrowed.")
-            record.status = 'borrowed'
-            record.available = False
-            record.message_post(
+        available_books = self.filtered(lambda r: r.status != 'unavailable')
+        if not available_books:
+            raise ValidationError("This Book is not available")
+
+        due_date = fields.Date.today() + timedelta(days=10)
+        available_books.write({
+            'status': 'borrowed',
+            'available': False
+        })
+
+        for book in available_books:
+            book.message_post(
                 body=f"The book was borrowed by {self.env.user.name} on {fields.Datetime.now()}",
                 subject="Book Borrowed"
             )
-            # Schedule an activity with a due date for the borrower
-            due_date = fields.Date.today() + timedelta(days=10)
-            record.activity_schedule(
+            book.activity_schedule(
                 summary=f"Borrower: {self.env.user.name}, Deadline: {due_date}",
                 user_id=self.env.user.id,
                 date_deadline=due_date,
@@ -60,7 +64,6 @@ class ProductTemplate(models.Model):
         """
         self.status = 'available'
         self.available = True
-
 
     def action_return(self):
         """
@@ -77,7 +80,6 @@ class ProductTemplate(models.Model):
                 subject="Book Returned",
                 message_type="comment"
             )
-
 
     @api.depends('author')
     def _compute_display_name(self):
@@ -104,9 +106,8 @@ class ProductTemplate(models.Model):
             args += [('author', operator, name)]
         return super().name_search(args=args, limit=limit)
 
-
     @api.model_create_multi
-    def create(self,vals_list):
+    def create(self, vals_list):
         """
         this function is used for create a unique sequence in refernce field of product
         parameter: self
@@ -116,7 +117,6 @@ class ProductTemplate(models.Model):
         for vals in vals_list:
             vals['default_code'] = self.env['ir.sequence'].next_by_code('product.template')
         return super(ProductTemplate, self).create(vals_list)
-
 
     def borrowed_books(self):
         """

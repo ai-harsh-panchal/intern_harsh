@@ -24,6 +24,7 @@
                                 <field name="book_ids" options="{'create' : False}"/>
                             </page>
                         </notebook>
+                        <chatter/>
                     </sheet>
                 </form>
             </field>
