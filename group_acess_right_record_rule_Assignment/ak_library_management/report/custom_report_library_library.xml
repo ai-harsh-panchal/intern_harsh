@@ -1,0 +1,155 @@
+<odoo>
+    <template id="library_report_custom_template">
+        <html>
+            <body>
+                <main>
+                    <t t-foreach="docs" t-as="o">
+                        <t class="article">
+                            <!-- Custom Header -->
+                            <div class="header">
+                                <div class="logo" style="text-align: left;">
+                                    <p>Your Logo</p>
+                                </div>
+                                <div class="title" style="text-align: right;">
+                                    <h3>Aktiv Software</h3>
+                                    <div>10th Floor,Binori Bsquare 3,Sindhu Bhavan Road<br/>Ahmedabad
+                                    </div>
+                                    <div>info@aktivsoftware.com</div>
+                                </div>
+                            </div>
+                            <div class="page">
+                                <!-- Library Header Section -->
+                                <h2>Library Name #<span t-field="o.id"/>:
+                                    <span t-field="o.name"/>
+                                </h2>
+                                <!-- Library Details Section -->
+
+                                <table width="100%" style="text-align:center; border-collapse: collapse;">
+                                    <tr>
+                                        <td width="25%">
+                                            <strong>Librarian Name</strong>
+                                            <div t-field="o.librarian_id.name">Mitchell Admin</div>
+                                        </td>
+                                        <td width="25%">
+                                            <strong>Date</strong>
+                                            <div>
+                                                <span t-field="o.date" t-options='{"format": "dd/MMM/YYYY"}'/>
+                                            </div>
+                                        </td>
+                                        <td width="25%">
+                                            <strong>Location</strong>
+                                            <div t-field="o.location">Ahm</div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table class="table-bordered" width="100%"
+                                       style="border: 1px solid black; text-align:center;">
+                                    <thead>
+                                        <tr>
+                                            <th style="color: red;">
+                                                <b>Book</b>
+                                            </th>
+                                            <th style="color: red;">Price</th>
+                                            <th style="color: red;">Published Date</th>
+                                            <th style="color: red;">Author</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="o.book_ids" t-as="p">
+                                            <tr style="border: 1px solid black;">
+                                                <td>
+                                                    <b>
+                                                        <span t-field="p.barcode"/>
+                                                    </b>
+                                                    <br/>
+                                                    <span t-field="p.name"/>
+                                                    <br/>
+                                                    <br/>
+                                                    <span>
+                                                        <b>On Hand</b>
+                                                    </span>
+                                                    <br/>
+                                                    <span t-out="p.qty_available"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="p.list_price"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="p.published_date"
+                                                          t-options="{'format':'d/MMM/yyyy'}"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="p.author"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                                <!-- Notes Section -->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <strong>Notes:</strong>
+                                        <p t-field="o.notes"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- New Footer Section -->
+                            <div class="footer">
+                                <div class="row mt-4">
+                                    <div class="col-4">
+                                        <span>www.aktivsoftware.com</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                </main>
+            </body>
+        </html>
+    </template>
+
+    <!-- library member report for mail attachment  -->
+    <template id="report_member_card">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Member Details</h2>
+                        <div class="row mt32 mb32">
+                            <div class="col-12">
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <thead>
+                                        <tr>
+                                            <th style="border: 1px solid black; padding: 8px;">Member Name</th>
+                                            <th style="border: 1px solid black; padding: 8px;">Membership Date</th>
+                                            <th style="border: 1px solid black; padding: 8px;">Books Borrowed</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="border: 1px solid black; padding: 8px;">
+                                                <span t-field="doc.member_id.name"/>
+                                            </td>
+                                            <td style="border: 1px solid black; padding: 8px;">
+                                                <span t-field="doc.membership_date"/>
+                                            </td>
+                                            <td style="border: 1px solid black; padding: 8px;">
+                                                <ul>
+                                                    <t t-foreach="doc.book_ids" t-as="book">
+                                                        <li>
+                                                            <span t-field="book.name"/>
+                                                        </li>
+                                                    </t>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
