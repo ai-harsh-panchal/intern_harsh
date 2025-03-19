@@ -1,11 +1,12 @@
-# -*- coding: utf-8 -*-#
+# -*- coding: utf-8 -*-
 
-from odoo import fields, models
+from odoo import models, fields
 
 
-class ResConfigSettings(models.TransientModel):
+class LibraryConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
-    library_book_limit = fields.Integer(
-        string='Borrowing Limit'
+    borrowing_limit = fields.Integer(
+        string="Max Borrowing Limit",
+        config_parameter='ak_library_management.borrowing_limit'
     )

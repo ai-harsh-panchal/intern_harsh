@@ -2,14 +2,14 @@
 
 {
     'name': "Library Management System",
-    'version': '18.0.1.0.2',
+    'version': '18.0.1.0.3',
     'summary': 'A comprehensive module for managing library operations, including book tracking and member management.',
     'depends': ['base', 'web', 'sale_management', 'stock', 'product', 'base_automation', 'mail', 'hr'],
     'category': 'Education',
     'author': 'Harsh',
     'website': 'https://www.aktivsoftware.com',
     'data': [
-        'security/access_group.xml',
+        'security/ak_library_management_security.xml',
         'security/ir.model.access.csv',
         'data/ir_sequence_data.xml',
         'views/library_book_views.xml',
