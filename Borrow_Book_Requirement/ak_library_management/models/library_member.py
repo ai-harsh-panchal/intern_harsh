@@ -35,7 +35,7 @@ class Member(models.Model):
         """
         this method is used to send mail to member when membership is expired
         parameter: self
-        return: dictionary of action open form
+        return: dictionary of action and open form
         """
         self.ensure_one()
         librarian_user = self.env.user
@@ -53,3 +53,4 @@ class Member(models.Model):
             'target': 'new',
             'context': composer,
         }
+

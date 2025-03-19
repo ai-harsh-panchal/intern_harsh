@@ -7,8 +7,8 @@
             <form string="Borrow Books">
                 <field name="message"/>
                 <footer>
-                    <button special="save" string="Continue"/>
-                    <button special="cancel" string="Cancel"/>
+                    <button name="action_continue" type="object" string="Continue"/>
+                    <button name="action_cancel" type="object" string="Cancel"/>
                 </footer>
             </form>
         </field>

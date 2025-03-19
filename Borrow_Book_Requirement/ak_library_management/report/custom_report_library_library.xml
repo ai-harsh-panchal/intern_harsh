@@ -7,12 +7,13 @@
                         <t class="article">
                             <!-- Custom Header -->
                             <div class="header">
-                                <div class="logo" style ="text-align: left;">
+                                <div class="logo" style="text-align: left;">
                                     <p>Your Logo</p>
                                 </div>
                                 <div class="title" style="text-align: right;">
                                     <h3>Aktiv Software</h3>
-                                    <div>10th Floor,Binori Bsquare 3,Sindhu Bhavan Road <br/>Ahmedabad</div>
+                                    <div>10th Floor,Binori Bsquare 3,Sindhu Bhavan Road<br/>Ahmedabad
+                                    </div>
                                     <div>info@aktivsoftware.com</div>
                                 </div>
                             </div>
@@ -116,17 +117,35 @@
                     <div class="page">
                         <h2>Member Details</h2>
                         <div class="row mt32 mb32">
-                            <div class="col-6">
-                                <strong>Member Name:</strong>
-                                <span t-field="doc.member_id.name"/>
-                                <br/>
-                                <strong>Membership Date:</strong>
-                                <span t-field="doc.membership_date"/>
-                                <br/>
-                                <strong>Books Borrowed : </strong>
-                                <t t-foreach="doc.book_ids" t-as="book">
-                                    <span t-field="book.name"/>
-                                </t>
+                            <div class="col-12">
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <thead>
+                                        <tr>
+                                            <th style="border: 1px solid black; padding: 8px;">Member Name</th>
+                                            <th style="border: 1px solid black; padding: 8px;">Membership Date</th>
+                                            <th style="border: 1px solid black; padding: 8px;">Books Borrowed</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="border: 1px solid black; padding: 8px;">
+                                                <span t-field="doc.member_id.name"/>
+                                            </td>
+                                            <td style="border: 1px solid black; padding: 8px;">
+                                                <span t-field="doc.membership_date"/>
+                                            </td>
+                                            <td style="border: 1px solid black; padding: 8px;">
+                                                <ul>
+                                                    <t t-foreach="doc.book_ids" t-as="book">
+                                                        <li>
+                                                            <span t-field="book.name"/>
+                                                        </li>
+                                                    </t>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

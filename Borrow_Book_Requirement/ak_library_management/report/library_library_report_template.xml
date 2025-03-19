@@ -1,68 +1,63 @@
 <odoo>
-    <!--    Report template library-->
+    <!-- Report template library -->
     <template id="library_report_template_details">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t t-call="web.external_layout">
-                    <br/>
-                    <div class="page">
+                    <div class="page" style="margin: 20px;">
                         <!-- Library Header Section -->
                         <div class="row mb-4">
                             <div class="col-12">
                                 <t t-set="layout_document_title">
-                                <h4>Library Name #<span t-field="o.id"/>: <span t-field="o.name"/></h4>
+                                    <h4>Library Name #<span t-field="o.id"/>: <span t-field="o.name"/></h4>
                                 </t>
                             </div>
                         </div>
-
                         <!-- Library Details Section -->
                         <div class="row mb-4" id="library_informations">
                             <div t-if="o.librarian_id" class="col" name="librarian_info">
-                                <strong>Librarian Name</strong>
+                                <strong>Librarian Name:</strong>
                                 <div t-field="o.librarian_id.name"/>
                             </div>
                             <div t-if="o.date" class="col" name="date_info">
-                                <strong>Date</strong>
+                                <strong>Date:</strong>
                                 <div t-field="o.date" t-options='{"format": "dd/MMM/YYYY"}'/>
                             </div>
-
                             <div t-if="o.book_count" class="col" name="book_count_info">
-                                <strong>Total Borrowed Books</strong>
+                                <strong>Total Borrowed Books:</strong>
                                 <div t-field="o.book_count"/>
                             </div>
-
                             <div t-if="o.location" class="col" name="location_info">
-                                <strong>Location</strong>
+                                <strong>Location:</strong>
                                 <div t-field="o.location"/>
                             </div>
                         </div>
-
                         <!-- Books Table Section -->
                         <div class="row mb-4">
                             <div class="col-12">
-                                <table class="table table-bordered">
+                                <table class="table table-bordered" style="border-collapse: collapse; width: 100%;">
                                     <thead>
                                         <tr>
-                                            <th style="color: red;">Book</th>
-                                            <th style="color: red;">Price</th>
-                                            <th style="color: red;">Published Date</th>
-                                            <th style="color: red;">Author</th>
+                                            <th style="color: red; border: 1px solid black; padding: 8px;">Book</th>
+                                            <th style="color: red; border: 1px solid black; padding: 8px;">Price</th>
+                                            <th style="color: red; border: 1px solid black; padding: 8px;">Published Date</th>
+                                            <th style="color: red; border: 1px solid black; padding: 8px;">Author</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr t-foreach="o.book_ids" t-as="book">
-                                            <td>
+                                            <td style="border: 1px solid black; padding: 8px;">
                                                 <strong t-esc="book.barcode or 'No-ISBN'"/><br/>
                                                 <span t-field="book.name"/><br/>
                                                 On Hand: <span t-field="book.qty_available"/>
                                             </td>
-                                            <td>
+                                            <td style="border: 1px solid black; padding: 8px;">
                                                 <span t-field="book.list_price"/>
                                             </td>
-                                            <td>
+                                            <td style="border: 1px solid black; padding: 8px;">
                                                 <span t-field="book.published_date" t-options='{"format": "dd/MMM/YYYY"}'/>
                                             </td>
-                                            <td>
+                                            <td style="border: 1px solid black; padding: 8px;">
                                                 <span t-field="book.author"/>
                                             </td>
                                         </tr>
@@ -70,7 +65,6 @@
                                 </table>
                             </div>
                         </div>
-
                         <!-- Notes Section -->
                         <div class="row">
                             <div class="col-12">
@@ -83,6 +77,7 @@
             </t>
         </t>
     </template>
+
     <template id="external_layout_custom" inherit_id="web.external_layout_standard">
         <xpath expr="//div[@name='company_address']" position="replace">
             <div name="company_address" style="text-align: right;">
@@ -92,6 +87,19 @@
                 </div>
                 <div t-if="company.phone">
                     Phone: <span t-field="company.phone"/>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="external_layout_footer_custom" inherit_id="web.external_layout_standard">
+        <xpath expr="//div[hasclass('o_footer_content')]" position="replace">
+            <div class="o_footer_content d-flex justify-content-between border-top pt-2">
+                <div class="text-start">
+                    <span t-if="company.website" t-field="company.website"/>
+                </div>
+                <div class="text-end text-muted">
+                    Page: <span class="page"/> / <span class="topage"/>
                 </div>
             </div>
         </xpath>

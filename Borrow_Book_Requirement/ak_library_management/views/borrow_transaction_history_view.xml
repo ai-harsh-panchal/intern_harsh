@@ -8,9 +8,8 @@
                 <list string="Borrow Transaction History">
                     <field name="customer_id"/>
                     <field name="books_ids"/>
-                    <field name="borrow_start_date"/>
                     <field name="borrow_end_date"/>
-                    <field name="deposit_amount"/>
+                    <field name="deposit_amount" groups="!ak_library_management.group_library_assistant"/>
                 </list>
             </field>
         </record>
@@ -47,7 +46,7 @@
                         </group>
                     </sheet>
                     <footer>
-                        <button name="action_borrow_books" string="Confirm" type="object"/>
+                        <button name="action_confirm" string="Confirm" type="object"/>
                         <button special="cancel" string="Cancel"/>
                     </footer>
                 </form>
