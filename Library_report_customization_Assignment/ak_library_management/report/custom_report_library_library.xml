@@ -19,73 +19,72 @@
                             </div>
                             <div class="page">
                                 <!-- Library Header Section -->
-                                <div class="row mb-4">
-                                    <div class="col-12">
-                                        <t t-set="layout_document_title">
-                                            <h4>Library Name #<span t-field="o.id"/>:
-                                                <span t-field="o.name"/>
-                                            </h4>
-                                        </t>
-                                    </div>
-                                </div>
-
+                                <h2>Library Name #<span t-field="o.id"/>:
+                                    <span t-field="o.name"/>
+                                </h2>
                                 <!-- Library Details Section -->
-                                <div class="row mb-4" id="library_informations">
-                                    <div t-if="o.librarian_id" class="col" name="librarian_info">
-                                        <strong>Librarian Name</strong>
-                                        <div t-field="o.librarian_id.name"/>
-                                    </div>
-                                    <div t-if="o.date" class="col" name="date_info">
-                                        <strong>Date</strong>
-                                        <div t-field="o.date" t-options='{"format": "dd/MMM/YYYY"}'/>
-                                    </div>
 
-                                    <div t-if="o.book_count" class="col" name="book_count_info">
-                                        <strong>Total Borrowed Books</strong>
-                                        <div t-field="o.book_count"/>
-                                    </div>
-
-                                    <div t-if="o.location" class="col" name="location_info">
-                                        <strong>Location</strong>
-                                        <div t-field="o.location"/>
-                                    </div>
-                                </div>
-                                <div class="row mb-4">
-                                    <div class="col-12">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th style="color: red;">Book</th>
-                                                    <th style="color: red;">Price</th>
-                                                    <th style="color: red;">Published Date</th>
-                                                    <th style="color: red;">Author</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr t-foreach="o.book_ids" t-as="book">
-                                                    <td>
-                                                        <strong t-esc="book.barcode or 'No-ISBN'"/>
-                                                        <br/>
-                                                        <span t-field="book.name"/>
-                                                        <br/>
-                                                        On Hand:
-                                                        <span t-field="book.qty_available"/>
-                                                    </td>
-                                                    <td>
-                                                        <span t-field="book.list_price"/>
-                                                    </td>
-                                                    <td>
-                                                        <span t-field="book.published_date"
-                                                              t-options='{"format": "dd/MMM/YYYY"}'/>
-                                                    </td>
-                                                    <td>
-                                                        <span t-field="book.author"/>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                                <table width="100%" style="text-align:center; border-collapse: collapse;">
+                                    <tr>
+                                        <td width="25%">
+                                            <strong>Librarian Name</strong>
+                                            <div t-field="o.librarian_id.name">Mitchell Admin</div>
+                                        </td>
+                                        <td width="25%">
+                                            <strong>Date</strong>
+                                            <div>
+                                                <span t-field="o.date" t-options='{"format": "dd/MMM/YYYY"}'/>
+                                            </div>
+                                        </td>
+                                        <td width="25%">
+                                            <strong>Location</strong>
+                                            <div t-field="o.location">Ahm</div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table class="table-bordered" width="100%"
+                                       style="border: 1px solid black; text-align:center;">
+                                    <thead>
+                                        <tr>
+                                            <th style="color: red;">
+                                                <b>Book</b>
+                                            </th>
+                                            <th style="color: red;">Price</th>
+                                            <th style="color: red;">Published Date</th>
+                                            <th style="color: red;">Author</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="o.book_ids" t-as="p">
+                                            <tr style="border: 1px solid black;">
+                                                <td>
+                                                    <b>
+                                                        <span t-field="p.barcode"/>
+                                                    </b>
+                                                    <br/>
+                                                    <span t-field="p.name"/>
+                                                    <br/>
+                                                    <br/>
+                                                    <span>
+                                                        <b>On Hand</b>
+                                                    </span>
+                                                    <br/>
+                                                    <span t-out="p.qty_available"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="p.list_price"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="p.published_date"
+                                                          t-options="{'format':'d/MMM/yyyy'}"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="p.author"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
                                 <!-- Notes Section -->
                                 <div class="row">
                                     <div class="col-12">
@@ -117,17 +116,35 @@
                     <div class="page">
                         <h2>Member Details</h2>
                         <div class="row mt32 mb32">
-                            <div class="col-6">
-                                <strong>Member Name:</strong>
-                                <span t-field="doc.member_id.name"/>
-                                <br/>
-                                <strong>Membership Date:</strong>
-                                <span t-field="doc.membership_date"/>
-                                <br/>
-                                <strong>Books Borrowed :</strong>
-                                <t t-foreach="doc.book_ids" t-as="book">
-                                    <span t-field="book.name"/>
-                                </t>
+                            <div class="col-12">
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <thead>
+                                        <tr>
+                                            <th style="border: 1px solid black; padding: 8px;">Member Name</th>
+                                            <th style="border: 1px solid black; padding: 8px;">Membership Date</th>
+                                            <th style="border: 1px solid black; padding: 8px;">Books Borrowed</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="border: 1px solid black; padding: 8px;">
+                                                <span t-field="doc.member_id.name"/>
+                                            </td>
+                                            <td style="border: 1px solid black; padding: 8px;">
+                                                <span t-field="doc.membership_date"/>
+                                            </td>
+                                            <td style="border: 1px solid black; padding: 8px;">
+                                                <ul>
+                                                    <t t-foreach="doc.book_ids" t-as="book">
+                                                        <li>
+                                                            <span t-field="book.name"/>
+                                                        </li>
+                                                    </t>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
