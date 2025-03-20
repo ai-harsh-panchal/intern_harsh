@@ -47,7 +47,7 @@
 ### changes
 - Multiple warnings display to the user sequentially, when all condition match in borrow book transaction model
 
-## [18.0.1.0.3] - 19-03-25 | Assignment Library report customization 
+## [18.0.1.0.3] - 19-03-25 | Assignment Library custom report
 
 ### changes
 - change in library_library_report_template apply spacing in table fix border of table display 
