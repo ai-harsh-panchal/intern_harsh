@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_invoice_document_inherit" inherit_id="account.report_invoice_document">
+            <xpath expr="//div[@name='address_same_as_shipping']//t[@t-set='address']" position="replace">
+                <t t-set="address">
+                    <div>
+                        <strong>
+                            <span t-field="o.partner_id.name"/>
+                        </strong>
+                        <address class="mb-0">
+                            <strong>
+                                <span t-field="o.partner_id"
+                                      t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}'/>
+                            </strong>
+                        </address>
+                        <div t-if="o.partner_id.phone">
+                            Phone: <span t-field="o.partner_id.phone"/>
+                        </div>
+                        <div t-if="o.partner_id.vat" id="partner_vat">
+                            <t t-if="o.company_id.account_fiscal_country_id.vat_label"
+                               t-out="o.company_id.account_fiscal_country_id.vat_label"
+                               id="inv_tax_id_label"/>
+                            <t t-else="">Tax ID</t>: <span t-field="o.partner_id.vat"/>
+                        </div>
+                    </div>
+                </t>
+            </xpath>
+        </template>
+    </data>
+</odoo>

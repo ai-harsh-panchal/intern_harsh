@@ -9,7 +9,9 @@
                         <div class="row mb-4">
                             <div class="col-12">
                                 <t t-set="layout_document_title">
-                                    <h4>Library Name #<span t-field="o.id"/>: <span t-field="o.name"/></h4>
+                                    <h4>Library Name : [<span t-field="o.name"/>] #
+                                        <span t-field="o.id"/>
+                                    </h4>
                                 </t>
                             </div>
                         </div>
@@ -35,27 +37,33 @@
                         <!-- Books Table Section -->
                         <div class="row mb-4">
                             <div class="col-12">
-                                <table class="table table-bordered" style="border-collapse: collapse; width: 100%;">
+                                <table class="table table-bordered table-hover w-100">
                                     <thead>
                                         <tr>
-                                            <th style="color: red; border: 1px solid black; padding: 8px;">Book</th>
-                                            <th style="color: red; border: 1px solid black; padding: 8px;">Price</th>
-                                            <th style="color: red; border: 1px solid black; padding: 8px;">Published Date</th>
-                                            <th style="color: red; border: 1px solid black; padding: 8px;">Author</th>
+                                            <th class="text-left" style="color: red; padding: 8px;">Book</th>
+                                            <th class="text-left" style="color: red; padding: 8px;">Price</th>
+                                            <th class="text-left" style="color: red; padding: 8px;">Published
+                                                Date
+                                            </th>
+                                            <th class="text-left" style="color: red;">Author</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr t-foreach="o.book_ids" t-as="book">
                                             <td style="border: 1px solid black; padding: 8px;">
-                                                <strong t-esc="book.barcode or 'No-ISBN'"/><br/>
-                                                <span t-field="book.name"/><br/>
-                                                On Hand: <span t-field="book.qty_available"/>
+                                                <strong t-esc="book.barcode or 'No-ISBN'"/>
+                                                <br/>
+                                                <span t-field="book.name"/>
+                                                <br/>
+                                                On Hand:
+                                                <span t-out="int(book.qty_available)"/>
                                             </td>
                                             <td style="border: 1px solid black; padding: 8px;">
                                                 <span t-field="book.list_price"/>
                                             </td>
                                             <td style="border: 1px solid black; padding: 8px;">
-                                                <span t-field="book.published_date" t-options='{"format": "dd/MMM/YYYY"}'/>
+                                                <span t-field="book.published_date"
+                                                      t-options='{"format": "dd/MMM/YYYY"}'/>
                                             </td>
                                             <td style="border: 1px solid black; padding: 8px;">
                                                 <span t-field="book.author"/>
@@ -78,20 +86,24 @@
         </t>
     </template>
 
+    <!-- Custom header External Layout Template -->
     <template id="external_layout_custom" inherit_id="web.external_layout_standard">
         <xpath expr="//div[@name='company_address']" position="replace">
-            <div name="company_address" style="text-align: right;">
-                <span t-field="company.partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'/>
-                <div t-if="company.email">
-                    Email: <span t-field="company.email"/>
-                </div>
-                <div t-if="company.phone">
-                    Phone: <span t-field="company.phone"/>
+            <div class="row">
+                <div class="col-12 d-flex justify-content-end" name="company_address">
+                    <ul class="list-unstyled text-right">
+                        <li>
+                            <span t-field="company.partner_id"
+                                  t-options='{"widget": "contact", "fields": ["address", "email", "phone"], "no_marker": true}'>
+                            </span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </xpath>
     </template>
 
+    <!-- Custom footer External Layout Template -->
     <template id="external_layout_footer_custom" inherit_id="web.external_layout_standard">
         <xpath expr="//div[hasclass('o_footer_content')]" position="replace">
             <div class="o_footer_content d-flex justify-content-between border-top pt-2">
@@ -99,7 +111,10 @@
                     <span t-if="company.website" t-field="company.website"/>
                 </div>
                 <div class="text-end text-muted">
-                    Page: <span class="page"/> / <span class="topage"/>
+                    Page:
+                    <span class="page"/>
+                    /
+                    <span class="topage"/>
                 </div>
             </div>
         </xpath>

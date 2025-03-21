@@ -47,9 +47,11 @@
 ### changes
 - Multiple warnings display to the user sequentially, when all condition match in borrow book transaction model
 
-## [18.0.1.0.3] - 19-03-25 | Assignment Library report customization 
+## [18.0.1.0.4] - 21-03-25 | Assignment Library report customization 
 
 ### changes
-- change in library_library_report_template apply spacing in table fix border of table display 
-- change in custom_report_library_library maintain alignment in div content of header and display record in table 
-- update member report template display a member details in particular table format
+- i remove the html tag and other from custom_report_library_library and Use Odoo layout instead of HTML.
+- i have use table class for manage width and table format instead of setting a static width.
+- Update email and phone details in library_library_report_template
+- also update version in manifest
+

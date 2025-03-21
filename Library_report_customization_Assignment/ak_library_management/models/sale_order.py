@@ -23,21 +23,25 @@ class SaleOrder(models.Model):
         parameter: self
         return: Call base action_confirm method
         """
-        order_record = self.order_line.filtered(lambda line: line.product_id.qty_available < 5)
-        self.approval_required = True
-        low_stock_products = self.order_line.filtered(
-            lambda l: l.product_id.qty_available < 5
-        ).mapped('product_template_id.name')
-        return {
-            'name': 'Approval Required',
-            'type': 'ir.actions.act_window',
-            'res_model': 'sale.order.wizard',
-            'view_mode': 'form',
-            'target': 'new',
-            'context': {
-                'default_message': f"Approval required for {', '.join(low_stock_products)} product due to stock being less than 5."
-            }
-        }
+        for order in self:
+            low_stock_lines = order.order_line.filtered(lambda line: line.product_id.qty_available < 5)
+
+            if not order.approved_confirm and low_stock_lines:
+                order.approval_required = True
+
+                low_stock_products = low_stock_lines.mapped('product_template_id.name')
+
+                return {
+                    'name': 'Approval Required',
+                    'type': 'ir.actions.act_window',
+                    'res_model': 'sale.order.wizard',
+                    'view_mode': 'form',
+                    'target': 'new',
+                    'context': {
+                        'default_message': f"Approval required for {', '.join(low_stock_products)} product due to stock being less than 5."
+                    }
+                }
+
         return super().action_confirm()
 
     def action_approve(self):
