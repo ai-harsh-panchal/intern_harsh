@@ -2,7 +2,7 @@
 
 {
     'name': "Library Management System",
-    'version': '18.0.1.0.4',
+    'version': '18.0.1.1.0',
     'summary': 'A comprehensive module for managing library operations, including book tracking and member management.',
     'depends': ['base', 'web', 'account', 'sale_management', 'stock', 'product', 'base_automation', 'mail', 'hr', 'purchase', 'website'],
     'category': 'Education',
