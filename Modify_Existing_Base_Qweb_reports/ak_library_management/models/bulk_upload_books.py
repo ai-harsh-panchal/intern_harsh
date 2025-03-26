@@ -1,0 +1,84 @@
+# -*- coding: utf-8 -*-
+
+from odoo import models, fields, api
+
+
+class BulkUploadBooks(models.TransientModel):
+    """
+    Transient model for bulk uploading multiple books simultaneously.
+    This wizard facilitates the creation of multiple book records through a single interface.
+    It allows users to input multiple book names and associate them with an author.
+    """
+    _name = 'bulk.upload.books'
+    _description = 'Bulk Upload Books'
+    _rec_name = 'book_names'
+
+    book_names = fields.Text(string='Book Names')
+    author_id = fields.Many2one('res.partner', string='Author', required=True)
+    product_create = fields.Boolean(string='Create Products')
+    book_count = fields.Integer(compute="compute_count_book")
+    category_id = fields.Many2one(comodel_name='library.category', string='Category')
+    price = fields.Float(string='Price')
+    product_ids = fields.Many2many(comodel_name="product.template")
+
+    def action_create_product(self):
+        """
+        Reverts changes by deleting book records and notifying users.
+        this function create a book record in product.template model and also
+        check the if duplicate record value get then it will not create the record
+        parameter: self
+        return: None
+        """
+        for book_name in self.book_names.split(','):
+            book_name.strip()
+            if not self.env['product.template'].search([('name', '=', book_name)]):
+                products = self.env['product.template'].create({
+                    'name': book_name,
+                    'author': self.author_id.name
+                })
+                self.product_ids = [(4, products.id)]
+                self.env['bus.bus']._sendone(self.env.user.partner_id, 'simple_notification', {
+                    'type': 'success',
+                    'message': f"{book_name} is created as product.",
+                })
+            self.product_create = True
+
+    def action_revert_changes(self):
+        """
+        This function is used for revert the changes
+            - Deletes the corresponding product.template records
+            - Sends a success notification for each deleted book
+            - Sets product_create flag to true
+        Param : self
+        Returns: None
+        """
+        self.product_ids.unlink()
+
+    @api.depends("product_ids")
+    def compute_count_book(self):
+        """
+        Computes the count of books for the smart button.
+        parameter: self
+        return: None
+        """
+        for record in self:
+            record.book_count = len(record.product_ids) if record.product_ids else 0
+
+    def action_book_list(self):
+        """
+        This function is used to open a form view when there is one record.
+        If there are multiple records, it opens a list view.
+        param self: Recordset of the model calling the method.
+        return: A dictionary defining an action, which can either open a list view for multiple records or a form view for a single record.
+        return type: dict
+        """
+        action = {
+            'name': 'Bulk Books List',
+            'type': 'ir.actions.act_window',
+            'res_model': 'product.template',
+            'view_mode': 'list,form' if len(self.product_ids) > 1 else 'form',
+            'domain': [("id", "in", self.product_ids.ids)],
+        }
+        if len(self.product_ids) == 1:
+            action['res_id'] = self.product_ids.id
+        return action
