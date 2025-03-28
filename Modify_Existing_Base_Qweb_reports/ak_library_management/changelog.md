@@ -59,3 +59,11 @@
 
 ### changes 
 - add report_invoice.xml file for modify base sale order invoice report
+
+## [18.0.1.2.1] - 28-03-25 | Assignment Dynamic HTTP Controller
+
+### changes
+- implement slug in res partner model py file 
+- create a kanban view in dynamic web page xml file for contact list 
+- change the view of partner details from list to form view as per odoo standard 
+- manage controller function for partner details and contact list 
