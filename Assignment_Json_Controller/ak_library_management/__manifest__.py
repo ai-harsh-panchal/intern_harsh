@@ -1,0 +1,52 @@
+# -*- coding: utf-8 -*-
+
+{
+    'name': "Library Management System",
+    'version': '18.0.1.3.0',
+    'summary': 'A comprehensive module for managing library operations, including book tracking and member management.',
+    'depends': ['base', 'web', 'account', 'sale_management', 'stock', 'product', 'base_automation', 'mail', 'hr',
+                'purchase', 'website'],
+    'category': 'Education',
+    'author': 'Harsh',
+    'website': 'https://www.aktivsoftware.com',
+    'data': [
+        'security/ak_library_management_security.xml',
+        'security/ir.model.access.csv',
+        'data/ir_sequence_data.xml',
+        'views/library_book_views.xml',
+        'views/library_category_views.xml',
+        'views/library_member_views.xml',
+        'views/library_library_views.xml',
+        'views/product_template_views.xml',
+        'views/bulk_upload_book_views.xml',
+        'views/res_user_form_view.xml',
+        'views/sale_order_views.xml',
+        'views/res_partner_form_view.xml',
+        'views/borrow_transaction_history_view.xml',
+        'wizard/borrow_books_wizard.xml',
+        'wizard/sale_order_wizard.xml',
+        'data/borrow_transaction_ir_actions.xml',
+        'report/library_library_report_action.xml',
+        'data/borrow_transaction_mail_template.xml',
+        'report/library_library_report_template.xml',
+        'report/custom_report_library_library.xml',
+        'views/library_menus.xml',
+        'views/stock_warehouse_view.xml',
+        'views/res_config_setting_view.xml',
+        'report/report_invoice.xml',
+        'views/dynamic_web_page.xml',
+        'views/customer_page.xml',
+        'views/sale_menus.xml',
+    ],
+    "assets":
+        {
+            "web.assets_frontend":
+                [
+                    "/ak_library_management/static/src/js/customer_fetch.js",
+                ]
+        },
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+    'license': 'LGPL-3',
+}
