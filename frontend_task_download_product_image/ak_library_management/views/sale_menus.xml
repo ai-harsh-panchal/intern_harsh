@@ -1,0 +1,23 @@
+<odoo>
+        <!-- here i have inherit a menu from sale
+         and change the sequence below to pricelist menu
+         and also chnage the name of menu -->
+
+        <menuitem
+                id="sale.menu_products"
+                name="Product Items"
+                action="product.product_normal_action_sell"
+                parent="sale.product_menu_catalog"
+                sequence="40"
+        />
+         <!-- here i have change the position of customer menu
+          from order to configuaration -->
+
+        <menuitem
+                id="sale.res_partner_menu"
+                name="Customers"
+                action="account.res_partner_action_customer"
+                parent="sale.menu_sale_config"
+                sequence="30"
+        />
+</odoo>

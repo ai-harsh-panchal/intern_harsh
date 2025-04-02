@@ -1,0 +1,13 @@
+<odoo>
+    <!-- inherit product template -->
+    <template id="product_image_download_custom" inherit_id="website_sale.product">
+        <xpath expr="//div[@id='o_product_terms_and_share']" position="after">
+            <t t-if="product.image_1920 or product.product_template_image_ids">
+                <a class="btn btn-primary"
+                   t-att-href="'/download_product_image/' + str(product.id)">
+                    Download Image
+                </a>
+            </t>
+        </xpath>
+    </template>
+</odoo>

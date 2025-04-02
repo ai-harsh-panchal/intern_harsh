@@ -1,0 +1,137 @@
+<odoo>
+    <!-- Dynamic kanban layout contact web page template -->
+    <template id="res_partner_template">
+        <t t-call="website.layout">
+            <div class="container" style="margin-right: 105px;">
+                <div class="row" style="width: 110%; height: 150%;">
+                    <t t-foreach="partners" t-as="partner">
+                        <div class="col-md-4" style="margin-bottom: 15px;">
+                            <a t-att-href="'/partner/%s-%s' % (partner.name_slugified, partner.id)">
+                                <div class="o_kanban_card" style="border: 1px solid #d8dadd; width: auto;">
+                                    <article
+                                            class="o_kanban_record d-flex cursor-pointer flex-grow-1 flex-md-shrink-1 flex-shrink-0 flex-row"
+                                            tabindex="0">
+                                        <aside class="o_kanban_aside_full">
+                                            <div class="o_kanban_image_fill position-relative w-100">
+                                                <div name="avatar_128"
+                                                     class="o_field_widget o_readonly_modifier o_field_image h-100">
+                                                    <div class="d-inline-block position-relative opacity-trigger-hover">
+                                                        <img
+                                                                alt="Contact image"
+                                                                t-att-src="'/web/image/res.partner/%s/avatar_128' % partner.id"
+                                                                style="width: 100px; height: 100px; object-fit: cover; margin-bottom: 10px; margin-left: 12px; margin-top: 10px;">
+                                                        </img>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </aside>
+                                        <div class="ps-2 ps-md-0"
+                                             style="margin-left: 10px; margin-top: 9px;">
+                                            <div class="mb-1">
+                                                <span class="mb-0 fw-bold"
+                                                      style="font-weight: 500 !important; font-size: 0.9625rem !important;">
+                                                    <t t-esc="partner.name"/>
+                                                </span>
+                                                <div name="category_id"
+                                                     class="o_field_widget o_field_many2many_tags m-0">
+                                                    <div class="d-flex flex-wrap gap-1"></div>
+                                                </div>
+                                            </div>
+                                            <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.75rem; display: block; max-width: 100%; overflow-wrap: break-word;">
+                                                <t t-esc="partner.email"/>
+                                            </span>
+                                            <footer>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="me-3" style="font-size: 0.75rem; margin-top: 5px;">
+                                                        <i class="fa fa-credit-card me-1" aria-label="Purchases"
+                                                           role="img" title="Purchases"></i>
+                                                        <span>
+                                                            <t t-out="partner.purchase_order_count"/>
+                                                        </span>
+                                                    </div>
+                                                    <div style="font-size: 0.75rem;">
+                                                        <i class="fa fa-usd me-1" role="img" aria-label="Sale orders"
+                                                           title="Sales orders"></i>
+                                                        <span>
+                                                            <t t-out="partner.sale_order_count"/>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </footer>
+                                        </div>
+                                    </article>
+                                </div>
+                            </a>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Partner Details Template -->
+    <template id="partner_detail_template">
+        <t t-call="website.layout">
+            <div class="oe_structure">
+                <div class="container">
+                    <div class="shadow-lg card mb-2 mt-2">
+                        <div class="card-body">
+                            <div>
+                                <strong class="fs-3 mt-5">
+                                    <t t-out="contact.name"/>
+                                </strong>
+                                <img t-attf-src='/web/image/res.partner/#{contact.id}/avatar_128'
+                                     class="float-md-end" style="height:80px; width:80px;"/>
+                            </div>
+                            <table class="table table-borderless">
+                                <tbody>
+                                    <tr>
+                                        <td>Email:
+                                            <t t-out="contact.email"/>
+                                        </td>
+                                        <td>Website:
+                                            <t t-out="contact.website"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phone:
+                                            <t t-out="contact.phone"/>
+                                        </td>
+                                        <td>Tax ID:
+                                            <t t-out="contact.vat"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mobile:
+                                            <t t-out="contact.mobile"/>
+                                        </td>
+                                        <td>Tags:
+                                            <t t-foreach="contact.category_id" t-as="tag">
+                                                <span style="border-radius: 20px;background: #B4EBE6; padding-left:10px; padding-right:10px;margin-right:5px;">
+                                                    <t t-out="tag.name"/>
+                                                </span>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="mb-2 mt-2 back-button">
+                                <a class="btn btn-primary mb-2" href="/contacts" role="button">Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <data>
+        <!-- this record display contacts menu in website module -->
+        <record id="res_partner_website_custom" model="website.menu">
+            <field name="name">Contacts</field>
+            <field name="url">/contacts</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" eval="20"/>
+        </record>
+    </data>
+</odoo>

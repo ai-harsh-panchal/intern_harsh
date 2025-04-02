@@ -1,0 +1,145 @@
+<odoo>
+    <!-- custom Library Report without odoo external layout -->
+    <template id="basic_library_qweb_report_template">
+        <div class="header o_standard_header">
+            <div style="text-align:left;">Your logo</div>
+            <div style="text-align:right;">
+                <p>Aktiv Software<br/>"https://www.aktivsoftware.com"
+                    <br/>
+                    10th Floor,Binori Bsquare 3,Sindhu Bhavan Road
+                    <br/>
+                    India
+                </p>
+            </div>
+        </div>
+        <div class="page">
+            <h2>Library Qweb Report</h2>
+            <h3>
+                <span t-field="o.name"/>
+                #
+                <span t-field="o.id"/>
+            </h3>
+            <br/>
+            <br/>
+            <table width="100%" style="text-align:center">
+                <td width="25%">
+                    <strong>Librarian Name</strong>
+                    <div t-field="o.librarian_id.name">Mitchell Admin</div>
+                </td>
+                <td width="25%">
+                    <strong>Date</strong>
+                    <div>
+                        <t t-out="o.date"/>
+                    </div>
+                </td>
+                <td width="25%">
+                    <strong>Total Borrowed Books</strong>
+                    <div t-out="float(o.book_count)"/>
+                </td>
+                <td width="25%">
+                    <strong>Location</strong>
+                    <div t-field="o.location">Ahm</div>
+                </td>
+            </table>
+            <table class="table-bordered" width="100%" style="border: 1px solid black; text-align:center;">
+                <thead>
+                    <tr>
+                        <th style="color: red;">
+                            <b>Book</b>
+                        </th>
+                        <th style="color: red;">Price</th>
+                        <th style="color: red;">Published Date</th>
+                        <th style="color: red;">Author</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="o.book_ids" t-as="p">
+                        <tr style="border: 1px solid black;">
+                            <td>
+                                <b>
+                                    <span t-field="p.barcode"/>
+                                </b>
+                                <br/>
+                                <span t-field="p.name"/>
+                                <br/>
+                                <br/>
+                                <span>
+                                    <b>On Hand</b>
+                                </span>
+                                <br/>
+                                <span t-out="int(p.qty_available)"/>
+                            </td>
+                            <td>
+                                <span t-field="p.list_price"/>
+                            </td>
+                            <td>
+                                <span t-field="p.published_date" t-options="{'format':'d/MMM/yyyy'}"/>
+                            </td>
+                            <td>
+                                <span t-field="p.author"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+            <p t-field="o.notes"/>
+        </div>
+        <div class="footer o_standard_footer">
+            <div class="row text-center" style="border-top: 1px solid black">
+                <span>www.aktivsoftware.com</span>
+            </div>
+        </div>
+    </template>
+
+    <template id="custom_library_qweb_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="ak_library_management.basic_library_qweb_report_template"/>
+            </t>
+        </t>
+    </template>
+
+    <!-- library member report for mail attachment  -->
+    <template id="report_member_card">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Member Details</h2>
+                        <div class="row mt32 mb32">
+                            <div class="col-12">
+                                <table class="table table-bordered table-hover w-100">
+                                    <tr>
+                                        <th class="text-center">Member Name</th>
+                                        <th class="text-center">Membership Date</th>
+                                        <th class="text-center">Books Borrowed</th>
+                                    </tr>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center">
+                                                <span t-field="doc.member_id.name"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <span t-field="doc.membership_date"
+                                                      t-options='{"format": "dd/MM/yyyy"}'/>
+                                            </td>
+                                            <td>
+                                                <ul>
+                                                    <t t-foreach="doc.book_ids" t-as="book">
+                                                        <li>
+                                                            <span t-field="book.name"/>
+                                                        </li>
+                                                    </t>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
