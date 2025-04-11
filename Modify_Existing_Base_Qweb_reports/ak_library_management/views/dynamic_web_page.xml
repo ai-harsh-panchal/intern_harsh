@@ -1,15 +1,4 @@
 <odoo>
-    <!-- Demo web page template -->
-    <template id="demo_page_template">
-        <t t-call="website.layout">
-            <div class="container">
-                <h4>Welcome to My Odoo Ak library Management Module!</h4>
-                <p>This is a demo page created to showcase the functionality of the controller.</p>
-                <p>Feel free to explore the features and functionalities of this module.</p>
-            </div>
-        </t>
-    </template>
-
     <!-- Dynamic kanban layout contact web page template -->
     <template id="res_partner_template">
         <t t-call="website.layout">
@@ -137,14 +126,6 @@
     </template>
 
     <data>
-        <!-- this record display Ak Library Management menu in website module -->
-        <record id="menu_website_custom" model="website.menu">
-            <field name="name">Ak Library Management</field>
-            <field name="url">/demo</field>
-            <field name="parent_id" ref="website.main_menu"/>
-            <field name="sequence" eval="10"/>
-        </record>
-
         <!-- this record display contacts menu in website module -->
         <record id="res_partner_website_custom" model="website.menu">
             <field name="name">Contacts</field>

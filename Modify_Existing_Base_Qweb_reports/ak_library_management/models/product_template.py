@@ -26,6 +26,7 @@ class ProductTemplate(models.Model):
                               string='Status',
                               tracking=True,
                               default='available')
+    is_vendor = fields.Boolean(string='Vendor on Variants')
 
     @api.constrains('unavailable')
     def action_borrow(self):
