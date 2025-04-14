@@ -13,3 +13,6 @@ from . import borrow_transaction_history
 from . import bulk_upload_books
 from . import stock_warehouse
 from . import res_config_settings
+from . import product_product
+from . import product_supplierinfo
+from . import purchase_order

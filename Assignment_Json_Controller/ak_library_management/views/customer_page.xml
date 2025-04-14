@@ -20,6 +20,7 @@
                         <input type="text" id="InputName" placeholder="Customer Name"/>
                         <input type="text" id="InputAddress" placeholder="Customer Address"/>
                         <input type="text" id="InputPhone" placeholder="Customer Phone"/>
+                        <p class="warning-message" style="color: red; display: none;"></p>
                     </div>
                 </div>
             </div>

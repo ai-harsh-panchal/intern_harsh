@@ -5,7 +5,7 @@
             <xpath expr="//div[@name='company_address']" position="replace">
                 <t t-if="o._name == 'account.move' and o.move_type == 'out_invoice'">
                     <div class="row" style="margin-top: 20px; margin-left:12px; padding-bottom:20px;">
-                        <div class="col-7" style="text-align: left;">
+                        <div class="col-7 mr-3" style="text-align: left;">
                             <table style="width: 100%;" class="table-borderless">
                                 <tr>
                                     <td style="width: 150px;">Invoice Reference:</td>
@@ -39,8 +39,9 @@
                                 </tr>
                             </table>
                         </div>
-                        <div class="col-5 text-right ms-1">
-                            <div style="margin-left: 15px;">
+
+                        <div class="col-7 text-right">
+                            <div style="margin-right: 10px; margin-left: 150px;">
                                 <strong>
                                     <span t-field="o.partner_id.name"/>
                                 </strong>
@@ -55,77 +56,79 @@
                     </div>
                 </t>
             </xpath>
-        <xpath expr="//div[contains(@t-attf-class, 'article')]" position="attributes">
-            <attribute name="t-attf-class">article o_report_layout_standard o_company_#{company.id}_layout
-                o_snail_mail {{'o_report_layout_background' if company.layout_background != 'Blank' else ''}}
-            </attribute>
-        </xpath>
-        <xpath expr="//div[hasclass('o_footer_content')]" position="replace">
-            <div class="o_footer_content d-flex justify-content-center pt-2"
-                 style="color: darkblue; font-size: 14px; font-weight: bold; border-top: none;">
-                <div class="text-center">
-                    <span>Nolen, Winker and Partners - 33, rue de Gasperich, L- 5826 Hesperange - VAT LU31980427
-                    </span>
+            <xpath expr="//div[contains(@t-attf-class, 'article')]" position="attributes">
+                <attribute name="t-attf-class">article o_report_layout_standard o_company_#{company.id}_layout
+                    o_snail_mail {{'o_report_layout_background' if company.layout_background != 'Blank' else ''}}
+                </attribute>
+            </xpath>
+            <xpath expr="//div[hasclass('o_footer_content')]" position="replace">
+                <div class="o_footer_content d-flex justify-content-center pt-2"
+                     style="color: darkblue; font-size: 14px; font-weight: bold; border-top: none;">
+                    <div class="text-center">
+                        <span>Nolen, Winker and Partners - 33, rue de Gasperich, L- 5826 Hesperange - VAT LU31980427
+                        </span>
+                    </div>
                 </div>
-            </div>
-        </xpath>
-    </template>
+            </xpath>
+        </template>
 
-    <!-- inherit article elements of invoice report -->
-    <template id="report_invoice_document_inherit_elements" inherit_id="account.report_invoice_document">
-        <xpath expr="//td[@name='td_taxes']" position="replace">
-        </xpath>
-        <xpath expr="//span[@id='payment_terms_note_id']" position="replace">
-        </xpath>
-        <xpath expr="//th[@name='th_taxes']" position="replace">
-        </xpath>
-        <xpath expr="//div[@id='right-elements']" position="attributes">
-            <attribute name="t-attf-class"/>
-        </xpath>
-        <xpath expr="//t[@t-call='account.document_tax_totals_company_currency_template']" position="attributes">
-            <attribute name="t-if">not o</attribute>
-        </xpath>
-        <xpath expr="//table[@name='invoice_line_table']" position="before">
-            <style>
-                th {
-                font-weight: bold;
-                }
-            </style>
-        </xpath>
-        <xpath expr="//div[@id='payment_term']" position="attributes">
-            <attribute name="style">margin-top: 100px; margin-left:12px;</attribute>
-        </xpath>
-        <xpath expr="//table[@name='invoice_line_table']" position="after">
-            <div style="margin-top: 60px;"></div>
-        </xpath>
-        <xpath expr="//div[@id='informations']" position="replace">
-            <div/>
-        </xpath>
-        <xpath expr="//td[@name='td_price_unit']" position="replace">
-            <td name="td_price_unit"
-                t-attf-class="text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}"
-                t-options='{"widget": "monetary","display_currency": o.currency_id}'>
-                <span class="text-nowrap" t-field="line.price_unit">9.00</span>
-            </td>
-        </xpath>
-        <xpath expr="//t[@t-set='layout_document_title']" position="replace">
-            <div class="fw-bold" style="font-size: 20px; margin-left:12px; margin-bottom: 80px; padding-top:50px;">
-                <span>INVOICE</span>
-            </div>
-        </xpath>
-        <xpath expr="//div[@name='address_same_as_shipping']" position="replace">
-            <div/>
-        </xpath>
-    </template>
+        <!-- inherit article elements of invoice report-->
+        <template id="report_invoice_document_inherit_elements" inherit_id="account.report_invoice_document">
+            <xpath expr="//td[@name='td_taxes']" position="attributes">
+                <attribute name="t-if">show_taxes</attribute>
+            </xpath>
+            <xpath expr="//span[@id='payment_terms_note_id']" position="attributes">
+                <attribute name="t-if">show_payment_terms</attribute>
+            </xpath>
+            <xpath expr="//th[@name='th_taxes']" position="attributes">
+                <attribute name="t-if">show_taxes</attribute>
+            </xpath>
+            <xpath expr="//div[@id='right-elements']" position="attributes">
+                <attribute name="t-attf-class">custom-class</attribute>
+            </xpath>
+            <xpath expr="//t[@t-call='account.document_tax_totals_company_currency_template']" position="attributes">
+                <attribute name="t-if">not o</attribute>
+            </xpath>
+            <xpath expr="//table[@name='invoice_line_table']" position="before">
+                <style>
+                    th {
+                    font-weight: bold;
+                    }
+                </style>
+            </xpath>
+            <xpath expr="//div[@id='payment_term']" position="attributes">
+                <attribute name="style">margin-top: 100px; margin-left:12px;</attribute>
+            </xpath>
+            <xpath expr="//table[@name='invoice_line_table']" position="after">
+                <div style="margin-top: 60px;"></div>
+            </xpath>
+            <xpath expr="//td[@name='td_price_unit']" position="attributes">
+                <attribute name="t-attf-class">text-end {{ 'd-none d-md-table-cell' if report_type == 'html' else ''
+                    }}
+                </attribute>
+                <attribute name="t-options">{ "widget": "monetary", "display_currency": o.currency_id }</attribute>
+            </xpath>
+            <xpath expr="//t[@t-set='layout_document_title']" position="replace">
+                <div class="fw-bold" style="font-size: 20px; margin-left:12px; margin-bottom: 80px; padding-top:50px;">
+                    <span>INVOICE</span>
+                </div>
+            </xpath>
+            <xpath expr="//div[@name='address_same_as_shipping']" position="attributes">
+                <attribute name="t-if">not o</attribute>
+            </xpath>
+            <xpath expr="//div[@id='informations']" position="attributes">
+                <attribute name="t-if">not o</attribute>
+            </xpath>
+        </template>
 
-    <!-- inherit document tax totals template -->
-    <template id="custom_document_tax_totals" inherit_id="account.document_tax_totals_template">
-        <xpath expr="//tr[@class='o_taxes']/t/td/span[@class='text-nowrap']" position="attributes">
-            <attribute name="style">font-weight: bold;</attribute>
-        </xpath>
-        <xpath expr="//tr[@class='o_subtotal']/td" position="attributes">
-            <attribute name="style">font-weight: bold;</attribute>
-        </xpath>
-    </template>
-</data>
-        </odoo>
+        <!-- inherit document tax totals template -->
+        <template id="custom_document_tax_totals" inherit_id="account.document_tax_totals_template">
+            <xpath expr="//tr[@class='o_taxes']/t/td/span[@class='text-nowrap']" position="attributes">
+                <attribute name="style">font-weight: bold;</attribute>
+            </xpath>
+            <xpath expr="//tr[@class='o_subtotal']/td" position="attributes">
+                <attribute name="style">font-weight: bold;</attribute>
+            </xpath>
+        </template>
+    </data>
+</odoo>

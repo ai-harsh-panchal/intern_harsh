@@ -38,7 +38,6 @@ class Library(models.Model):
             borrowed_books = rec.book_ids.filtered(lambda book: book.status == 'borrowed')
             rec.book_count = len(borrowed_books)
 
-
     def action_get_books_record(self):
         """
         this function perfrom action when i click on button it display the
