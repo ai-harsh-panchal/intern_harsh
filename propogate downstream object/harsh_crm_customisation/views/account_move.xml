@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+        <!--inherit invoice form view-->
+        <record id="view_sale_invoice_add_job_name" model="ir.ui.view">
+            <field name="name">account.move.form.add.job</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_date']" position="after">
+                    <field name="job_name" readonly="job_name != False"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
