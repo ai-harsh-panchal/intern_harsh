@@ -67,3 +67,47 @@
 - create a kanban view in dynamic web page xml file for contact list 
 - change the view of partner details from list to form view as per odoo standard 
 - manage controller function for partner details and contact list 
+
+## [18.0.1.3.0] - 01-04-25 | Assignment Json Controller
+
+### Added 
+- add customer_page xml file for display and fetch the data of contact
+
+## [18.0.1.4.0] - 01-04-25 | Assignment Front-end - Practical Task (POS 18 products section)
+
+### Added
+- add product_list_page_view and product_screen xml file in xml folder
+
+## [18.0.1.5.0] - 02-04-25 | Assignment Front-end - Practical Task (Download Product Images)
+
+### Added 
+- add product template website view xml file in views 
+
+## [18.0.1.6.0] - 04-04-25 | Assignment Vendor management system
+
+### Added 
+- add product_product, product_supllierinfo py file  in models
+
+## [18.0.1.6.1] - 11-04-25 | Assignment modify base report
+
+### changes 
+- apply proper space in header section in report_invoice xml file
+- and manage payment term in invoice 
+
+## [18.0.1.6.2] - 14-04-25 | Assignment json controller
+
+### changes
+- modify controller/main.py file add doc string for particular each functions
+- modify customer_page xml file add warning message if user entered wrong email id for fetch data
+
+## [18.0.1.6.3] - 15-04-25 | Assignment Dynamic HTTP controller
+
+### changes
+- modify dynamic web page xml file improve a partner details form layout
+- contact web page make a visible for without login 
+
+## [18.0.1.6.4] - 15-04-25 | Assignment modify existing base report 
+
+### changes 
+- modify report_invoice xml file in this what i manage the label it display only when the data is avaiable
+ 

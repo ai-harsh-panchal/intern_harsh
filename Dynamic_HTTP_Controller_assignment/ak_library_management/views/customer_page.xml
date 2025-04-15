@@ -1,0 +1,39 @@
+<odoo>
+    <!-- this is customer fetch web page template -->
+    <template id="customer_fetch_template" name="Customer Fetch">
+        <t t-call="website.layout">
+            <style>
+                .customer-fetch {
+                margin: 20px;
+                padding: 15px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                }
+            </style>
+
+            <div class="customer-fetch">
+                <div class="row">
+                    <div class="col">
+                        <h5>Fetch Customer Details</h5>
+                        <input type="email" id="InputEmail" placeholder="Enter Customer Email"/>
+                        <button class="fetch-button">Fetch Customer</button>
+                        <input type="text" id="InputName" placeholder="Customer Name"/>
+                        <input type="text" id="InputAddress" placeholder="Customer Address"/>
+                        <input type="text" id="InputPhone" placeholder="Customer Phone"/>
+                        <p class="warning-message" style="color: red; display: none;"></p>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- this customer form menu -->
+    <data>
+        <record id="customer_details_menu" model="website.menu">
+            <field name="name">Customer Form</field>
+            <field name="url">/customer_fetch_template</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" eval="30"/>
+        </record>
+    </data>
+</odoo>

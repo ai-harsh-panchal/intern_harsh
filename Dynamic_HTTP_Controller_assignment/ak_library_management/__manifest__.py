@@ -2,9 +2,10 @@
 
 {
     'name': "Library Management System",
-    'version': '18.0.1.2.1',
+    'version': '18.0.1.6.4',
     'summary': 'A comprehensive module for managing library operations, including book tracking and member management.',
-    'depends': ['base', 'web', 'account', 'sale_management', 'stock', 'product', 'base_automation', 'mail', 'hr', 'purchase', 'website'],
+    'depends': ['base', 'web', 'account', 'sale_management', 'stock', 'website_sale','product', 'base_automation', 'mail', 'hr',
+                'purchase', 'website', 'point_of_sale', 'pos_self_order', 'project'],
     'category': 'Education',
     'author': 'Harsh',
     'website': 'https://www.aktivsoftware.com',
@@ -27,15 +28,30 @@
         'data/borrow_transaction_ir_actions.xml',
         'report/library_library_report_action.xml',
         'data/borrow_transaction_mail_template.xml',
-        'report/library_library_report_template.xml',
-        'report/custom_report_library_library.xml',
+        # 'report/library_library_report_template.xml',
+        # 'report/custom_report_library_library.xml',
         'views/library_menus.xml',
         'views/stock_warehouse_view.xml',
         'views/res_config_setting_view.xml',
         'report/report_invoice.xml',
         'views/dynamic_web_page.xml',
+        'views/customer_page.xml',
+        'views/product_template_website.xml',
         'views/sale_menus.xml',
     ],
+    "assets":
+        {
+            'point_of_sale._assets_pos':
+            [
+                '/ak_library_management/static/src/xml/product_list_page_view.xml',
+                '/ak_library_management/static/src/xml/product_screen.xml',
+            ],
+            "web.assets_frontend":
+                [
+                    "/ak_library_management/static/src/js/customer_fetch.js",
+                    "/ak_library_management/static/src/js/add_to_cart.js",
+                ],
+        },
     'installable': True,
     'application': True,
     'auto_install': False,
