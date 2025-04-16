@@ -10,6 +10,9 @@ publicWidget.registry.CustomerFetch = publicWidget.Widget.extend({
 
     _onFetchCustomer: function(ev) {
         const email = this.$('#InputEmail').val();
+        const $warningMessage = this.$('.warning-message');
+        $warningMessage.text('').hide();
+
         if (email) {
             rpc("/fetch_customer", {'email': email}).then(
                 (data) => {
@@ -18,7 +21,7 @@ publicWidget.registry.CustomerFetch = publicWidget.Widget.extend({
                     this.$('#InputPhone').val(data.phone || '');
                 }
             ).catch((error) => {
-                console.error('Error fetching customer:', error);
+                $warningMessage.text('Invalid email address. Please try again.').show();
             });
         } else {
             this.$('#InputName').val('');

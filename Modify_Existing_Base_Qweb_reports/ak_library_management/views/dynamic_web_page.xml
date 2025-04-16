@@ -16,11 +16,13 @@
                                                 <div name="avatar_128"
                                                      class="o_field_widget o_readonly_modifier o_field_image h-100">
                                                     <div class="d-inline-block position-relative opacity-trigger-hover">
-                                                        <img
-                                                                alt="Contact image"
-                                                                t-att-src="'/web/image/res.partner/%s/avatar_128' % partner.id"
-                                                                style="width: 100px; height: 100px; object-fit: cover; margin-bottom: 10px; margin-left: 12px; margin-top: 10px;">
-                                                        </img>
+                                                        <t t-if="partner.image_1920">
+                                                            <img
+                                                                    alt="Contact image"
+                                                                    t-att-src="image_data_uri(partner.image_1920)"
+                                                                    style="width: 100px; height: 100px; object-fit: cover; margin-bottom: 10px; margin-left: 12px; margin-top: 10px;">
+                                                            </img>
+                                                        </t>
                                                     </div>
                                                 </div>
                                             </div>
@@ -74,40 +76,54 @@
         <t t-call="website.layout">
             <div class="oe_structure">
                 <div class="container">
-                    <div class="shadow-lg card mb-2 mt-2">
+                    <div class="shadow-lg card mb-4 mt-4">
                         <div class="card-body">
-                            <div>
-                                <strong class="fs-3 mt-5">
+                            <div class="d-flex align-items-center mb-3">
+                                <t t-if="contact.image_1920">
+                                    <img t-att-src="image_data_uri(contact.image_1920)"
+                                         class="rounded-circle me-3" style="height: 80px; width: 80px;"/>
+                                </t>
+                                <strong class="fs-3">
                                     <t t-out="contact.name"/>
                                 </strong>
-                                <img t-attf-src='/web/image/res.partner/#{contact.id}/avatar_128'
-                                     class="float-md-end" style="height:80px; width:80px;"/>
                             </div>
                             <table class="table table-borderless">
                                 <tbody>
                                     <tr>
-                                        <td>Email:
+                                        <td class="fw-bold">Email:</td>
+                                        <td>
                                             <t t-out="contact.email"/>
                                         </td>
-                                        <td>Website:
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Website:</td>
+                                        <td>
                                             <t t-out="contact.website"/>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Phone:
+                                        <td class="fw-bold">Phone:</td>
+                                        <td>
                                             <t t-out="contact.phone"/>
                                         </td>
-                                        <td>Tax ID:
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Tax ID:</td>
+                                        <td>
                                             <t t-out="contact.vat"/>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Mobile:
+                                        <td class="fw-bold">Mobile:</td>
+                                        <td>
                                             <t t-out="contact.mobile"/>
                                         </td>
-                                        <td>Tags:
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold">Tags:</td>
+                                        <td>
                                             <t t-foreach="contact.category_id" t-as="tag">
-                                                <span style="border-radius: 20px;background: #B4EBE6; padding-left:10px; padding-right:10px;margin-right:5px;">
+                                                <span class="badge bg-info me-1">
                                                     <t t-out="tag.name"/>
                                                 </span>
                                             </t>
@@ -115,8 +131,8 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <div class="mb-2 mt-2 back-button">
-                                <a class="btn btn-primary mb-2" href="/contacts" role="button">Back</a>
+                            <div class="mb-2 mt-3">
+                                <a class="btn btn-primary" href="/contacts" role="button">Back</a>
                             </div>
                         </div>
                     </div>

@@ -13,30 +13,36 @@
                                         <span t-field="o.name"/>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>Invoice Date:</td>
-                                    <td>
-                                        <span t-field="o.invoice_date" t-options='{"format": "dd/MM/yyyy"}'/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Reference Period:</td>
-                                    <td>
-                                        <span>
-                                            <t t-esc="o.invoice_date"
-                                               t-options='{"widget": "date", "format": "dd/MM/yyyy"}'/> <!-- Example: 01/04/2024 -->
-                                            To
-                                            <t t-esc="o.invoice_date_due"
-                                               t-options='{"widget": "date", "format": "dd/MM/yyyy"}'/> <!-- Example: 30/04/2024 -->
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Payment Term:</td>
-                                    <td>
-                                        <span t-field="o.invoice_payment_term_id"/>
-                                    </td>
-                                </tr>
+                                <t t-if="o.invoice_date">
+                                    <tr>
+                                        <td>Invoice Date:</td>
+                                        <td>
+                                            <span t-field="o.invoice_date" t-options='{"format": "dd/MM/yyyy"}'/>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <t t-if="o.invoice_date or o.invoice_date_due">
+                                    <tr>
+                                        <td>Reference Period:</td>
+                                        <td>
+                                            <span>
+                                                <t t-esc="o.invoice_date"
+                                                   t-options='{"widget": "date", "format": "dd/MM/yyyy"}'/> <!-- Example: 01/04/2024 -->
+                                                To
+                                                <t t-esc="o.invoice_date_due"
+                                                   t-options='{"widget": "date", "format": "dd/MM/yyyy"}'/> <!-- Example: 30/04/2024 -->
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <t t-if="o.invoice_payment_term_id">
+                                    <tr>
+                                        <td>Payment Term:</td>
+                                        <td>
+                                            <span t-field="o.invoice_payment_term_id"/>
+                                        </td>
+                                    </tr>
+                                </t>
                             </table>
                         </div>
 

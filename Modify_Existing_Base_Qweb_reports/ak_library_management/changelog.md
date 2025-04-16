@@ -93,3 +93,21 @@
 ### changes 
 - apply proper space in header section in report_invoice xml file
 - and manage payment term in invoice 
+
+## [18.0.1.6.2] - 14-04-25 | Assignment json controller
+
+### changes
+- modify controller/main.py file add doc string for particular each functions
+- modify customer_page xml file add warning message if user entered wrong email id for fetch data
+
+## [18.0.1.6.3] - 15-04-25 | Assignment Dynamic HTTP controller
+
+### changes
+- modify dynamic web page xml file improve a partner details form layout
+- contact web page make a visible for without login 
+
+## [18.0.1.6.4] - 15-04-25 | Assignment modify existing base report 
+
+### changes 
+- modify report_invoice xml file in this what i manage the label it display only when the data is avaiable
+ 

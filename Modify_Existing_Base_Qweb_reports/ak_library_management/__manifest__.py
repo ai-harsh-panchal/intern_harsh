@@ -2,7 +2,7 @@
 
 {
     'name': "Library Management System",
-    'version': '18.0.1.6.1',
+    'version': '18.0.1.6.4',
     'summary': 'A comprehensive module for managing library operations, including book tracking and member management.',
     'depends': ['base', 'web', 'account', 'sale_management', 'stock', 'website_sale','product', 'base_automation', 'mail', 'hr',
                 'purchase', 'website', 'point_of_sale', 'pos_self_order', 'project'],
@@ -49,6 +49,7 @@
             "web.assets_frontend":
                 [
                     "/ak_library_management/static/src/js/customer_fetch.js",
+                    "/ak_library_management/static/src/js/add_to_cart.js",
                 ],
         },
     'installable': True,

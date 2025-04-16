@@ -16,7 +16,7 @@ class CustomerController(http.Controller):
         param : self
         return : Rendered HTML of the contacts page with a list of partners.
         """
-        partners = request.env['res.partner'].search([])
+        partners = request.env['res.partner'].sudo().search([])
         return http.request.render('ak_library_management.res_partner_template', {
             'partners': partners
         })
@@ -28,7 +28,7 @@ class CustomerController(http.Controller):
         param : self
         return : renders them using the partner detail template.
         """
-        contact = request.env['res.partner'].browse(partner_id)
+        contact = request.env['res.partner'].sudo().browse(partner_id)
         return request.render('ak_library_management.partner_detail_template', {
             'contact': contact
         })
@@ -37,6 +37,8 @@ class CustomerController(http.Controller):
     def fetch_customer_details_form(self):
         """
         this function only just render customer form using http type
+        param : self
+        return : render customer template
         """
         return http.request.render('ak_library_management.customer_fetch_template')
 
@@ -45,6 +47,8 @@ class CustomerController(http.Controller):
         """
         this function is use for get the data of particular customer on
         basis on email using json type
+        param : self, email
+        return : customer details (dict)
         """
         customer = request.env['res.partner'].search([('email', '=', email)])
         if customer:
@@ -60,6 +64,8 @@ class CustomerController(http.Controller):
         """
         this function is used to download the product image if the product have
         one image then it will directly download otherwise it will generate zip file
+        param : self, product_id
+        return : binary data
         """
         product = request.env['product.template'].sudo().browse(product_id)
         image_ids = product.product_template_image_ids
