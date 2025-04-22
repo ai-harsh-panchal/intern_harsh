@@ -11,3 +11,4 @@
 
 ### Changes
 - modify in product_template_website xml file manage the add to cart button on mouse hover 
+- change the xpath of add to cart in and manage the style of button with wishlist btn 

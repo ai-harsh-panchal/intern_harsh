@@ -2,7 +2,7 @@
 
 {
     'name': "shop customisation",
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.0.2',
     'summary': 'shop website customisation',
     'depends': ['base', 'web', 'sale_management', 'stock', 'website_sale', 'product', 'website', 'sale'],
     'category': 'Website',
