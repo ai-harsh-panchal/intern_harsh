@@ -1,0 +1,23 @@
+<odoo>
+    <data>
+        <!-- product catalog form view -->
+        <record id="view_product_catalog_wizard" model="ir.ui.view">
+            <field name="name">product.catalog.wizard.form</field>
+            <field name="model">product.catalog.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Product Catalog Generator">
+                    <group>
+                        <field name="catalog_style"/>
+                        <field name="page_break_after"/>
+                        <field name="product_ids" widget="many2many_tags"/>
+                    </group>
+                    <footer>
+                        <button string="Generate Catalog" type="action"
+                                name="%(ak_product_cataloge_pdf.action_product_catalog_report)d" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

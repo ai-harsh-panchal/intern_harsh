@@ -1,0 +1,136 @@
+<odoo>
+    <!-- this template is for product catalog report-->
+    <template id="product_catalog_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-if="doc.catalog_style == 'style_1'">
+                    <div class="article">
+                        <h2 style="text-align: center;">Generated Product Catalog</h2>
+                        <t t-set="count" t-value="0"/>
+                        <t t-foreach="doc.product_ids" t-as="product">
+                            <div t-if="count % doc.page_break_after == 0 and count != 0"
+                                 style="page-break-after: always;"/>
+                            <div name="product detail" class="d-flex">
+                                <div class="mb-3 mt-2">
+                                    <span>
+                                        <img t-if="product.image_1920"
+                                             t-att-src="image_data_uri(product.image_1920)"
+                                             style="height:130px; width:150px;"
+                                             loading='lazy' alt="product image"/>
+                                        <img t-else=""
+                                             style="height:130px; width:150px;"
+                                             loading='lazy' alt="product image"
+                                             class="d-block ms-auto me-auto"/>
+                                    </span>
+                                </div>
+                                <div class="ms-2 mt-2">
+                                    <div>
+                                        <b>
+                                            <t t-out="product.name"/>
+                                        </b>
+                                    </div>
+                                    <div class="bg-secondary mb-1 text-center" style="width:150px;">
+                                        <t t-out="product.default_code"/>
+                                    </div>
+                                    <div class="bg-secondary text-center" style="width:150px;">
+                                        <b>Price :</b>
+                                        <t t-out="product.lst_price"
+                                           t-options="{'widget':'monetary', 'display_currency':product.currency_id}"/>
+                                    </div>
+                                    <div>
+                                        <t t-out="product.description_sale"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="border: solid 1px purple;"/>
+                            <t t-set="count" t-value="count + 1"/>
+                        </t>
+                    </div>
+                </t>
+                <t t-if="doc.catalog_style == 'style_2'">
+                    <table class="o_has_total_table table o_main_table table-borderless">
+                        <tbody>
+                            <t t-set="total" t-value="len(doc.product_ids)"/>
+                            <t t-foreach="range(0, total, 2)" t-as="index">
+                                <tr>
+                                    <td>
+                                        <div style="border: dashed purple; margin: 30px; margin-top: 0; width: 350px;">
+                                            <div style="text-align: center; margin-top: 5px; font-size: 17px;">
+                                                <b>
+                                                    <t t-out="doc.product_ids[index].name"/>
+                                                </b>
+                                            </div>
+                                            <div style="text-align: center;">
+                                                <img t-if="doc.product_ids[index].image_1920"
+                                                     t-att-src="image_data_uri(doc.product_ids[index].image_1920)"
+                                                     style="height:130px; width:180px;"
+                                                     loading='lazy' alt="product image"
+                                                     class="d-block mx-auto"/>
+                                                <img t-else=""
+                                                     style="height:130px; width:180px;"
+                                                     loading='lazy' alt="product image"
+                                                     class="d-block mx-auto"/>
+                                            </div>
+                                            <div class="text-center mb-2 mt-2 ms-1 me-1"
+                                                 style="background-color: yellow; text-align: center;">
+                                                <t t-out="doc.product_ids[index].default_code"/>
+                                            </div>
+                                            <div class="ms-1 me-1"
+                                                 style="padding: 30px; background-color: yellow; text-align: center; margin-top: 10px;">
+                                                <span>
+                                                    <t t-out="doc.product_ids.currency_id.symbol"/>
+                                                    <t t-out="doc.product_ids[index].list_price"/>
+                                                </span>
+                                            </div>
+                                            <div style="border: solid 1px purple;" class="m-2"></div>
+                                            <div class="ms-1 me-1" style="padding-bottom: 200px;">
+                                                <t t-out="doc.product_ids[index].description_sale"/>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div t-if="total > index + 1"
+                                             style="border: dashed purple; margin: 30px; margin-top: 0; width: 350px;">
+                                            <div style="font-size: 17px; margin-top: 5px; text-align: center;">
+                                                <b>
+                                                    <t t-out="doc.product_ids[index + 1].name"/>
+                                                </b>
+                                            </div>
+                                            <div style="text-align: center;">
+                                                <img t-if="doc.product_ids[index].image_1920"
+                                                     t-att-src="image_data_uri(doc.product_ids[index + 1].image_1920)"
+                                                     style="height:130px; width:180px;"
+                                                     loading='lazy' alt="product image"
+                                                     class="d-block mx-auto"/>
+                                                <img t-else=""
+                                                     style="height:130px; width:180px;"
+                                                     loading='lazy' alt="product image"
+                                                     class="d-block mx-auto"/>
+                                            </div>
+                                            <div class="text-center mb-2 mt-2 ms-1 me-1"
+                                                 style="background-color: yellow; text-align: center;">
+                                                <t t-out="doc.product_ids[index + 1].default_code"/>
+                                            </div>
+                                            <div class="ms-1 me-1"
+                                                 style="padding: 30px; background-color: yellow; text-align: center; margin-top: 10px;">
+                                                <span>
+                                                    <t t-out="doc.product_ids.currency_id.symbol"/>
+                                                    <t t-out="doc.product_ids[index + 1].list_price"/>
+                                                </span>
+                                            </div>
+                                            <div style="border: solid 1px purple;" class="m-2"></div>
+                                            <div class="ms-1 me-1" style="padding-bottom: 200px;">
+                                                <t t-out="doc.product_ids[index + 1].description_sale"/>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr style="height: 40px;"></tr> <!-- Add spacing between rows -->
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
