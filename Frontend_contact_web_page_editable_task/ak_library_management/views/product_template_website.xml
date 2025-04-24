@@ -1,0 +1,41 @@
+<odoo>
+    <!-- inherit product template -->
+    <template id="product_image_download_custom" inherit_id="website_sale.product">
+        <xpath expr="//div[@id='o_product_terms_and_share']" position="after">
+            <t t-if="product.image_1920 or product.product_template_image_ids">
+                <a class="btn btn-primary"
+                   t-att-href="'/download_product_image/' + str(product.id)">
+                    Download Image
+                </a>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- Add on hand quantity in product information -->
+    <template id="product_on_hand_qty_view" inherit_id="website_sale.products_item">
+        <xpath expr="//div[contains(@class, 'o_wsale_product_information_text')]" position="inside">
+            <div class="on_hand_quantity mt-2">
+                <span style="color: blue;">
+                    On Hand :
+                    <t t-if="product.sudo().qty_available > 0">
+                        <span style="color: green;" t-field="product.sudo().qty_available"/>
+                    </t>
+                    <t t-else="">
+                        <span style="color: red;">Out of Stock</span>
+                    </t>
+                </span>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- Add to cart button in product item view -->
+    <template id="add_to_cart_button_view" inherit_id="website_sale.products_item">
+    <xpath expr="//div[contains(@class, 'o_wsale_product_sub d-flex')]" position="inside">
+        <button type="button" class="btn btn-primary js_add_cart_json"
+                t-att-data-product-id="product.product_variant_id.id"
+                t-att-disabled="product.sudo().qty_available == 0">
+            <i class="fa fa-shopping-cart me-2"></i>Add to Cart
+        </button>
+    </xpath>
+</template>
+</odoo>
