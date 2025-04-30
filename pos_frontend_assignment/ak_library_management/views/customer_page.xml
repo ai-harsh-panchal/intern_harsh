@@ -1,6 +1,6 @@
 <odoo>
     <!-- this is customer fetch web page template -->
-    <template id="customer_fetch_template" name="Customer Fetch">
+    <template id="customer_fetch_template_page" name="Customer Fetch">
         <t t-call="website.layout">
             <style>
                 .customer-fetch {
@@ -20,6 +20,7 @@
                         <input type="text" id="InputName" placeholder="Customer Name"/>
                         <input type="text" id="InputAddress" placeholder="Customer Address"/>
                         <input type="text" id="InputPhone" placeholder="Customer Phone"/>
+                        <p class="warning-message" style="color: red; display: none;"></p>
                     </div>
                 </div>
             </div>
@@ -27,12 +28,4 @@
     </template>
 
     <!-- this customer form menu -->
-    <data>
-        <record id="customer_details_menu" model="website.menu">
-            <field name="name">Customer Form</field>
-            <field name="url">/customer_fetch_template</field>
-            <field name="parent_id" ref="website.main_menu"/>
-            <field name="sequence" eval="30"/>
-        </record>
-    </data>
 </odoo>

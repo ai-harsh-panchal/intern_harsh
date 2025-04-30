@@ -20,7 +20,6 @@
                 </xpath>
             </field>
         </record>
-
         <!-- this record change the action name of Quotation in sale order -->
         <record id="sale.action_quotations_with_onboarding" model="ir.actions.act_window">
             <field name="name">Draft Quotations</field>

@@ -2,10 +2,10 @@
 
 {
     'name': "Library Management System",
-    'version': '18.0.1.4.0',
+    'version': '18.0.1.7.1',
     'summary': 'A comprehensive module for managing library operations, including book tracking and member management.',
-    'depends': ['base', 'web', 'account', 'sale_management', 'stock', 'product', 'base_automation', 'mail', 'hr',
-                'purchase', 'website', 'point_of_sale', 'pos_self_order'],
+    'depends': ['base', 'web', 'account', 'sale_management', 'stock', 'website_sale','product', 'base_automation', 'mail', 'hr',
+                'purchase', 'website', 'point_of_sale', 'pos_self_order', 'project', 'sale'],
     'category': 'Education',
     'author': 'Harsh',
     'website': 'https://www.aktivsoftware.com',
@@ -33,9 +33,11 @@
         'views/library_menus.xml',
         'views/stock_warehouse_view.xml',
         'views/res_config_setting_view.xml',
-        # 'report/report_invoice.xml',
+        'report/report_invoice.xml',
         'views/dynamic_web_page.xml',
         'views/customer_page.xml',
+        'views/product_template_website.xml',
+        'views/order_details.xml',
         'views/sale_menus.xml',
     ],
     "assets":
@@ -46,9 +48,11 @@
                 '/ak_library_management/static/src/xml/product_screen.xml',
             ],
             "web.assets_frontend":
-                [
-                    "/ak_library_management/static/src/js/customer_fetch.js",
-                ],
+            [
+                "/ak_library_management/static/src/js/customer_fetch.js",
+                "/ak_library_management/static/src/js/customer_details.js",
+                "/ak_library_management/static/src/js/add_to_cart.js",
+            ],
         },
     'installable': True,
     'application': True,

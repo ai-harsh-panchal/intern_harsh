@@ -77,3 +77,54 @@
 
 ### Added
 - add product_list_page_view and product_screen xml file in xml folder
+
+## [18.0.1.5.0] - 02-04-25 | Assignment Front-end - Practical Task (Download Product Images)
+
+### Added 
+- add product template website view xml file in views 
+
+## [18.0.1.6.0] - 04-04-25 | Assignment Vendor management system
+
+### Added 
+- add product_product, product_supllierinfo py file  in models
+
+## [18.0.1.6.1] - 11-04-25 | Assignment modify base report
+
+### changes 
+- apply proper space in header section in report_invoice xml file
+- and manage payment term in invoice 
+
+## [18.0.1.6.2] - 14-04-25 | Assignment json controller
+
+### changes
+- modify controller/main.py file add doc string for particular each functions
+- modify customer_page xml file add warning message if user entered wrong email id for fetch data
+
+## [18.0.1.6.3] - 15-04-25 | Assignment Dynamic HTTP controller
+
+### changes
+- modify dynamic web page xml file improve a partner details form layout
+- contact web page make a visible for without login 
+
+## [18.0.1.6.4] - 15-04-25 | Assignment modify existing base report 
+
+### changes 
+- modify report_invoice xml file in this what i manage the label it display only when the data is avaiable
+
+
+## [18.0.1.7.0] - 24-04-25 | Assignment Front-end - Practical Task (Contact Web Page with Editable Feature
+
+### Changes
+
+- Make editable feature from customer details template in website ( dynamic web page xml file)
+- Add customer_details js file for handle store and edit the data in res partner
+- manage the json function for this feature 
+
+## [18.0.1.7.1] - 30-04-25 | Assignment POS Frontend task 
+
+### Changes
+- improve the xpath of productcard page in product view page xml file
+- maintain style and class in xpath 
+- solve error in console side
+
+ 

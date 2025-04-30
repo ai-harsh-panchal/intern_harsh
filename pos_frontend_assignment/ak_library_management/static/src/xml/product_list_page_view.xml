@@ -1,24 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <templates id="template" xml:space="preserve">
-    <t t-name="ak_library_management.ProductCard" t-inherit="point_of_sale.ProductCard" t-inherit-mode="extension">
-        <xpath expr="//div[contains(@class, 'product-content')]" position="inside">
-            <div style="justify-content: space-between;">
-                <p style="color: #714B67; font-weight:bold; padding:0 0.5rem 0.5rem; font-size:12px;"
-                   t-esc="props.price"/>
-            </div>
+    <t t-inherit="point_of_sale.ProductCard" t-inherit-mode="extension">
+        <xpath expr="//article[contains(@t-attf-class, 'product position-relative')]" position="attributes">
+            <attribute name="t-attf-class">{{props.class}} product position-relative btn btn-light d-flex align-items-stretch p-0 m-0 rounded-0 text-start cursor-pointer</attribute>
         </xpath>
-        <xpath expr="//div[contains(@class, 'product-content')]" position="attributes">
-            <attribute name="class">product-content d-flex flex-column</attribute>
-        </xpath>
-        <xpath expr="//article" position="attributes">
-            <attribute name="t-attf-class">flex-column  product position-relative btn btn-light d-flex align-items-stretch p-0 m-0 rounded-0 text-start cursor-pointer transition-base</attribute>
-        </xpath>
+
         <xpath expr="//div[hasclass('product-information-tag')]" position="attributes">
             <attribute name="class">product-information-tag rounded-0</attribute>
         </xpath>
-        <xpath expr="//div[contains(@class, 'overflow-hidden lh-sm product-name my-2')]" position="attributes">
-            <attribute name="style">margin-left : 10px; font-family: "Lato", "Lucida Grande", Helvetica, Verdana, Arial; color: #4A4F59; font-size: 12px;</attribute>
+
+        <xpath expr="//div[contains(@class, 'product-img')]" position="attributes">
+            <attribute name="class" remove="rounded-top rounded-3"/>
+        </xpath>
+
+        <xpath expr="//img[@t-att-src = 'props.imageUrl']" position="attributes">
+            <attribute name="class">""</attribute>
+            <attribute name="style">width:100%; height:100px; object-fit:contain;</attribute>
+        </xpath>
+
+        <xpath expr="//div[contains(@class,'product-content')]" position="attributes">
+            <attribute name="class">product-content d-flex flex-column </attribute>
+            <attribute name="style">height:100%; justify-content:space-between;</attribute>
+        </xpath>
+
+        <xpath expr="//div[contains(@class,'product-name')]" position="attributes">
+            <attribute name="class">product-name overflow-hidden</attribute>
+            <attribute name="style">margin:0.5rem; line-height:14px; font-size:12px;
+                font-family:"Lato", "Lucida Grande", Helvetica, Verdana, Arial;</attribute>
+        </xpath>
+
+        <xpath expr="//div[contains(@class,'product-name')]" position="after">
+            <span style="color:#714B67; font-weight:bold; padding:0 0.5rem 0.5rem; font-size:12px;">
+                <t t-out="props.price"/>
+            </span>
         </xpath>
     </t>
 </templates>

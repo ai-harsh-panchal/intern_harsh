@@ -94,7 +94,7 @@ class BorrowTransactionHistory(models.Model):
         """
         this function is used to confirm the borrow transaction with multiple checks
         param: self
-        return: _process_borrow_transaction().
+        return: recordset
         """
         warnings = []
 

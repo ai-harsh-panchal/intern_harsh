@@ -1,0 +1,103 @@
+<odoo>
+    <template id="customer_orders_template">
+        <t t-call="website.layout">
+            <div class="container">
+
+                <div class="container">
+                    <h1>Dashboard</h1>
+                    <h2>Invoices Section</h2>
+                    <p>Total Amount Due: 15
+                        <t t-esc="total_amount_due"/>
+                    </p>
+                    <p>Total Amount Paid: 44
+                        <t t-esc="total_amount_paid"/>
+                    </p>
+                    <p>Total Amount Overdue: 10
+                        <t t-esc="total_amount_overdue"/>
+                    </p>
+                    <h2>Quotations Section</h2>
+                    <p>Total Quotations: 56
+                    </p>
+                    <p>Total Confirmed Quotations: 48
+                        <t t-esc="total_confirmed_quotations"/>
+                    </p>
+                    <p>Total Cancelled Quotations:
+                        <t t-esc="total_cancelled_quotations"/>
+                    </p>
+                    <h2>Product Deliveries Section</h2>
+                    <p>Total Product Deliveries:
+                        <t t-esc="total_deliveries"/>
+                    </p>
+                    <p>Completed Deliveries: 21
+                        <t t-esc="total_completed_deliveries"/>
+                    </p>
+                    <h2>Report Download</h2>
+                    <a href="/dashboard/report/download" class="btn btn-primary">Download Report</a>
+                </div>
+
+
+                <h2>user Orders details for
+                    <t t-esc="customer.name"/>
+                </h2>
+                <div class="row">
+                    <div class="col-4">
+                        <h5>Total Invoices</h5>
+                        <p>
+                            <t t-esc="total_invoices"/>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <h5>Total Quotations</h5>
+                        <p>
+                            <t t-esc="total_quotations"/>
+                        </p>
+                    </div>
+                    <div class="col-4">
+                        <h5>Total Delivered</h5>
+                        <p>
+                            <t t-esc="total_delivered"/>
+                        </p>
+                    </div>
+                </div>
+                <h2>Sale Order Details</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Order Reference</th>
+                            <th>Date</th>
+                            <th>Total Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="sale_orders" t-as="order">
+                            <tr>
+                                <td>
+                                    <t t-out="order.name"/>
+                                </td>
+                                <td>
+                                    <t t-out="order.create_date"/>
+                                </td>
+                                <td>
+                                    <t t-out="order.amount_total"/>
+                                </td>
+                                <td>
+                                    <t t-out="order.state"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <data>
+        <record id="sale_order_website_custom" model="website.menu">
+            <field name="name">Sale Order Details</field>
+            <field name="url">/customer/orders</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" eval="60"/>
+        </record>
+    </data>
+</odoo>

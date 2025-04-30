@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields
+from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
 
@@ -68,3 +68,4 @@ class SaleOrder(models.Model):
         """
         self.write({'approval_required': False})
         return self.action_cancel()
+

@@ -16,11 +16,13 @@
                                                 <div name="avatar_128"
                                                      class="o_field_widget o_readonly_modifier o_field_image h-100">
                                                     <div class="d-inline-block position-relative opacity-trigger-hover">
-                                                        <img
-                                                                alt="Contact image"
-                                                                t-att-src="'/web/image/res.partner/%s/avatar_128' % partner.id"
-                                                                style="width: 100px; height: 100px; object-fit: cover; margin-bottom: 10px; margin-left: 12px; margin-top: 10px;">
-                                                        </img>
+                                                        <t t-if="partner.image_1920">
+                                                            <img
+                                                                    alt="Contact image"
+                                                                    t-att-src="image_data_uri(partner.image_1920)"
+                                                                    style="width: 100px; height: 100px; object-fit: cover; margin-bottom: 10px; margin-left: 12px; margin-top: 10px;">
+                                                            </img>
+                                                        </t>
                                                     </div>
                                                 </div>
                                             </div>
@@ -69,55 +71,81 @@
         </t>
     </template>
 
-    <!-- Partner Details Template -->
     <template id="partner_detail_template">
         <t t-call="website.layout">
-            <div class="oe_structure">
+            <div class="oe_structure save_customer">
                 <div class="container">
-                    <div class="shadow-lg card mb-2 mt-2">
+                    <div class="shadow-lg card mb-4 mt-4">
                         <div class="card-body">
-                            <div>
-                                <strong class="fs-3 mt-5">
-                                    <t t-out="contact.name"/>
-                                </strong>
-                                <img t-attf-src='/web/image/res.partner/#{contact.id}/avatar_128'
-                                     class="float-md-end" style="height:80px; width:80px;"/>
+                            <div class="d-flex align-items-center mb-3">
+                                <t t-if="contact.image_1920">
+                                    <img t-att-src="image_data_uri(contact.image_1920)"
+                                         class="rounded-circle me-3" style="height: 80px; width: 80px;"/>
+                                </t>
                             </div>
-                            <table class="table table-borderless">
-                                <tbody>
-                                    <tr>
-                                        <td>Email:
-                                            <t t-out="contact.email"/>
-                                        </td>
-                                        <td>Website:
-                                            <t t-out="contact.website"/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Phone:
-                                            <t t-out="contact.phone"/>
-                                        </td>
-                                        <td>Tax ID:
-                                            <t t-out="contact.vat"/>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mobile:
-                                            <t t-out="contact.mobile"/>
-                                        </td>
-                                        <td>Tags:
-                                            <t t-foreach="contact.category_id" t-as="tag">
-                                                <span style="border-radius: 20px;background: #B4EBE6; padding-left:10px; padding-right:10px;margin-right:5px;">
-                                                    <t t-out="tag.name"/>
-                                                </span>
-                                            </t>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="mb-2 mt-2 back-button">
-                                <a class="btn btn-primary mb-2" href="/contacts" role="button">Back</a>
-                            </div>
+                            <form id="contact-form">
+                                <table class="table table-borderless">
+                                    <tbody>
+                                        <tr>
+                                            <td class="fw-bold">Name:
+                                                <span style="color: red; font-weight: bold;">*</span>
+                                            </td>
+                                            <td>
+                                                <input type="hidden" class="customer-id" t-att-value="contact.id"/>
+                                                <input type="text" id="name" name="name"
+                                                       class="form-control"
+                                                       t-att-value="contact.name" required="1" readonly="1"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Email:
+                                            <span style="color: red; font-weight: bold;">*</span>
+                                            </td>
+                                            <td>
+                                                <input type="email" id="email" name="email" class="form-control"
+                                                       t-att-value="contact.email" readonly="1"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Website:</td>
+                                            <td>
+                                                <input type="text" id="website" name="website" class="form-control"
+                                                       t-att-value="contact.website" readonly="1"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Phone:
+                                            <span style="color: red; font-weight: bold;">*</span>
+                                            </td>
+                                            <td>
+                                                <input type="tel" id="phone" name="phone" class="form-control"
+                                                       t-att-value="contact.phone" readonly="1"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Tax ID:</td>
+                                            <td>
+                                                <input type="text" id="vat" name="vat" class="form-control"
+                                                       t-att-value="contact.vat" readonly="1"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fw-bold">Mobile:</td>
+                                            <td>
+                                                <input type="tel" id="mobile" name="mobile" class="form-control"
+                                                       t-att-value="contact.mobile" readonly="1"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="mb-2 mt-3">
+                                    <button class="btn btn-info onEditCustomer" type="button">Edit</button>
+                                    <button class="btn btn-success onSaveCustomer" type="button" style="display:none;">
+                                        Save
+                                    </button>
+                                    <a class="btn btn-primary" href="/contacts" role="button">Back</a>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
