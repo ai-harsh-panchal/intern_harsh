@@ -1,0 +1,25 @@
+<odoo>
+    <!-- Menu for Approvals -->
+    <menuitem
+            id="sale_manager_approval_config"
+            name="Sales manager Approvals"
+            action="action_sale_manager_approval"
+            parent="sale.menu_sales_config"
+            sequence="20"
+    />
+
+    <menuitem
+            id="sale_manager_approval_menu"
+            name="Approvals"
+            parent="sale.sale_menu_root"
+            sequence="50"
+    />
+
+    <menuitem
+            id="sale_manager_approval_submenu"
+            name="Pending Sales Orders"
+            action="action_quotations_with_pending"
+            parent="sale_manager_approval_menu"
+            sequence="50"
+    />
+</odoo>

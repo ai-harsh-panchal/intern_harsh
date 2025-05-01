@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <!-- Inherit sale order view form -->
+        <record id="sale_order_custom_approval" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit.approval</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar"/>
+                </xpath>
+                <xpath expr="//header" position="inside">
+                    <button name="send_for_approval" type="object"
+                            string="Send for Approval"
+                            invisible="approval_required == False or state in ('sale','cancel')"/>
+                    <button name="approve_order" type="object"
+                            string="Approve" groups="sales_team.group_sale_manager" invisible="approval_required == False or state in ('sale', 'cancel')"/>
+                </xpath>
+                <xpath expr="(//button[@name='action_confirm'])[2]" position="attributes">
+                    <attribute name="invisible">approval_required == True or state in ('sale', 'pending_approval',
+                        'cancel')
+                    </attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+        <!-- inherit sale order report document -->
+        <template id="report_saleorder_document" inherit_id="sale.report_saleorder_document">
+            <xpath expr="//div[@class='page']" position="inside">
+                <div class="row">
+                    <t t-foreach="doc" t-as="docs">
+                        <div class="col-6">
+                            <strong>Approved By:</strong>
+                            <span t-out="docs.approved_by.name"/>
+                        </div>
+                        <div class="col-6">
+                            <strong>Approved Date:</strong>
+                            <span t-out="docs.approved_date"/>
+                        </div>
+                    </t>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>

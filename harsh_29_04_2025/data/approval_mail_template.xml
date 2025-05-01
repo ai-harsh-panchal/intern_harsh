@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+        <!-- mail template for send approval of sale order to manager -->
+        <record id="email_template_sale_approval_request" model="mail.template">
+            <field name="name">Approval Request</field>
+            <field name="model_id" ref="model_sale_order"/>
+            <field name="subject">Approval Request for Sale Order</field>
+            <field name="email_from">{{ object.partner_id.email }}</field>
+            <field name="email_to">{{ user.email }}</field>
+            <field name="body_html" type="html">
+                <div>
+                    <p>You have the following sale orders pending approval:<strong> <t t-out="object.name"/> </strong>
+                    </p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>
